@@ -4,89 +4,84 @@ jsonOdm.Collection = function (collectionName) {
 
     if(jsonOdm.selectedSource && jsonOdm.selectedSource[collectionName]){
         self = self.concat(jsonOdm.selectedSource[collectionName]);
-        //jsonOdm.Collection.decorate(self);
+        jsonOdm.Collection.decorate(self);
     }
 
     return self;
 };
 
-jsonOdm.Collection.decorate = function (json,dataSource) {
-    var decorate = function(json,dataSource){
-        /** Creates a has many relation to another collection
-         *
-         * @param {*|String} foreignKeyMapName
-         * @param {int|String} privateKeyField
-         * @param {*|String} childCollectionName
-         * @param {String} alias The new field that will carry all connected data. This field must not exist before setting the relation
-         */
-        json.$hasMany = function (foreignKeyMapName,privateKeyField,childCollectionName,alias){
-            if(typeof childCollectionName == "string") alias = alias || childCollectionName;
+jsonOdm.Collection.decorate = function (collection) {
+    var decorate = function (collection){
+        if(jsonOdm.util.isArray(collection)) {
+            /** Creates a has many relation to another collection
+             *
+             * @param {*|String} foreignKeyMapName
+             * @param {int|String} privateKeyField
+             * @param {*|String} childCollectionName
+             * @param {String} alias The new field that will carry all connected data. This field must not exist before setting the relation
+             */
+            collection.$hasMany = function (foreignKeyMapName, privateKeyField, childCollectionName, alias) {
+                // SET THE ALIAS
+                if (typeof childCollectionName == "string") alias = alias || childCollectionName;
+                // FIND THE CHILD COLLECTION
+                var childCollection = childCollectionName;
+                if (typeof childCollectionName == "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]){
+                    childCollection = jsonOdm.selectedSource[childCollectionName];
+                }
 
-            var childCollection = childCollectionName;
-            if(typeof childCollectionName == "string" && jsonOdm.dataSources[dataSource] && jsonOdm.dataSources[dataSource].json &&jsonOdm.dataSources[dataSource].json.hasOwnProperty(childCollectionName)) childCollection = jsonOdm.dataSources[dataSource].json[childCollectionName];
+                for (var c = 0; c < collection.length; c++) {
+                    var foreignKeyMap = foreignKeyMapName;
+                    if (collection[c].hasOwnProperty(foreignKeyMapName)) foreignKeyMap = collection[c][foreignKeyMapName];
+                    if (typeof collection[c][alias] == "undefined") {
+                        for (var i = 0; foreignKeyMap.length && i < foreignKeyMap.length; i++) {
+                            var foreignModel = null;
+                            for (var j = 0; j < childCollection.length; j++) {
+                                if (foreignKeyMap[i] == childCollection[j][privateKeyField]) {
+                                    foreignModel = childCollection[j];
+                                    break;
+                                }
+                            }
+                            if (foreignModel != null) {
+                                if (!collection[c][alias])collection[c][alias] = [];
+                                collection[c][alias].push(foreignModel);
+                            }
+                        }
+                    }
+                }
+            };
+            collection.$hasOne = function (foreignKey, privateKeyField, childCollectionName, alias) {
+                // SET THE ALIAS
+                if (typeof childCollectionName == "string") alias = alias || childCollectionName;
+                // FIND THE CHILD COLLECTION
+                var childCollection = childCollectionName;
+                if (typeof childCollectionName == "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]){
+                    childCollection = jsonOdm.selectedSource[childCollectionName];
+                }
 
-            var collectionObject = json;
-            if(!(json instanceof Collection || angular.isArray(json))){
-                collectionObject = [json];
-            }
-
-            for(var c in collectionObject) {
-                if(!collectionObject.hasOwnProperty(c) || c[0] == '$')continue;
-                var foreignKeyMap = foreignKeyMapName;
-                if (collectionObject[c].hasOwnProperty(foreignKeyMapName)) foreignKeyMap = collectionObject[c][foreignKeyMapName];
-                if (typeof collectionObject[c][alias] == "undefined") {
-                    for (var i = 0; foreignKeyMap.length && i < foreignKeyMap.length; i++) {
+                for (var c = 0; c < collection.length; c++) {
+                    if (collection[c].hasOwnProperty(foreignKey)) foreignKey = collection[c][foreignKey];
+                    if (typeof collection[c][alias] == "undefined") {
                         var foreignModel = null;
                         for (var j = 0; j < childCollection.length; j++) {
-                            if (foreignKeyMap[i] == childCollection[j][privateKeyField]) {
+                            if (foreignKey == childCollection[j][privateKeyField]) {
                                 foreignModel = childCollection[j];
                                 break;
                             }
                         }
                         if (foreignModel != null) {
-                            if(!collectionObject[c][alias])collectionObject[c][alias] = [];
-                            collectionObject[c][alias].push(foreignModel);
+                            collection[c][alias] = foreignModel;
                         }
                     }
-                }
-            }
-        };
-        json.$hasOne = function(foreignKey,privateKeyField,childCollectionName,alias){
-            if(typeof childCollectionName == "string") alias = alias || childCollectionName;
-
-            var childCollection = childCollectionName;
-            if(typeof childCollectionName == "string" && jsonOdm.dataSources[dataSource] && jsonOdm.dataSources[dataSource].json &&jsonOdm.dataSources[dataSource].json.hasOwnProperty(childCollectionName)) childCollection = jsonOdm.dataSources[dataSource].json[childCollectionName];
-
-            var collectionObject = json;
-            if(!(json instanceof Collection || angular.isArray(json))){
-                collectionObject = [json];
-            }
-
-            for(var c in collectionObject) {
-                if(!collectionObject.hasOwnProperty(c) || c[0] == '$')continue;
-                if (collectionObject[c].hasOwnProperty(foreignKey)) foreignKey = collectionObject[c][foreignKey];
-                if (typeof collectionObject[c][alias] == "undefined") {
-                    var foreignModel = null;
-                    for (var j = 0; j < childCollection.length; j++) {
-                        if (foreignKey == childCollection[j][privateKeyField]) {
-                            foreignModel = childCollection[j];
-                            break;
-                        }
-                    }
-                    if (foreignModel != null) {
-                        collectionObject[c][alias] = foreignModel;
-                    }
-
                 }
             }
         }
     };
 
-    decorate(json,dataSource);
-    for(var i in json){
-        if(!json.hasOwnProperty(i)) continue;
-        if(typeof json[i] == "object" && !angular.isArray(json[i])){
-            decorate(json[i],dataSource);
+    decorate(collection);
+    for(var i = 0; i < collection.length; i++){
+        var keys = jsonOdm.util.objectKeys(collection[i]);
+        for(var j = 0; j < keys.length; j++){
+            decorate(collection[i][keys[j]]);
         }
     }
 };
