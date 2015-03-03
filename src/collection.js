@@ -73,15 +73,18 @@ jsonOdm.Collection.decorate = function (collection) {
                         }
                     }
                 }
+            };
+
+            for(var i = 0; i < collection.length; i++){
+                var keys = jsonOdm.util.objectKeys(collection[i]);
+                for(var j = 0; j < keys.length; j++){
+                    if(typeof collection[i][keys[j]].$hasMany == "undefined"){
+                        decorate(collection[i][keys[j]]);
+                    }
+                }
             }
         }
     };
 
     decorate(collection);
-    for(var i = 0; i < collection.length; i++){
-        var keys = jsonOdm.util.objectKeys(collection[i]);
-        for(var j = 0; j < keys.length; j++){
-            decorate(collection[i][keys[j]]);
-        }
-    }
 };
