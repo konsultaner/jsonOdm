@@ -3,8 +3,8 @@ jsonOdm.Collection = function (collectionName) {
     self = (Array.apply( self, Array.prototype.slice.call( arguments, 1 ) ) || self);
 
     if(jsonOdm.selectedSource && jsonOdm.selectedSource[collectionName]){
-        self.concat(jsonOdm.selectedSource[collectionName]);
-        jsonOdm.Collection.decorate(self);
+        self = self.concat(jsonOdm.selectedSource[collectionName]);
+        //jsonOdm.Collection.decorate(self);
     }
 
     return self;

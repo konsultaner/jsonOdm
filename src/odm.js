@@ -1,13 +1,13 @@
 "use strict";
 
-function jsonOdm () {
+function JsonOdm () {
     var self = this;
     this.sources = {};
     this.selectedSource = {};
     this.addSource = function (sourceId, source, selectSource) {
         if (typeof source == "object") {
             if (typeof self.sources[sourceId] == "undefined") self.sources[sourceId] = source;
-            if(selectSource) self.sources = source;
+            if(selectSource) self.selectedSource = source;
         }
     };
     this.selectSource = function (sourceId) {
@@ -15,4 +15,4 @@ function jsonOdm () {
     };
 }
 
-if(!window.jsonOdm) window.jsonOdm = new jsonOdm();
+if(!window.jsonOdm) window.jsonOdm = new JsonOdm();
