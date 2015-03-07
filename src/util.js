@@ -1,12 +1,27 @@
 "use strict";
+
 jsonOdm.util = {
+    /** Checks the input parameter and returns true if it is an array
+     *
+     * @param {*} arrayObject
+     * @return {boolean}
+     */
     isArray : function(arrayObject){
         if(!Array.isArray) {
             return Object.prototype.toString.call(arrayObject) === "[object Array]";
         }
         return Array.isArray(arrayObject);
     },
+    /** Get only the keys of an object
+     *
+     */
     objectKeys : Object.keys,
+    /** Query an object with a function
+     *
+     * @param {Object|Array} object
+     * @param {...String} path
+     * @return {*}
+     */
     branch : function(object,path){
         function goDown() {
             if(arguments && arguments.length && this){
@@ -22,7 +37,6 @@ jsonOdm.util = {
 
 if (!Object.keys) {
     jsonOdm.util.objectKeys = (function() {
-        'use strict';
         var hasOwnProperty = Object.prototype.hasOwnProperty,
             hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
             dontEnums = [

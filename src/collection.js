@@ -26,7 +26,7 @@ jsonOdm.Collection.decorate = function (collection) {
              * @param {*|String} foreignKeyMapName
              * @param {int|String} privateKeyField
              * @param {*|String} childCollectionName
-             * @param {String} alias The new field that will carry all connected data. This field must not exist before setting the relation
+             * @param {String} [alias] The new field that will carry all connected data. This field must not exist before setting the relation
              */
             collection.$hasMany = function (foreignKeyMapName, privateKeyField, childCollectionName, alias) {
                 // SET THE ALIAS
@@ -58,6 +58,13 @@ jsonOdm.Collection.decorate = function (collection) {
                 }
             };
 
+            /** Creates a has many relation to another collection
+             *
+             * @param {String} foreignKey
+             * @param {int|String} privateKeyField
+             * @param {String} childCollectionName
+             * @param {String} alias
+             */
             collection.$hasOne = function (foreignKey, privateKeyField, childCollectionName, alias) {
                 // SET THE ALIAS
                 if (typeof childCollectionName == "string") alias = alias || childCollectionName;
@@ -84,6 +91,10 @@ jsonOdm.Collection.decorate = function (collection) {
                 }
             };
 
+            /** Creates a query object filled with the right collection data
+             *
+             * @return {jsonOdm.Query}
+             */
             collection.$query = function(){
                 return new jsonOdm.Query(collection);
             };

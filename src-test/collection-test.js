@@ -1,4 +1,6 @@
-CollectionTest = TestCase("CollectionTest");
+"use strict";
+
+var CollectionTest = TestCase("CollectionTest");
 
 var testSource = {
         "testCollection":[
@@ -7,6 +9,7 @@ var testSource = {
         ],
         "parentCollection":[
             {
+                onOfALotId:300,
                 keys:[1,2,3,4],
                 childCollection:[
                     {id:1},{id:2},{id:3},
@@ -42,6 +45,11 @@ CollectionTest.prototype.testCollectionDecoration = function () {
     assertNotUndefined("Should be decorated",collection.$hasMany);
     assertFunction("Should be a function",collection.$hasMany);
     assertFunction("Should be a function",collection.$branch(0,'childCollection').$hasMany);
+
+    collection.$hasMany("keys","id","foreignCollection","foreignKeys");
+    collection.$hasOne("onOfALotId","id","aLot","onOfALot");
+    assertEquals("Should have collection extended",2,collection[0].foreignKeys.length);
+    assertEquals("Should have collection extended",collection[0].onOfALotId,collection[0].onOfALot.id);
 };
 
 CollectionTest.prototype.testSimpleQuery = function () {
@@ -51,4 +59,35 @@ CollectionTest.prototype.testSimpleQuery = function () {
 
     collection = new jsonOdm.Collection("aLot");
     assertEquals("Simple Query","Richi400",collection.$query().$branch("name").$eq("Richi199","Richi400").$all()[1].name);
+    var q = collection.$query();
+    var subCollection = q.$or(
+        q.$branch("name").$eq("Richi400"),
+        q.$branch("name").$eq("Richi199")
+    ).$all();
+    assertEquals("Should have 2 sub entries",2,subCollection.length);
+    assertEquals("The first one should be Richi199",199,subCollection[0].id);
+    assertEquals("The second one should be Richi400",400,subCollection[1].id);
+
+    q = collection.$query();
+    subCollection = q.$and(
+        q.$branch("name").$eq("Richi401"),
+        q.$branch("id").$eq(401)
+    ).$all();
+    assertEquals("Should have 1 entry",1,subCollection.length);
+    assertEquals("The first one should be Richi401",401,subCollection[0].id);
+
+    q = collection.$query();
+    subCollection = q.$or(
+        q.$and(
+            q.$branch("name").$eq("Richi401"),
+            q.$branch("id").$eq(401)
+        ),
+        q.$and(
+            q.$branch("name").$eq("Richi1002"),
+            q.$branch("id").$eq(1002)
+        )
+    ).$all();
+    assertEquals("Should have 2 sub entries",2,subCollection.length);
+    assertEquals("The first one should be Richi401",401,subCollection[0].id);
+    assertEquals("The second one should be Richi1002",1002,subCollection[1].id);
 };

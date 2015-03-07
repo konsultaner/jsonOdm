@@ -7,6 +7,7 @@
  */
 jsonOdm.Query = function (collection) {
     this.$$commandQueue = [];
+    this.$$collection = collection;
     this.$all = function (first) {
         if(this.$$commandQueue.length < 1) return collection;
         var filterCollection = new jsonOdm.Collection();
@@ -49,6 +50,30 @@ jsonOdm.Query.prototype.$testCollection = function (comparables,collectionTest) 
     return this;
 };
 
+/**
+ * Test a collection or colection field against one or more values
+ * @param {jsonOdm.Query[]} queries A finite number of operators
+ * @param {function} operator the test function to evaluate the values
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$binaryOperator = function (queries,operator) {
+    var $testCollection = (function (queries,oprator) {
+        return function (collection) {
+            if(typeof oprator != "function") return false;
+            var commandResults = [];
+            for(var i = 0; i < queries.length; i++){
+                for(var j = 0; j < queries[i].$$commandQueue.length; j++){
+                    commandResults.push(queries[i].$$commandQueue[j](collection));
+                }
+            }
+            return operator(commandResults);
+        }
+    })(queries,operator);
+    var subQuery = new jsonOdm.Query(this.$$collection);
+    subQuery.$$commandQueue.push($testCollection);
+    return subQuery;
+};
+
 /** Go down the property tree of the collection
  * @param {...String} node A variable amount of nodes to traverse down the document tree
  * @return {jsonOdm.Query}
@@ -63,8 +88,9 @@ jsonOdm.Query.prototype.$branch = function (node) {
             return jsonOdm.util.branch(collection,nodes);
         };
     })(arguments);
-    this.$$commandQueue.push($branch);
-    return this;
+    var subQuery = new jsonOdm.Query(this.$$collection);
+    subQuery.$$commandQueue.push($branch);
+    return subQuery;
 };
 
 /**
@@ -85,6 +111,36 @@ jsonOdm.Query.prototype.$eq = function (comparable) {
 jsonOdm.Query.prototype.$notEq = function (comparable) {
     return this.$testCollection(arguments, function (collectionValue, possibleValues) {
         return Array.prototype.indexOf.call(possibleValues,collectionValue) == -1;
+    });
+};
+
+/** Compairs result queries with the booleand and
+ *
+ * @param {...jsonOdm.Query} queries A finite number of operators
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$and = function (queries) {
+    // TODO optimize with generators to only query paths that are needed
+    return this.$binaryOperator(arguments, function (queryResults) {
+        for(var i = 0; i < queryResults.length; i++){
+            if(!queryResults[i]) return false;
+        }
+        return true;
+    });
+};
+
+/** Compairs result queries with the boolean or
+ *
+ * @param {...jsonOdm.Query} queries A finite number of operators
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$or = function (queries) {
+    // TODO optimize with generators to only query paths that are needed
+    return this.$binaryOperator(arguments, function (queryResults) {
+        for(var i = 0; i < queryResults.length; i++){
+            if(queryResults[i]) return true;
+        }
+        return false;
     });
 };
 
