@@ -1,11 +1,19 @@
+"use strict";
+
 jsonOdm.Collection = function (collectionName) {
     var self = Object.create( Array.prototype );
     self = (Array.apply( self, Array.prototype.slice.call( arguments, 1 ) ) || self);
 
-    if(jsonOdm.selectedSource && jsonOdm.selectedSource[collectionName]){
+    if(typeof collectionName != "undefined" && jsonOdm.selectedSource && jsonOdm.selectedSource[collectionName]){
         self = self.concat(jsonOdm.selectedSource[collectionName]);
-        jsonOdm.Collection.decorate(self);
     }
+    jsonOdm.Collection.decorate(self);
+
+    self.$branch = function () {
+        var subCollection = jsonOdm.util.branch(self,arguments);
+        jsonOdm.Collection.decorate(subCollection);
+        return subCollection;
+    };
 
     return self;
 };
@@ -49,6 +57,7 @@ jsonOdm.Collection.decorate = function (collection) {
                     }
                 }
             };
+
             collection.$hasOne = function (foreignKey, privateKeyField, childCollectionName, alias) {
                 // SET THE ALIAS
                 if (typeof childCollectionName == "string") alias = alias || childCollectionName;
@@ -75,14 +84,9 @@ jsonOdm.Collection.decorate = function (collection) {
                 }
             };
 
-            for(var i = 0; i < collection.length; i++){
-                var keys = jsonOdm.util.objectKeys(collection[i]);
-                for(var j = 0; j < keys.length; j++){
-                    if(typeof collection[i][keys[j]].$hasMany == "undefined"){
-                        decorate(collection[i][keys[j]]);
-                    }
-                }
-            }
+            collection.$query = function(){
+                return new jsonOdm.Query(collection);
+            };
         }
     };
 

@@ -1,7 +1,6 @@
 CollectionTest = TestCase("CollectionTest");
 
-jsonOdm.addSource("test",
-    {
+var testSource = {
         "testCollection":[
             {name:"Mustermann"},
             {name:"Musterfrau"}
@@ -17,8 +16,15 @@ jsonOdm.addSource("test",
         "foreignCollection":[
             {id:1,foreignName:"Mustermann"},
             {id:2,foreignName:"Musterfrau"}
-        ]
-    },true);
+        ],
+        "aLot":[]
+    };
+for(var i = 0; i < 10000; i++){
+    testSource.aLot.push({
+        id:i,name:'Richi'+i
+    })
+}
+jsonOdm.addSource("test",testSource,true);
 
 CollectionTest.prototype.testArrayInheritance = function () {
     var collection = new jsonOdm.Collection("testCollection");
@@ -35,5 +41,14 @@ CollectionTest.prototype.testCollectionDecoration = function () {
    var collection = new jsonOdm.Collection("parentCollection");
     assertNotUndefined("Should be decorated",collection.$hasMany);
     assertFunction("Should be a function",collection.$hasMany);
-    assertFunction("Should be a function",collection[0].childCollection.$hasMany);
+    assertFunction("Should be a function",collection.$branch(0,'childCollection').$hasMany);
+};
+
+CollectionTest.prototype.testSimpleQuery = function () {
+    var collection = new jsonOdm.Collection("testCollection");
+    assertEquals("Simple Query","Mustermann",collection.$query().$branch("name").$eq("Mustermann").$first().name);
+    assertEquals("Simple Query","Musterfrau",collection.$query().$branch("name").$eq("Musterfrau").$all()[0].name);
+
+    collection = new jsonOdm.Collection("aLot");
+    assertEquals("Simple Query","Richi400",collection.$query().$branch("name").$eq("Richi199","Richi400").$all()[1].name);
 };

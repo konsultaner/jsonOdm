@@ -6,7 +6,18 @@ jsonOdm.util = {
         }
         return Array.isArray(arrayObject);
     },
-    objectKeys : Object.keys
+    objectKeys : Object.keys,
+    branch : function(object,path){
+        function goDown() {
+            if(arguments && arguments.length && this){
+                var subCollection = this[arguments[0]];
+                if(!subCollection) return false;
+                return goDown.apply(subCollection,Array.prototype.slice.call( arguments, 1 ));
+            }
+            return this
+        }
+        return goDown.apply(object,path);
+    }
 };
 
 if (!Object.keys) {
