@@ -253,10 +253,6 @@ jsonOdm.Query.prototype.$binaryOperator = function (queries,operator) {
  */
 jsonOdm.Query.prototype.$branch = function (node) {
     var $branch = (function(nodes){
-        /**
-         * @param {*} The collection to go down
-         * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
-         */
         return function(collection){
             return jsonOdm.util.branch(collection,nodes);
         };

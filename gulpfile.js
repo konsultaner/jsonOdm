@@ -7,13 +7,11 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify');
 
 gulp
-    .task('default', ['build','doc'] ,function () {
-
-    })
+    .task('default', ['build','doc'] ,function () {})
     .task('build', function() {
         return gulp.src(['./src/odm.js', './src/util.js', './src/collection.js', './src/query.js'])
             .pipe(filesize())
-            .pipe(concat('json.odm.js'))
+            .pipe(concat('json.odm.min.js'))
             .pipe(uglify())
             .pipe(filesize())
             .pipe(gulp.dest('./bin/')
