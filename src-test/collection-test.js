@@ -55,7 +55,9 @@ CollectionTest.prototype.testCollectionDecoration = function () {
 CollectionTest.prototype.testSimpleQuery = function () {
     var collection = new jsonOdm.Collection("testCollection");
     assertEquals("Simple Query","Mustermann",collection.$query().$branch("name").$eq("Mustermann").$first().name);
+    assertEquals("Simple Query","Mustermann",collection.$query().$branch("name").$notEq("Musterfrau").$first().name);
     assertEquals("Simple Query","Musterfrau",collection.$query().$branch("name").$eq("Musterfrau").$all()[0].name);
+    assertEquals("No Result",0, collection.$query().$branch("name").$eq("Jack").$all().length);
 
     collection = new jsonOdm.Collection("aLot");
     assertEquals("Simple Query","Richi400",collection.$query().$branch("name").$eq("Richi199","Richi400").$all()[1].name);
@@ -68,7 +70,6 @@ CollectionTest.prototype.testSimpleQuery = function () {
     assertEquals("The first one should be Richi199",199,subCollection[0].id);
     assertEquals("The second one should be Richi400",400,subCollection[1].id);
 
-    q = collection.$query();
     subCollection = q.$and(
         q.$branch("name").$eq("Richi401"),
         q.$branch("id").$eq(401)
@@ -76,7 +77,6 @@ CollectionTest.prototype.testSimpleQuery = function () {
     assertEquals("Should have 1 entry",1,subCollection.length);
     assertEquals("The first one should be Richi401",401,subCollection[0].id);
 
-    q = collection.$query();
     subCollection = q.$or(
         q.$and(
             q.$branch("name").$eq("Richi401"),
