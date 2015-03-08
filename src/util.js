@@ -26,7 +26,7 @@ jsonOdm.util = {
         function goDown() {
             if(arguments && arguments.length && this){
                 var subCollection = this[arguments[0]];
-                if(!subCollection) return false;
+                if(!subCollection) return subCollection;
                 return goDown.apply(subCollection,Array.prototype.slice.call( arguments, 1 ));
             }
             return this

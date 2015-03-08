@@ -4,8 +4,8 @@ var CollectionTest = TestCase("CollectionTest");
 
 var testSource = {
         "testCollection":[
-            {id:1,name:"Mustermann"},
-            {id:2,name:"Musterfrau"}
+            {id:1,name:"Mustermann",firstName:"Tom"},
+            {id:2,name:"Musterfrau",firstName:null}
         ],
         "parentCollection":[
             {
@@ -60,6 +60,8 @@ CollectionTest.prototype.testSimpleQuery = function () {
     assertEquals("test greater then or equal",2,collection.$query().$branch("id").$gte(1).$all().length);
     assertEquals("test less then","Mustermann",collection.$query().$branch("id").$lte(2).$first().name);
     assertEquals("test less then or equal",2,collection.$query().$branch("id").$lte(2).$all().length);
+    assertEquals("test is null",1,collection.$query().$branch("firstName").$isNull().$all().length);
+    assertEquals("test is undefined",2,collection.$query().$branch("middleName").$isNull().$all().length);
     assertEquals("No Result",0, collection.$query().$branch("name").$eq("Jack").$all().length);
 
     collection = new jsonOdm.Collection("aLot");

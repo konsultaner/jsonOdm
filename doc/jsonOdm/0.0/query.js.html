@@ -339,6 +339,17 @@ jsonOdm.Query.prototype.$lte = function (comparable) {
 };
 
 /**
+ * Compares the current sub collection value to be null or undefined
+ * like this $isNull() field value is null or undefined
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$isNull = function () {
+    return this.$testCollection(null, function (collectionValue) {
+        return typeof collectionValue == 'undefined' || collectionValue === null;
+    });
+};
+
+/**
  * Compairs result queries with the booleand and
  * @param {...jsonOdm.Query} queries A finite number of operators
  * @return {jsonOdm.Query}
