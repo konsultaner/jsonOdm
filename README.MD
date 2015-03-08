@@ -8,7 +8,7 @@ Road map
 
 - Implement all comparison and projection methods from [mongo db](http://docs.mongodb.org/manual/reference/operator/query/)
 - Support Promise/A+ sources for the odm.addSource
-- Full CRUD support
+- Full CRUD support CRD is done so far
 - Aggregation
 
 Example

@@ -22,7 +22,7 @@ var testSource = {
         ],
         "aLot":[]
     };
-for(var i = 0; i < 10000; i++){
+for(var i = 1; i < 10000; i++){
     testSource.aLot.push({
         id:i,name:'Richi'+i
     })
@@ -52,7 +52,7 @@ CollectionTest.prototype.testCollectionDecoration = function () {
     assertEquals("Should have collection extended",collection[0].onOfALotId,collection[0].onOfALot.id);
 };
 
-CollectionTest.prototype.testSimpleQuery = function () {
+CollectionTest.prototype.testQuery = function () {
     var collection = new jsonOdm.Collection("testCollection");
     assertEquals("test the equality","Mustermann",collection.$query().$branch("name").$eq("Mustermann").$first().name);
     assertEquals("test the not equality","Mustermann",collection.$query().$branch("name").$notEq("Musterfrau").$first().name);
@@ -95,4 +95,10 @@ CollectionTest.prototype.testSimpleQuery = function () {
     assertEquals("Should have 2 sub entries",2,subCollection.length);
     assertEquals("The first one should be Richi401",401,subCollection[0].id);
     assertEquals("The second one should be Richi1002",1002,subCollection[1].id);
+};
+
+CollectionTest.prototype.testDelete = function () {
+    var collection = new jsonOdm.Collection("aLot");
+    collection.$query().$branch("id").$gt(500).$delete();
+    assertEquals("Deleted all entries that have id > 500",500,collection.length);
 };

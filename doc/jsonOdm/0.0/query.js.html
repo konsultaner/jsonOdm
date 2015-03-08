@@ -181,27 +181,59 @@
 jsonOdm.Query = function (collection) {
     this.$$commandQueue = [];
     this.$$collection = collection;
-    this.$all = function (first) {
-        if(this.$$commandQueue.length &lt; 1) return collection;
-        var filterCollection = new jsonOdm.Collection();
-        for(var i = 0; i &lt; collection.length; i++){
-            var validCollection = true;
-            for(var j = 0; j &lt; this.$$commandQueue.length; j++){
-                if(!(validCollection = validCollection &amp;&amp; this.$$commandQueue[j](collection[i]))){
-                    break;
-                }
-            }
-            if(validCollection){
-                if(first) return collection[i];
-                filterCollection.push(collection[i]);
+};
+
+/**
+ * Returns a collection containing all matching elements
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$delete = function () {
+    if(this.$$commandQueue.length &lt; 1) return this;
+    for(var i = 0; i &lt; this.$$collection.length;){
+        var validCollection = true;
+        for(var j = 0; j &lt; this.$$commandQueue.length; j++){
+            if(!(validCollection = validCollection &amp;&amp; this.$$commandQueue[j](this.$$collection[i]))){
+                break;
             }
         }
-        return filterCollection;
-    };
-    this.$first = function () {
-        return this.$all(true);
+        if(validCollection){
+            this.$$collection.splice(i,1);
+        }else{
+            i++
+        }
     }
+    return this;
+};
 
+/**
+ * Returns a collection containing all matching elements
+ * @param {boolean} [first] only return the first element, used by jsonOdm.Query.prototype.$first
+ * @return {jsonOdm.Collection}
+ */
+jsonOdm.Query.prototype.$all = function (first) {
+    if(this.$$commandQueue.length &lt; 1) return this.$$collection;
+    var filterCollection = new jsonOdm.Collection();
+    for(var i = 0; i &lt; this.$$collection.length; i++){
+        var validCollection = true;
+        for(var j = 0; j &lt; this.$$commandQueue.length; j++){
+            if(!(validCollection = validCollection &amp;&amp; this.$$commandQueue[j](this.$$collection[i]))){
+                break;
+            }
+        }
+        if(validCollection){
+            if(first) return this.$$collection[i];
+            filterCollection.push(this.$$collection[i]);
+        }
+    }
+    return filterCollection;
+};
+
+/**
+ * Short hand version for $all(true)
+ * @return {jsonOdm.Collection}
+ */
+jsonOdm.Query.prototype.$first = function () {
+    return this.$all(true);
 };
 
 /**
@@ -253,6 +285,10 @@ jsonOdm.Query.prototype.$binaryOperator = function (queries,operator) {
  */
 jsonOdm.Query.prototype.$branch = function (node) {
     var $branch = (function(nodes){
+        /**
+         * @param {*} The collection to go down
+         * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
+         */
         return function(collection){
             return jsonOdm.util.branch(collection,nodes);
         };

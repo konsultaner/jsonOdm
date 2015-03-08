@@ -18,27 +18,59 @@
 jsonOdm.Query = function (collection) {
     this.$$commandQueue = [];
     this.$$collection = collection;
-    this.$all = function (first) {
-        if(this.$$commandQueue.length < 1) return collection;
-        var filterCollection = new jsonOdm.Collection();
-        for(var i = 0; i < collection.length; i++){
-            var validCollection = true;
-            for(var j = 0; j < this.$$commandQueue.length; j++){
-                if(!(validCollection = validCollection && this.$$commandQueue[j](collection[i]))){
-                    break;
-                }
-            }
-            if(validCollection){
-                if(first) return collection[i];
-                filterCollection.push(collection[i]);
+};
+
+/**
+ * Returns a collection containing all matching elements
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$delete = function () {
+    if(this.$$commandQueue.length < 1) return this;
+    for(var i = 0; i < this.$$collection.length;){
+        var validCollection = true;
+        for(var j = 0; j < this.$$commandQueue.length; j++){
+            if(!(validCollection = validCollection && this.$$commandQueue[j](this.$$collection[i]))){
+                break;
             }
         }
-        return filterCollection;
-    };
-    this.$first = function () {
-        return this.$all(true);
+        if(validCollection){
+            this.$$collection.splice(i,1);
+        }else{
+            i++
+        }
     }
+    return this;
+};
 
+/**
+ * Returns a collection containing all matching elements
+ * @param {boolean} [first] only return the first element, used by jsonOdm.Query.prototype.$first
+ * @return {jsonOdm.Collection}
+ */
+jsonOdm.Query.prototype.$all = function (first) {
+    if(this.$$commandQueue.length < 1) return this.$$collection;
+    var filterCollection = new jsonOdm.Collection();
+    for(var i = 0; i < this.$$collection.length; i++){
+        var validCollection = true;
+        for(var j = 0; j < this.$$commandQueue.length; j++){
+            if(!(validCollection = validCollection && this.$$commandQueue[j](this.$$collection[i]))){
+                break;
+            }
+        }
+        if(validCollection){
+            if(first) return this.$$collection[i];
+            filterCollection.push(this.$$collection[i]);
+        }
+    }
+    return filterCollection;
+};
+
+/**
+ * Short hand version for $all(true)
+ * @return {jsonOdm.Collection}
+ */
+jsonOdm.Query.prototype.$first = function () {
+    return this.$all(true);
 };
 
 /**
