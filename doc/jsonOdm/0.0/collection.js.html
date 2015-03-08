@@ -1,4 +1,167 @@
-"use strict";
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>jsonOdm v0.0.1</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery-2.1.1.min.js"> </script>
+    <script src="scripts/page.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400italic,300,700,600,400' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            jsonOdm v0.0.1
+          </a>
+          <div class="navbar-right">
+            <div class="external-links">
+              <i class="fa fa-github"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="primary-content container-fluid">
+      <div class="row-fluid">
+          <div class="sidenav col-md-3">
+            
+
+
+<div class="module-list">
+  <h3>Modules</h3>
+  <ul class="module-listing">
+  
+    <li data-module-name="jsonOdm" class="collapsed collapsable module-item">
+      <span class="collapsed-status">
+        <i class="expand fa fa-plus-square-o"></i>
+        <i class="collapse fa fa-minus-square-o"></i>
+      </span>
+
+      jsonOdm
+      <ul class="thing-list">
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Collection.html">Collection</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Collection.html#decorate">decorate</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="JsonOdm.html">JsonOdm</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Query.html">Query</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+      </ul>
+    </li>
+  
+  </ul>
+</div>
+
+          </div>
+
+          <div class="col-md-9">
+              
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>"use strict";
 
 /**
  * The Collection class holding the date from the selected data source
@@ -11,7 +174,7 @@ jsonOdm.Collection = function (collectionName) {
     var self = Object.create( Array.prototype );
     self = (Array.apply( self, Array.prototype.slice.call( arguments, 1 ) ) || self);
 
-    if(typeof collectionName != "undefined" && jsonOdm.selectedSource && jsonOdm.selectedSource[collectionName]){
+    if(typeof collectionName != "undefined" &amp;&amp; jsonOdm.selectedSource &amp;&amp; jsonOdm.selectedSource[collectionName]){
         self = self.concat(jsonOdm.selectedSource[collectionName]);
     }
     jsonOdm.Collection.decorate(self);
@@ -46,17 +209,17 @@ jsonOdm.Collection.decorate = function (collection) {
                 if (typeof childCollectionName == "string") alias = alias || childCollectionName;
                 // FIND THE CHILD COLLECTION
                 var childCollection = childCollectionName;
-                if (typeof childCollectionName == "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]){
+                if (typeof childCollectionName == "string" &amp;&amp; jsonOdm.selectedSource &amp;&amp; jsonOdm.selectedSource[childCollectionName]){
                     childCollection = jsonOdm.selectedSource[childCollectionName];
                 }
 
-                for (var c = 0; c < collection.length; c++) {
+                for (var c = 0; c &lt; collection.length; c++) {
                     var foreignKeyMap = foreignKeyMapName;
                     if (collection[c].hasOwnProperty(foreignKeyMapName)) foreignKeyMap = collection[c][foreignKeyMapName];
                     if (typeof collection[c][alias] == "undefined") {
-                        for (var i = 0; foreignKeyMap.length && i < foreignKeyMap.length; i++) {
+                        for (var i = 0; foreignKeyMap.length &amp;&amp; i &lt; foreignKeyMap.length; i++) {
                             var foreignModel = null;
-                            for (var j = 0; j < childCollection.length; j++) {
+                            for (var j = 0; j &lt; childCollection.length; j++) {
                                 if (foreignKeyMap[i] == childCollection[j][privateKeyField]) {
                                     foreignModel = childCollection[j];
                                     break;
@@ -85,15 +248,15 @@ jsonOdm.Collection.decorate = function (collection) {
                 if (typeof childCollectionName == "string") alias = alias || childCollectionName;
                 // FIND THE CHILD COLLECTION
                 var childCollection = childCollectionName;
-                if (typeof childCollectionName == "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]){
+                if (typeof childCollectionName == "string" &amp;&amp; jsonOdm.selectedSource &amp;&amp; jsonOdm.selectedSource[childCollectionName]){
                     childCollection = jsonOdm.selectedSource[childCollectionName];
                 }
 
-                for (var c = 0; c < collection.length; c++) {
+                for (var c = 0; c &lt; collection.length; c++) {
                     if (collection[c].hasOwnProperty(foreignKey)) foreignKey = collection[c][foreignKey];
                     if (typeof collection[c][alias] == "undefined") {
                         var foreignModel = null;
-                        for (var j = 0; j < childCollection.length; j++) {
+                        for (var j = 0; j &lt; childCollection.length; j++) {
                             if (foreignKey == childCollection[j][privateKeyField]) {
                                 foreignModel = childCollection[j];
                                 break;
@@ -119,4 +282,21 @@ jsonOdm.Collection.decorate = function (collection) {
     };
 
     decorate(collection);
-};
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+          </div>
+      </div>
+
+        <br clear="both">
+
+      <footer>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
+</html>

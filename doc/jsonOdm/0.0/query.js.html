@@ -1,4 +1,167 @@
-"use strict";
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>jsonOdm v0.0.1</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery-2.1.1.min.js"> </script>
+    <script src="scripts/page.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400italic,300,700,600,400' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            jsonOdm v0.0.1
+          </a>
+          <div class="navbar-right">
+            <div class="external-links">
+              <i class="fa fa-github"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="primary-content container-fluid">
+      <div class="row-fluid">
+          <div class="sidenav col-md-3">
+            
+
+
+<div class="module-list">
+  <h3>Modules</h3>
+  <ul class="module-listing">
+  
+    <li data-module-name="jsonOdm" class="collapsed collapsable module-item">
+      <span class="collapsed-status">
+        <i class="expand fa fa-plus-square-o"></i>
+        <i class="collapse fa fa-minus-square-o"></i>
+      </span>
+
+      jsonOdm
+      <ul class="thing-list">
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Collection.html">Collection</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Collection.html#decorate">decorate</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="JsonOdm.html">JsonOdm</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Query.html">Query</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+      </ul>
+    </li>
+  
+  </ul>
+</div>
+
+          </div>
+
+          <div class="col-md-9">
+              
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>"use strict";
 
 /**
  * The query object that holds the collection to be queried
@@ -19,12 +182,12 @@ jsonOdm.Query = function (collection) {
     this.$$commandQueue = [];
     this.$$collection = collection;
     this.$all = function (first) {
-        if(this.$$commandQueue.length < 1) return collection;
+        if(this.$$commandQueue.length &lt; 1) return collection;
         var filterCollection = new jsonOdm.Collection();
-        for(var i = 0; i < collection.length; i++){
+        for(var i = 0; i &lt; collection.length; i++){
             var validCollection = true;
-            for(var j = 0; j < this.$$commandQueue.length; j++){
-                if(!(validCollection = validCollection && this.$$commandQueue[j](collection[i]))){
+            for(var j = 0; j &lt; this.$$commandQueue.length; j++){
+                if(!(validCollection = validCollection &amp;&amp; this.$$commandQueue[j](collection[i]))){
                     break;
                 }
             }
@@ -51,7 +214,7 @@ jsonOdm.Query.prototype.$testCollection = function (comparables,collectionTest) 
     var lastCommand = this.$$commandQueue.pop();
     var $testCollection = (function () {
         return function (collection) {
-            if(!((lastCommand instanceof jsonOdm.Collection || typeof lastCommand == "function") && typeof collectionTest == "function")) return false;
+            if(!((lastCommand instanceof jsonOdm.Collection || typeof lastCommand == "function") &amp;&amp; typeof collectionTest == "function")) return false;
             var collectionValue = lastCommand instanceof jsonOdm.Collection?lastCommand:lastCommand(collection);
             return collectionTest(collectionValue,comparables);
         }
@@ -71,8 +234,8 @@ jsonOdm.Query.prototype.$binaryOperator = function (queries,operator) {
         return function (collection) {
             if(typeof oprator != "function") return false;
             var commandResults = [];
-            for(var i = 0; i < queries.length; i++){
-                for(var j = 0; j < queries[i].$$commandQueue.length; j++){
+            for(var i = 0; i &lt; queries.length; i++){
+                for(var j = 0; j &lt; queries[i].$$commandQueue.length; j++){
                     commandResults.push(queries[i].$$commandQueue[j](collection));
                 }
             }
@@ -134,7 +297,7 @@ jsonOdm.Query.prototype.$notEq = function (comparable) {
 jsonOdm.Query.prototype.$and = function (queries) {
     // TODO optimize with generators to only query paths that are needed
     return this.$binaryOperator(arguments, function (queryResults) {
-        for(var i = 0; i < queryResults.length; i++){
+        for(var i = 0; i &lt; queryResults.length; i++){
             if(!queryResults[i]) return false;
         }
         return true;
@@ -149,9 +312,26 @@ jsonOdm.Query.prototype.$and = function (queries) {
 jsonOdm.Query.prototype.$or = function (queries) {
     // TODO optimize with generators to only query paths that are needed
     return this.$binaryOperator(arguments, function (queryResults) {
-        for(var i = 0; i < queryResults.length; i++){
+        for(var i = 0; i &lt; queryResults.length; i++){
             if(queryResults[i]) return true;
         }
         return false;
     });
-};
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+          </div>
+      </div>
+
+        <br clear="both">
+
+      <footer>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
+</html>
