@@ -172,11 +172,15 @@
  * var $q = myCollection.query();
  * $q.$and(
  *    $q.$or(
- *        $q.$branch('children','id').$eq(1,2),
- *        $q.$branch('children').$isNull()
+ *        $q.$branch('child','id').$eq(1,2),
+ *        $q.$branch('child').$isNull()
  *    ),
  *    $q.$each('enabled').$eq(1,true)
  * ).$all();
+ * @example //This example shows how to delete some entries of a collection
+ * var myCollection = new jsonOdm('myCollection');
+ * var $q = myCollection.query();
+ * $q.$branch('child','id').$eq(1,2).$delete();
  */
 jsonOdm.Query = function (collection) {
     this.$$commandQueue = [];
@@ -185,6 +189,11 @@ jsonOdm.Query = function (collection) {
 
 /**
  * Returns a collection containing all matching elements
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * collection.$query()
+ *    .$branch("id").$gt(500)
+ *    .$delete();
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$delete = function () {
@@ -208,6 +217,11 @@ jsonOdm.Query.prototype.$delete = function () {
 /**
  * Returns a collection containing all matching elements
  * @param {boolean} [first] only return the first element, used by jsonOdm.Query.prototype.$first
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * collection.$query()
+ *    .$branch("id").$eq(2,9)
+ *    .$all();
  * @return {jsonOdm.Collection}
  */
 jsonOdm.Query.prototype.$all = function (first) {

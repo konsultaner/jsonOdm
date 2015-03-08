@@ -328,18 +328,23 @@
     
 
     
-        <h4>Example</h4>
+        <h4>Examples</h4>
         
     <pre class="prettyprint"><code>//This example shows how to query a collection
 var myCollection = new jsonOdm('myCollection');
 var $q = myCollection.query();
 $q.$and(
   $q.$or(
-      $q.$branch('children','id').$eq(1,2),
-      $q.$branch('children').$isNull()
+      $q.$branch('child','id').$eq(1,2),
+      $q.$branch('child').$isNull()
   ),
   $q.$each('enabled').$eq(1,true)
 ).$all();</code></pre>
+
+    <pre class="prettyprint"><code>//This example shows how to delete some entries of a collection
+var myCollection = new jsonOdm('myCollection');
+var $q = myCollection.query();
+$q.$branch('child','id').$eq(1,2).$delete();</code></pre>
 
     
 
@@ -883,6 +888,14 @@ boolean
 </div>
 
         
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+collection.$query()
+   .$branch("id").$eq(2,9)
+   .$all();</code></pre>
 
     
 
@@ -1495,6 +1508,14 @@ String
 </div>
 
         
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+collection.$query()
+   .$branch("id").$gt(500)
+   .$delete();</code></pre>
 
     
 
