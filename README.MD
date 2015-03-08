@@ -6,12 +6,17 @@ This Project aims to be provide a json object document mapper.
 Road map
 ----
 
-Implement all comparison and projection methods from [mongo db](http://docs.mongodb.org/manual/reference/operator/query/)
+- Implement all comparison and projection methods from [mongo db](http://docs.mongodb.org/manual/reference/operator/query/)
+- Support Promise/A+ sources for the odm.addSource
+- Full CRUD support
+- Aggregation
 
 Example
 ------
 ```javascript
+// initialize The mapper
 var odm = new jsonOdm();
+// add a source to the mapper
 odm.addSource('people',{
    "Person" : [
        {"id":1,"name":"Richi",jobId:1},
@@ -29,15 +34,18 @@ odm.addSource('people',{
        {"id":4,"name":"hairdresser"}
    ]
 });
+// instantiate a collection object
 var people = new jsonOdm.Collection('Person');
 people.$hasOne("jobId","id","Jobs","job");
 var q = people.query();
-// get all hairdresser
+// get all hairdresser and plumber
 var hairdresser = q.$or(
+   q.$branch("jobId").$eq(1)
    q.$branch("jobId").$eq(4)
 ).$all();
-// get all but hairdressers
-var hairdresser = q.$or(
+// get all but hairdressers and plumbers
+var hairdresser = q.$and(
+   q.$branch("jobId").$notEq(1)
    q.$branch("jobId").$notEq(4)
 ).$all();
 ```
