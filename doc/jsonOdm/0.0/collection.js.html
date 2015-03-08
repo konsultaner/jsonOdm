@@ -197,9 +197,9 @@ jsonOdm.Collection.decorate = function (collection) {
         if(jsonOdm.util.isArray(collection)) {
             /**
              * Creates a has many relation to another collection
-             * @param {*|String} foreignKeyMapName
-             * @param {int|String} privateKeyField
-             * @param {*|String} childCollectionName
+             * @param {Array|String} foreignKeyMapName The name of the field that holds an array of foreign keys
+             * @param {int|String} privateKeyField The private key of the foreign collection objects
+             * @param {jsonOdm.Collection|String} childCollectionName The child collection that belongs to the foreign keys
              * @param {String} [alias] The new field that will carry all connected data. This field must not exist before setting the relation
              * @memberof jsonOdm.Collection.prototype
              * @method $hasMany
@@ -236,10 +236,10 @@ jsonOdm.Collection.decorate = function (collection) {
 
             /**
              * Creates a has many relation to another collection
-             * @param {String} foreignKey
-             * @param {int|String} privateKeyField
-             * @param {String} childCollectionName
-             * @param {String} alias
+             * @param {String} foreignKey The name of the field holding a foreign key
+             * @param {int|String} privateKeyField The name of the private key field
+             * @param {jsonOdm.Collection|String} childCollectionName The child collection that belongs to the foreign keys
+             * @param {String} alias  The new field that will carry the connected data.
              * @memberof jsonOdm.Collection.prototype
              * @method $hasOne
              */
@@ -271,7 +271,7 @@ jsonOdm.Collection.decorate = function (collection) {
 
             /**
              * Creates a query object filled with the right collection data
-             * @return {jsonOdm.Query}
+             * @return {jsonOdm.Query} A new query object
              * @memberof jsonOdm.Collection.prototype
              * @method $query
              */
