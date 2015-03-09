@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     jsdoc = require("gulp-jsdoc"),
     concat = require('gulp-concat'),
     filesize = require('gulp-filesize'),
+    bench = require('gulp-bench'),
     uglify = require('gulp-uglify');
 
 gulp
@@ -29,4 +30,9 @@ gulp
                     path: './node_modules/jsdoc3-bootstrap'
                 })
             );
+    })
+    .task('bench', function () {
+        return gulp.src('./bench/*.js', {read: false})
+            .pipe(bench())
+            .pipe(gulp.dest('./doc/bench/'));  /* writes a results file to current folder */
     });
