@@ -8,7 +8,7 @@
     "suite": "Query benchmarks"
   },
   {
-    "name": "Komplex Query all 500000 Elements",
+    "name": "Complex Query all 500000 Elements",
     "timestamp": "Mon Mar 09 2015 11:07:58 GMT+0100 (Mitteleuropäische Zeit)",
     "count": 1,
     "cycles": 1,

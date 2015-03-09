@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>jsonOdm v0.0.1</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery-2.1.1.min.js"> </script>
+    <script src="scripts/page.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400italic,300,700,600,400' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            jsonOdm v0.0.1
+          </a>
+          <div class="navbar-right">
+            <div class="external-links">
+              <i class="fa fa-github"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="primary-content container-fluid">
+      <div class="row-fluid">
+          <div class="sidenav col-md-3">
+            
+
+
+<div class="module-list">
+  <h3>Modules</h3>
+  <ul class="module-listing">
+  
+    <li data-module-name="jsonOdm" class="collapsed collapsable module-item">
+      <span class="collapsed-status">
+        <i class="expand fa fa-plus-square-o"></i>
+        <i class="collapse fa fa-minus-square-o"></i>
+      </span>
+
+      jsonOdm
+      <ul class="thing-list">
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="root.jsonOdm.Collection.html">Collection</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="root.jsonOdm.Collection.html#decorate">decorate</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="JsonOdm.html">JsonOdm</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="root.jsonOdm.Query.html">Query</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+      </ul>
+    </li>
+  
+  </ul>
+</div>
+
+          </div>
+
+          <div class="col-md-9">
+              
+
+
+
+<section>
+
+<header>
+    <h1 class="page-header">
+      Collection
+    </h1>
+
+    
+      <div title="module name" class="from-module">
+        
+          module:
+        
+        <code class="module-name">
+          jsonOdm
+        </code>
+      </div>
+    
+
+    <!-- dat inline script LOOKN REAL NASTY -->
+    <script>
+      jQuery('[data-module-name="jsonOdm"]').removeClass('collapsed');
+    </script>
+
+    
+</header>
+
+<article>
+    <div class="container-overview hero-unit">
+    
+
+    
+        <ul class="breadcrumb">
+            <li>Extends</li>
+            <li>Array</li>
+        </ul>
+    
+
+    
+
+    
+        
+
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="Collection">
+
+      
+        
+        Constructor
+      
+
+      
+
+      
+
+    </h3>
+
+    
+      <h4>new Collection<span class="signature">(<span class="optional">collectionName</span>)</span><span class="type-signature"> &rarr; {Collection}</span></h4>
+    
+
+    
+
+
+
+    
+
+
+
+
+    
+    <div class="description">
+        <p>
+        The Collection class holding the date from the selected data source
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">collectionName
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+String
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">The name of the selected collection. Leave empty if you want an empty collection but with all methods</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+Collection
+
+
+
+
+
+<span class="param-desc">
+    An array object with some extra methods added to it
+</span>
+
+</div>
+
+        
+
+    
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">
+          
+          Static Methods
+        </h3>
+        <div class="panel panel-default">
+            
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Collection.html#decorate">decorate</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Takes a collection object an appends all methods to it that are needed. This way we can work with a native array as a collection
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+        </div>
+
+    
+
+    
+
+    
+
+    
+
+    <hr>
+
+    <div class="large-listing">
+      
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="decorate">
+
+      
+        decorate<span class="signature">(collection)</span><span class="type-signature"></span><span class="label label-info">static</span> 
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Takes a collection object an appends all methods to it that are needed. This way we can work with a native array as a collection
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">collection
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Collection.html">jsonOdm.Collection</a>
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+      
+    </div>
+
+</article>
+
+</section>
+
+
+
+
+          </div>
+      </div>
+
+        <br clear="both">
+
+      <footer>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
+</html>

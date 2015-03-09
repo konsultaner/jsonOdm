@@ -1,0 +1,3073 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>jsonOdm v0.0.1</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery-2.1.1.min.js"> </script>
+    <script src="scripts/page.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400italic,300,700,600,400' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            jsonOdm v0.0.1
+          </a>
+          <div class="navbar-right">
+            <div class="external-links">
+              <i class="fa fa-github"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="primary-content container-fluid">
+      <div class="row-fluid">
+          <div class="sidenav col-md-3">
+            
+
+
+<div class="module-list">
+  <h3>Modules</h3>
+  <ul class="module-listing">
+  
+    <li data-module-name="jsonOdm" class="collapsed collapsable module-item">
+      <span class="collapsed-status">
+        <i class="expand fa fa-plus-square-o"></i>
+        <i class="collapse fa fa-minus-square-o"></i>
+      </span>
+
+      jsonOdm
+      <ul class="thing-list">
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="root.jsonOdm.Collection.html">Collection</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="root.jsonOdm.Collection.html#decorate">decorate</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="JsonOdm.html">JsonOdm</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="root.jsonOdm.Query.html">Query</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+      </ul>
+    </li>
+  
+  </ul>
+</div>
+
+          </div>
+
+          <div class="col-md-9">
+              
+
+
+
+<section>
+
+<header>
+    <h1 class="page-header">
+      Query
+    </h1>
+
+    
+      <div title="module name" class="from-module">
+        
+          module:
+        
+        <code class="module-name">
+          jsonOdm
+        </code>
+      </div>
+    
+
+    <!-- dat inline script LOOKN REAL NASTY -->
+    <script>
+      jQuery('[data-module-name="jsonOdm"]').removeClass('collapsed');
+    </script>
+
+    
+</header>
+
+<article>
+    <div class="container-overview hero-unit">
+    
+
+    
+
+    
+
+    
+        
+
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="Query">
+
+      
+        
+        Constructor
+      
+
+      
+
+      
+
+    </h3>
+
+    
+      <h4>new Query<span class="signature">(collection)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+    
+
+
+
+
+    
+    <div class="description">
+        <p>
+        The query object that holds the collection to be queried
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">collection
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Collection.html">jsonOdm.Collection</a>
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4>Examples</h4>
+        
+    <pre class="prettyprint"><code>//This example shows how to query a collection
+var myCollection = new jsonOdm('myCollection');
+var $q = myCollection.query();
+$q.$and(
+  $q.$or(
+      $q.$branch('child','id').$eq(1,2),
+      $q.$branch('child').$isNull()
+  ),
+  $q.$each('enabled').$eq(1,true)
+).$all();</code></pre>
+
+    <pre class="prettyprint"><code>//This example shows how to delete some entries of a collection
+var myCollection = new jsonOdm('myCollection');
+var $q = myCollection.query();
+$q.$branch('child','id').$eq(1,2).$delete();</code></pre>
+
+    
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">
+          
+          Methods
+        </h3>
+        <div class="panel panel-default">
+            
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$all">$all</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Returns a collection containing all matching elements
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$and">$and</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compairs result queries with the booleand and
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$binaryOperator">$binaryOperator</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Test a collection or colection field against one or more values
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$branch">$branch</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Go down the property tree of the collection
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$delete">$delete</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Returns a collection containing all matching elements
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$eq">$eq</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares the current sub collection value with the comparable
+like this $eq('1','2','4') so 1 or 2 or 4 are valid fields
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$first">$first</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Short hand version for $all(true)
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$gt">$gt</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares the current sub collection value with the comparable
+like this $gt('1') field values greater then 1 are valid
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$gte">$gte</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares the current sub collection value with the comparable
+like this $gte('1') field values greater then or equal to 1 are valid
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$isNull">$isNull</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares the current sub collection value to be null or undefined
+like this $isNull() field value is null or undefined
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$lt">$lt</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares the current sub collection value with the comparable
+like this $lt('1') field values less then 1 are valid
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$lte">$lte</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares the current sub collection value with the comparable
+like this $lte('1') field values less then or equal to 1 are valid
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$notEq">$notEq</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares the current sub collection value with the comparable
+like this $notEq('1','2','4') so 1 or 2 or 4 are not valid fields
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$or">$or</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compairs result queries with the boolean or
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="root.jsonOdm.Query.html#$testCollection">$testCollection</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Test a collection or colection field against one or more values
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+        </div>
+
+    
+
+    
+
+    <hr>
+
+    <div class="large-listing">
+      
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$all">
+
+      
+        $all<span class="signature">(<span class="optional">first</span>)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Collection.html">jsonOdm.Collection</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Returns a collection containing all matching elements
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">first
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+boolean
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">only return the first element, used by jsonOdm.Query.prototype.$first</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Collection.html">jsonOdm.Collection</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+collection.$query()
+   .$branch("id").$eq(2,9)
+   .$all();</code></pre>
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$and">
+
+      
+        $and<span class="signature">(queries)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compairs result queries with the booleand and
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">queries
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+jsonOdm.Query
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A finite number of operators</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$binaryOperator">
+
+      
+        $binaryOperator<span class="signature">(queries, operator)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Test a collection or colection field against one or more values
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">queries
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+jsonOdm.Query[]
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A finite number of operators</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">operator
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+function
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">the test function to evaluate the values</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$branch">
+
+      
+        $branch<span class="signature">(node)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Go down the property tree of the collection
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">node
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+String
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A variable amount of nodes to traverse down the document tree</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$delete">
+
+      
+        $delete<span class="signature">()</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Returns a collection containing all matching elements
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+collection.$query()
+   .$branch("id").$gt(500)
+   .$delete();</code></pre>
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$eq">
+
+      
+        $eq<span class="signature">(comparable)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares the current sub collection value with the comparable
+like this $eq('1','2','4') so 1 or 2 or 4 are valid fields
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">comparable
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+*
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Values to compare the current field with</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$first">
+
+      
+        $first<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Collection.html">jsonOdm.Collection</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Short hand version for $all(true)
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Collection.html">jsonOdm.Collection</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$gt">
+
+      
+        $gt<span class="signature">(comparable)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares the current sub collection value with the comparable
+like this $gt('1') field values greater then 1 are valid
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">comparable
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+*
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Values to compare the current field with</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$gte">
+
+      
+        $gte<span class="signature">(comparable)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares the current sub collection value with the comparable
+like this $gte('1') field values greater then or equal to 1 are valid
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">comparable
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+*
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Values to compare the current field with</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$isNull">
+
+      
+        $isNull<span class="signature">()</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares the current sub collection value to be null or undefined
+like this $isNull() field value is null or undefined
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$lt">
+
+      
+        $lt<span class="signature">(comparable)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares the current sub collection value with the comparable
+like this $lt('1') field values less then 1 are valid
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">comparable
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+*
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Values to compare the current field with</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$lte">
+
+      
+        $lte<span class="signature">(comparable)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares the current sub collection value with the comparable
+like this $lte('1') field values less then or equal to 1 are valid
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">comparable
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+*
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Values to compare the current field with</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$notEq">
+
+      
+        $notEq<span class="signature">(comparable)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares the current sub collection value with the comparable
+like this $notEq('1','2','4') so 1 or 2 or 4 are not valid fields
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">comparable
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+*
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Values to compare the current field with</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$or">
+
+      
+        $or<span class="signature">(queries)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compairs result queries with the boolean or
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">queries
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+jsonOdm.Query
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A finite number of operators</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$testCollection">
+
+      
+        $testCollection<span class="signature">(comparables, collectionTest)</span><span class="type-signature"> &rarr; {jsonOdm.Query}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Test a collection or colection field against one or more values
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">comparables
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array of values to test again</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">collectionTest
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+function
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">the test function to evaluate the values</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+jsonOdm.Query
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+      
+    </div>
+
+</article>
+
+</section>
+
+
+
+
+          </div>
+      </div>
+
+        <br clear="both">
+
+      <footer>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
+</html>

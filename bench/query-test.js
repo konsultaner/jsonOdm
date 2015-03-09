@@ -20,7 +20,7 @@ module.exports = {
             }
         },
         {
-            name: 'Komplex Query all 500000 Elements',
+            name: 'Complex Query all 500000 Elements',
             fn: function() {
                 var $q = bigCollection.$query();
                 $q.$and(
