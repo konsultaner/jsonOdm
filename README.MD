@@ -15,6 +15,24 @@ Road map
 - Full CRUD support CRD is done so far
 - Aggregation
 
+Required NPM-Packages
+---------------------
+
+To build it from source use command ```gulp``` and after adding:
+```bash
+npm install --save-dev gulp
+npm install --save-dev gulp-concat
+npm install --save-dev gulp-filesize
+npm install --save-dev gulp-jsdoc
+npm install --save-dev gulp-uglify
+npm install --save-dev jsdoc3-bootstrap
+```
+
+To execute the benchmark use command ```gulp bench``` after adding:
+```bash
+npm install --save-dev gulp-bench
+```
+
 Example
 ------
 ```javascript

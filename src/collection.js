@@ -9,7 +9,8 @@
  */
 jsonOdm.Collection = function (collectionName) {
     var self = Object.create( Array.prototype );
-    self = (Array.apply( self, Array.prototype.slice.call( arguments, 1 ) ) || self);
+    // calls the constructor of Array
+    self = (Array.apply(self) || self);
 
     if(typeof collectionName != "undefined" && jsonOdm.selectedSource && jsonOdm.selectedSource[collectionName]){
         self = self.concat(jsonOdm.selectedSource[collectionName]);
