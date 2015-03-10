@@ -41,33 +41,46 @@ var odm = new jsonOdm();
 // add a source to the mapper
 odm.addSource('people',{
    "Person" : [
-       {"id":1,"name":"Richi",jobId:1},
-       {"id":2,"name":"Dave",jobId:2},
-       {"id":3,"name":"Tom",jobId:3},
-       {"id":4,"name":"Lisa",jobId:4},
-       {"id":5,"name":"Hanni",jobId:3},
-       {"id":6,"name":"Selma",jobId:3},
-       {"id":7,"name":"Ralf",jobId:1}
+       {"id":1,"name":"Richi",jobId:1,hobbyIds:[1,3,4]},
+       {"id":2,"name":"Dave",jobId:2,hobbyIds:[2,4]},
+       {"id":3,"name":"Tom",jobId:3,hobbyIds:[3,5]},
+       {"id":4,"name":"Lisa",jobId:4,hobbyIds:[1,2,3]},
+       {"id":5,"name":"Hanni",jobId:3,hobbyIds:[1,5]},
+       {"id":6,"name":"Selma",jobId:3,hobbyIds:[1,4]},
+       {"id":7,"name":"Ralf",jobId:1,hobbyIds:[4,3]}
    ],
    "Jobs" : [
        {"id":1,"name":"plumber"},
        {"id":2,"name":"programmer"},
        {"id":3,"name":"chef"},
        {"id":4,"name":"hairdresser"}
+   ],
+   "Hobbies" : [
+       {"id":1,"name":"swimming"},
+       {"id":2,"name":"cycling"},
+       {"id":3,"name":"fishing"},
+       {"id":4,"name":"coding"},
+       {"id":5,"name":"dancing"}
    ]
 });
 // instantiate a collection object
 var people = new jsonOdm.Collection('Person');
 people.$hasOne("jobId","id","Jobs","job");
+people.$hasMany("hobbyIds","id","Hobbies","hobbies");
+
 var q = people.query();
 // get all hairdresser and plumber
 var hairdresser = q.$or(
    q.$branch("jobId").$eq(1)
    q.$branch("jobId").$eq(4)
 ).$all();
+
 // get all but hairdressers and plumbers
 var hairdresser = q.$and(
    q.$branch("jobId").$notEq(1)
    q.$branch("jobId").$notEq(4)
 ).$all();
+
+// delete all plumbers
+q.$branch("job","name").$eq("plumber").$delete();
 ```
