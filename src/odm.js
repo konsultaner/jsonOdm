@@ -37,7 +37,7 @@
  *
  * // get all but hairdressers
  * var hairdresser = q.$or(
- *    q.$branch("jobId").$notEq(4)
+ *    q.$branch("jobId").$ne(4)
  * ).$all();
  *
  */

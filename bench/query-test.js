@@ -27,9 +27,9 @@ module.exports = {
                     $q.$branch("id").$gte(4000),
                     $q.$or(
                         $q.$branch('profession').$eq('plumber','hairdresser'),
-                        $q.$branch('profession').$notEq('sailor','student')
+                        $q.$branch('profession').$ne('sailor','student')
                     ),
-                    $q.$branch("name").$notEq('name49999')
+                    $q.$branch("name").$ne('name49999')
                 ).$all();
                 return;
             }

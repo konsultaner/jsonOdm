@@ -55,7 +55,7 @@ CollectionTest.prototype.testCollectionDecoration = function () {
 CollectionTest.prototype.testQuery = function () {
     var collection = new jsonOdm.Collection("testCollection");
     assertEquals("test the equality","Mustermann",collection.$query().$branch("name").$eq("Mustermann").$first().name);
-    assertEquals("test the not equality","Mustermann",collection.$query().$branch("name").$notEq("Musterfrau").$first().name);
+    assertEquals("test the not equality","Mustermann",collection.$query().$branch("name").$ne("Musterfrau").$first().name);
     assertEquals("test greater then","Musterfrau",collection.$query().$branch("id").$gt(1).$all()[0].name);
     assertEquals("test greater then or equal",2,collection.$query().$branch("id").$gte(1).$all().length);
     assertEquals("test less then","Mustermann",collection.$query().$branch("id").$lte(2).$first().name);

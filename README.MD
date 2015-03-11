@@ -77,8 +77,8 @@ var hairdresser = q.$or(
 
 // get all but hairdressers and plumbers
 var hairdresser = q.$and(
-   q.$branch("jobId").$notEq(1)
-   q.$branch("jobId").$notEq(4)
+   q.$branch("jobId").$ne(1)
+   q.$branch("jobId").$ne(4)
 ).$all();
 
 // delete all plumbers

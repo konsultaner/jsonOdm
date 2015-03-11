@@ -161,14 +161,39 @@ jsonOdm.Query.prototype.$eq = function (comparable) {
     });
 };
 
+
 /**
  * Compares the current sub collection value with the comparable
- * like this $notEq('1','2','4') so 1 or 2 or 4 are not valid fields
+ * like this $in(['1','2','4']) so 1 or 2 or 4 are valid fields
+ * @param {Array} comparable Values to compare the current field with
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$in = function (comparable) {
+    return this.$testCollection(comparable,function (collectionValue, possibleValues) {
+        return Array.prototype.indexOf.call(possibleValues,collectionValue) > -1;
+    });
+};
+
+/**
+ * Compares the current sub collection value with the comparable
+ * like this $ne('1','2','4') so 1 or 2 or 4 are not valid fields
  * @param {...*} comparable Values to compare the current field with
  * @return {jsonOdm.Query}
  */
-jsonOdm.Query.prototype.$notEq = function (comparable) {
+jsonOdm.Query.prototype.$ne = function (comparable) {
     return this.$testCollection(arguments, function (collectionValue, possibleValues) {
+        return Array.prototype.indexOf.call(possibleValues,collectionValue) == -1;
+    });
+};
+
+/**
+ * Compares the current sub collection value with the comparable
+ * like this $nin(['1','2','4']) so 1 or 2 or 4 are not valid fields
+ * @param {Array} comparable Values to compare the current field with
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$nin = function (comparable) {
+    return this.$testCollection(comparable, function (collectionValue, possibleValues) {
         return Array.prototype.indexOf.call(possibleValues,collectionValue) == -1;
     });
 };
