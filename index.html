@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="JSON ODM : A JSON ODM (object document mapper) for JavaScript to use on the server or in the browser.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>JSON ODM</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/richidd/jsonOdm">View on GitHub</a>
+
+          <h1 id="project_title">JSON ODM</h1>
+          <h2 id="project_tagline">A JSON ODM (object document mapper) for JavaScript to use on the server or in the browser.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/richidd/jsonOdm/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/richidd/jsonOdm/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="json-odm" class="anchor" href="#json-odm" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON ODM</h1>
+
+<p>This Project aims to be provide a json object document mapper.
+<strong>Why would I need this?</strong>
+There are many cases where you do not want to have the server query your data. You may also see this mapper as a fancy way to filter your data or prepare a view model.
+The original use case was an <a href="http://ionicframework.com">ionic</a> app that was not interactive so providing a server backend was not needed, but structuring my data
+into joinable collections seemed very helpful.</p>
+
+<h2>
+<a id="road-map" class="anchor" href="#road-map" aria-hidden="true"><span class="octicon octicon-link"></span></a>Road map</h2>
+
+<ul>
+<li>Implement all comparison and projection methods from <a href="http://docs.mongodb.org/manual/reference/operator/query/">mongo db</a>
+</li>
+<li>Support Promise/A+ sources for the odm.addSource</li>
+<li>Full CRUD support CRD is done so far</li>
+<li>Aggregation</li>
+</ul>
+
+<h2>
+<a id="required-npm-packages" class="anchor" href="#required-npm-packages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Required NPM-Packages</h2>
+
+<p>To build it from source use command <code>gulp</code> and after adding:</p>
+
+<div class="highlight highlight-bash"><pre>npm install --save-dev gulp
+npm install --save-dev gulp-concat
+npm install --save-dev gulp-filesize
+npm install --save-dev gulp-jsdoc
+npm install --save-dev gulp-uglify
+npm install --save-dev jsdoc3-bootstrap</pre></div>
+
+<p>To execute the benchmark use command <code>gulp bench</code> after adding:</p>
+
+<div class="highlight highlight-bash"><pre>npm install --save-dev gulp-bench</pre></div>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-c">// initialize The mapper</span>
+<span class="pl-s">var</span> odm <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">jsonOdm</span>();
+<span class="pl-c">// add a source to the mapper</span>
+odm.addSource(<span class="pl-s1"><span class="pl-pds">'</span>people<span class="pl-pds">'</span></span>,{
+   <span class="pl-s1"><span class="pl-pds">"</span>Person<span class="pl-pds">"</span></span> <span class="pl-k">:</span> [
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">1</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>Richi<span class="pl-pds">"</span></span>,jobId<span class="pl-k">:</span><span class="pl-c1">1</span>,hobbyIds<span class="pl-k">:</span>[<span class="pl-c1">1</span>,<span class="pl-c1">3</span>,<span class="pl-c1">4</span>]},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">2</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>Dave<span class="pl-pds">"</span></span>,jobId<span class="pl-k">:</span><span class="pl-c1">2</span>,hobbyIds<span class="pl-k">:</span>[<span class="pl-c1">2</span>,<span class="pl-c1">4</span>]},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">3</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>Tom<span class="pl-pds">"</span></span>,jobId<span class="pl-k">:</span><span class="pl-c1">3</span>,hobbyIds<span class="pl-k">:</span>[<span class="pl-c1">3</span>,<span class="pl-c1">5</span>]},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">4</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>Lisa<span class="pl-pds">"</span></span>,jobId<span class="pl-k">:</span><span class="pl-c1">4</span>,hobbyIds<span class="pl-k">:</span>[<span class="pl-c1">1</span>,<span class="pl-c1">2</span>,<span class="pl-c1">3</span>]},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">5</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>Hanni<span class="pl-pds">"</span></span>,jobId<span class="pl-k">:</span><span class="pl-c1">3</span>,hobbyIds<span class="pl-k">:</span>[<span class="pl-c1">1</span>,<span class="pl-c1">5</span>]},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">6</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>Selma<span class="pl-pds">"</span></span>,jobId<span class="pl-k">:</span><span class="pl-c1">3</span>,hobbyIds<span class="pl-k">:</span>[<span class="pl-c1">1</span>,<span class="pl-c1">4</span>]},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">7</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>Ralf<span class="pl-pds">"</span></span>,jobId<span class="pl-k">:</span><span class="pl-c1">1</span>,hobbyIds<span class="pl-k">:</span>[<span class="pl-c1">4</span>,<span class="pl-c1">3</span>]}
+   ],
+   <span class="pl-s1"><span class="pl-pds">"</span>Jobs<span class="pl-pds">"</span></span> <span class="pl-k">:</span> [
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">1</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>plumber<span class="pl-pds">"</span></span>},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">2</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>programmer<span class="pl-pds">"</span></span>},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">3</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>chef<span class="pl-pds">"</span></span>},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">4</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>hairdresser<span class="pl-pds">"</span></span>}
+   ],
+   <span class="pl-s1"><span class="pl-pds">"</span>Hobbies<span class="pl-pds">"</span></span> <span class="pl-k">:</span> [
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">1</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>swimming<span class="pl-pds">"</span></span>},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">2</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>cycling<span class="pl-pds">"</span></span>},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">3</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>fishing<span class="pl-pds">"</span></span>},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">4</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>coding<span class="pl-pds">"</span></span>},
+       {<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">5</span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">"</span>dancing<span class="pl-pds">"</span></span>}
+   ]
+});
+<span class="pl-c">// instantiate a collection object</span>
+<span class="pl-s">var</span> people <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">jsonOdm.Collection</span>(<span class="pl-s1"><span class="pl-pds">'</span>Person<span class="pl-pds">'</span></span>);
+people.$hasOne(<span class="pl-s1"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Jobs<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>job<span class="pl-pds">"</span></span>);
+people.$hasMany(<span class="pl-s1"><span class="pl-pds">"</span>hobbyIds<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>Hobbies<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>hobbies<span class="pl-pds">"</span></span>);
+
+<span class="pl-s">var</span> q <span class="pl-k">=</span> people.query();
+<span class="pl-c">// get all hairdresser and plumber</span>
+<span class="pl-s">var</span> hairdresser <span class="pl-k">=</span> q.$or(
+   q.$branch(<span class="pl-s1"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$eq(<span class="pl-c1">1</span>)
+   q.$branch(<span class="pl-s1"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$eq(<span class="pl-c1">4</span>)
+).$all();
+
+<span class="pl-c">// get all but hairdressers and plumbers</span>
+<span class="pl-s">var</span> hairdresser <span class="pl-k">=</span> q.$and(
+   q.$branch(<span class="pl-s1"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$notEq(<span class="pl-c1">1</span>)
+   q.$branch(<span class="pl-s1"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$notEq(<span class="pl-c1">4</span>)
+).$all();
+
+<span class="pl-c">// delete all plumbers</span>
+q.$branch(<span class="pl-s1"><span class="pl-pds">"</span>job<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>).$eq(<span class="pl-s1"><span class="pl-pds">"</span>plumber<span class="pl-pds">"</span></span>).$<span class="pl-k">delete</span>();</pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">JSON ODM maintained by <a href="https://github.com/richidd">richidd</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
