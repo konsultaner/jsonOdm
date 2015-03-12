@@ -91,11 +91,12 @@ jsonOdm.Collection.decorate = function (collection) {
                 }
 
                 for (var c = 0; c < collection.length; c++) {
-                    if (collection[c].hasOwnProperty(foreignKey)) foreignKey = collection[c][foreignKey];
+                    var foreignKeyValue;
+                    if (collection[c].hasOwnProperty(foreignKey)) foreignKeyValue = collection[c][foreignKey];
                     if (typeof collection[c][alias] == "undefined") {
                         var foreignModel = null;
                         for (var j = 0; j < childCollection.length; j++) {
-                            if (foreignKey == childCollection[j][privateKeyField]) {
+                            if (foreignKeyValue == childCollection[j][privateKeyField]) {
                                 foreignModel = childCollection[j];
                                 break;
                             }

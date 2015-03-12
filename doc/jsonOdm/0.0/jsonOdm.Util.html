@@ -232,7 +232,7 @@
 
 <header>
     <h1 class="page-header">
-      Collection
+      Util
     </h1>
 
     
@@ -259,11 +259,6 @@
     
 
     
-        <ul class="breadcrumb">
-            <li>Extends</li>
-            <li>Array</li>
-        </ul>
-    
 
     
 
@@ -275,7 +270,7 @@
     <h3 class="
         subsection-title name
         
-      " id="Collection">
+      " id="Util">
 
       
         
@@ -289,7 +284,7 @@
     </h3>
 
     
-      <h4>new Collection<span class="signature">(<span class="optional">collectionName</span>)</span><span class="type-signature"> &rarr; {Collection}</span></h4>
+      <h4>new Util<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -304,7 +299,7 @@
     
     <div class="description">
         <p>
-        The Collection class holding the date from the selected data source
+        The Utility Class that provides some useful methods used throughout the ODM
         </p>
     </div>
     
@@ -312,56 +307,6 @@
     
 
     
-
-    
-        <h4>Parameters</h4>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-        <tr>
-                
-                <th>Name</th>
-                
-
-                <th>Type</th>
-
-                
-
-                <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-        <tr>
-            
-                <td class="name">collectionName
-                  
-                    <i title="optional parameter" class="fa fa-question-circle"></i>
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-String
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">The name of the selected collection. Leave empty if you want an empty collection but with all methods</td>
-        </tr>
-
-        
-        </tbody>
-</table>
 
     
 
@@ -402,25 +347,6 @@ String
     
 
     
-    <h4>Returns</h4>
-    
-            <div class="returns">
-
-
-    
-Collection
-
-
-
-
-
-<span class="param-desc">
-    An array object with some extra methods added to it
-</span>
-
-</div>
-
-        
 
     
 
@@ -440,9 +366,11 @@ Collection
     
 
     
+
+    
         <h3 class="subsection-title">
           
-          Static Methods
+          Members
         </h3>
         <div class="panel panel-default">
             
@@ -461,7 +389,7 @@ Collection
         <tr>
             <td class="name">
               
-              <a href="jsonOdm.Collection.html#decorate">decorate</a>
+              <a href="jsonOdm.Util.html#objectKeys">objectKeys</a>
 
               
               
@@ -469,7 +397,7 @@ Collection
             </td>
             <td class="description">
                 
-                    Takes a collection object an appends all methods to it that are needed. This way we can work with a native array as a collection
+                    Get only the keys of an object
                 
 
                 
@@ -483,8 +411,6 @@ Collection
 </table>
 
         </div>
-
-    
 
     
 
@@ -510,7 +436,7 @@ Collection
         <tr>
             <td class="name">
               
-              <a href="jsonOdm.Collection.html#$hasMany">$hasMany</a>
+              <a href="jsonOdm.Util.html#branch">branch</a>
 
               
               
@@ -518,7 +444,7 @@ Collection
             </td>
             <td class="description">
                 
-                    Creates a has many relation to another collection
+                    Query an object with a function
                 
 
                 
@@ -532,7 +458,7 @@ Collection
         <tr>
             <td class="name">
               
-              <a href="jsonOdm.Collection.html#$hasOne">$hasOne</a>
+              <a href="jsonOdm.Util.html#isArray">isArray</a>
 
               
               
@@ -540,29 +466,7 @@ Collection
             </td>
             <td class="description">
                 
-                    Creates a has many relation to another collection
-                
-
-                
-
-
-            </td>
-        </tr>
-
-        
-
-        <tr>
-            <td class="name">
-              
-              <a href="jsonOdm.Collection.html#$query">$query</a>
-
-              
-              
-              
-            </td>
-            <td class="description">
-                
-                    Creates a query object filled with the right collection data
+                    Checks the input parameter and returns true if it is an array
                 
 
                 
@@ -596,10 +500,10 @@ Collection
     <h3 class="
         subsection-title name
         
-      " id="decorate">
+      " id="branch">
 
       
-        decorate<span class="signature">(collection)</span><span class="type-signature"></span><span class="label label-info">static</span> 
+        branch<span class="signature">(object, path)</span><span class="type-signature"> &rarr; {*}</span>
       
 
       
@@ -625,7 +529,7 @@ Collection
     
     <div class="description">
         <p>
-        Takes a collection object an appends all methods to it that are needed. This way we can work with a native array as a collection
+        Query an object with a function
         </p>
     </div>
     
@@ -658,7 +562,7 @@ Collection
 
         <tr>
             
-                <td class="name">collection
+                <td class="name">object
                   
                 </td>
             
@@ -666,7 +570,34 @@ Collection
             <td class="type">
             
                 
-<a href="jsonOdm.Collection.html">jsonOdm.Collection</a>
+Object
+|
+
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">path
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+String
 
 
 
@@ -721,6 +652,21 @@ Collection
     
 
     
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+*
+
+
+
+
+
+</div>
+
+        
 
     
 
@@ -740,10 +686,10 @@ Collection
     <h3 class="
         subsection-title name
         
-      " id="$hasMany">
+      " id="isArray">
 
       
-        $hasMany<span class="signature">(foreignKeyMapName, privateKeyField, childCollectionName, <span class="optional">alias</span>)</span><span class="type-signature"></span>
+        isArray<span class="signature">(arrayObject)</span><span class="type-signature"> &rarr; {boolean}</span>
       
 
       
@@ -769,7 +715,7 @@ Collection
     
     <div class="description">
         <p>
-        Creates a has many relation to another collection
+        Checks the input parameter and returns true if it is an array
         </p>
     </div>
     
@@ -802,7 +748,7 @@ Collection
 
         <tr>
             
-                <td class="name">foreignKeyMapName
+                <td class="name">arrayObject
                   
                 </td>
             
@@ -810,10 +756,7 @@ Collection
             <td class="type">
             
                 
-Array
-|
-
-String
+*
 
 
 
@@ -822,87 +765,7 @@ String
 
             
 
-            <td class="description last">The name of the field that holds an array of foreign keys</td>
-        </tr>
-
-        
-
-        <tr>
-            
-                <td class="name">privateKeyField
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-int
-|
-
-String
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">The private key of the foreign collection objects</td>
-        </tr>
-
-        
-
-        <tr>
-            
-                <td class="name">childCollectionName
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-<a href="jsonOdm.Collection.html">jsonOdm.Collection</a>
-|
-
-String
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">The child collection that belongs to the foreign keys</td>
-        </tr>
-
-        
-
-        <tr>
-            
-                <td class="name">alias
-                  
-                    <i title="optional parameter" class="fa fa-question-circle"></i>
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-String
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">The new field that will carry all connected data. This field must not exist before setting the relation</td>
+            <td class="description last"></td>
         </tr>
 
         
@@ -948,6 +811,21 @@ String
     
 
     
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+boolean
+
+
+
+
+
+</div>
+
+        
 
     
 
@@ -967,10 +845,10 @@ String
     <h3 class="
         subsection-title name
         
-      " id="$hasOne">
+      " id="objectKeys">
 
       
-        $hasOne<span class="signature">(foreignKey, privateKeyField, childCollectionName, alias)</span><span class="type-signature"></span>
+        objectKeys<span class="type-signature"></span>
       
 
       
@@ -996,229 +874,7 @@ String
     
     <div class="description">
         <p>
-        Creates a has many relation to another collection
-        </p>
-    </div>
-    
-
-    
-
-    
-
-    
-        <h4>Parameters</h4>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-        <tr>
-                
-                <th>Name</th>
-                
-
-                <th>Type</th>
-
-                
-
-                <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-        <tr>
-            
-                <td class="name">foreignKey
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-String
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">The name of the field holding a foreign key</td>
-        </tr>
-
-        
-
-        <tr>
-            
-                <td class="name">privateKeyField
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-int
-|
-
-String
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">The name of the private key field</td>
-        </tr>
-
-        
-
-        <tr>
-            
-                <td class="name">childCollectionName
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-<a href="jsonOdm.Collection.html">jsonOdm.Collection</a>
-|
-
-String
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">The child collection that belongs to the foreign keys</td>
-        </tr>
-
-        
-
-        <tr>
-            
-                <td class="name">alias
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-String
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">The new field that will carry the connected data.</td>
-        </tr>
-
-        
-        </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-  </dd>
-</dl>
-
-
-        
-            
-
-
-<dl class="bs-docs-example bs-members">
-  <dt>
-
-
-    <h3 class="
-        subsection-title name
-        
-      " id="$query">
-
-      
-        $query<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
-      
-
-      
-
-      
-
-    </h3>
-
-    
-
-    
-
-
-
-    
-
-
-
-  </dt>
-<dd>
-
-
-    
-    <div class="description">
-        <p>
-        Creates a query object filled with the right collection data
+        Get only the keys of an object
         </p>
     </div>
     
@@ -1272,14 +928,14 @@ String
 
 
     
-<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+Array
 
 
 
 
 
 <span class="param-desc">
-    A new query object
+    An array of keys
 </span>
 
 </div>

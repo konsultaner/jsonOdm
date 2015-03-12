@@ -111,6 +111,50 @@
 
     
 
+    <a href="jsonOdm.Geo.html">Geo</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#pointWithinPolygon">pointWithinPolygon</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
     <a href="JsonOdm.html">JsonOdm</a>
   </li>
 
@@ -137,6 +181,31 @@
     
 
     <a href="jsonOdm.Query.html">Query</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Util.html">Util</a>
   </li>
 
 
@@ -251,7 +320,7 @@ jsonOdm.Query.prototype.$first = function () {
 };
 
 /**
- * Test a collection or colection field against one or more values
+ * Test a collection or collection field against one or more values
  * @param {Array} comparables An array of values to test again
  * @param {function} collectionTest the test function to evaluate the values
  * @return {jsonOdm.Query}
@@ -270,7 +339,7 @@ jsonOdm.Query.prototype.$testCollection = function (comparables,collectionTest) 
 };
 
 /**
- * Test a collection or colection field against one or more values
+ * Test a collection or collection field against one or more values
  * @param {jsonOdm.Query[]} queries A finite number of operators
  * @param {function} operator the test function to evaluate the values
  * @return {jsonOdm.Query}
@@ -326,12 +395,36 @@ jsonOdm.Query.prototype.$eq = function (comparable) {
 
 /**
  * Compares the current sub collection value with the comparable
+ * like this $in(['1','2','4']) so 1 or 2 or 4 are valid fields
+ * @param {Array} comparable Values to compare the current field with
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$in = function (comparable) {
+    return this.$testCollection(comparable,function (collectionValue, possibleValues) {
+        return Array.prototype.indexOf.call(possibleValues,collectionValue) > -1;
+    });
+};
+
+/**
+ * Compares the current sub collection value with the comparable
  * like this $ne('1','2','4') so 1 or 2 or 4 are not valid fields
  * @param {...*} comparable Values to compare the current field with
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$ne = function (comparable) {
     return this.$testCollection(arguments, function (collectionValue, possibleValues) {
+        return Array.prototype.indexOf.call(possibleValues,collectionValue) == -1;
+    });
+};
+
+/**
+ * Compares the current sub collection value with the comparable
+ * like this $nin(['1','2','4']) so 1 or 2 or 4 are not valid fields
+ * @param {Array} comparable Values to compare the current field with
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$nin = function (comparable) {
+    return this.$testCollection(comparable, function (collectionValue, possibleValues) {
         return Array.prototype.indexOf.call(possibleValues,collectionValue) == -1;
     });
 };

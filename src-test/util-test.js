@@ -1,8 +1,8 @@
 "use strict";
 
-var CollectionTest = TestCase("UtilTest");
+var UtilTest = TestCase("UtilTest");
 
-CollectionTest.prototype.testIsArray = function () {
+UtilTest.prototype.testIsArray = function () {
     assertTrue("Should be an array",jsonOdm.util.isArray([]));
     assertFalse("Should not be an array",jsonOdm.util.isArray("a"));
     assertFalse("Should not be an array",jsonOdm.util.isArray(1));
@@ -11,7 +11,7 @@ CollectionTest.prototype.testIsArray = function () {
     assertFalse("Should not be an array",jsonOdm.util.isArray(false));
 };
 
-CollectionTest.prototype.testObjectKeys = function () {
+UtilTest.prototype.testObjectKeys = function () {
     var myObject = {myKey:"myValue"};
     assertEquals("Should have the key","myKey",jsonOdm.util.objectKeys(myObject)[0]);
     assertEquals("Should have the key",1,jsonOdm.util.objectKeys(myObject).length);

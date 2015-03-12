@@ -10,9 +10,16 @@ into joinable collections seemed very helpful.
 Road map
 ----
 
-- Implement all comparison and projection methods from [mongo db](http://docs.mongodb.org/manual/reference/operator/query/)
+- Implement query methods from [mongo db](http://docs.mongodb.org/manual/reference/operator/query/)
+    - Comparison (~~$eq~~,~~$gt~~,~~$gte~~,~~$lt~~,~~$lte~~,~~$ne~~,~~$in~~,~~$nin~~) 100%
+    - Logical (~~$or~~,~~$and~~,$not,$nor) 50%
+    - Element (~~$exists~~,$type) 50% ($isNull needs renaming)
+    - Evaluation ($mod,$regex,$text,$where) 0%
+    - Geospatial ($geoWithin,$geoIntersects,$near,$nearSphere) 5%
+    - Array (~~$all~~,$elementMatch,$size) 33%
+    - Projection Operators ($,$elemMatch,$meta,$slice) 0%
 - Support Promise/A+ sources for the odm.addSource
-- Full CRUD support CRD is done so far
+- Full ~~CR~~U~~D~~ support
 - Aggregation
 
 Required NPM-Packages

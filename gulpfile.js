@@ -10,7 +10,7 @@ var gulp = require('gulp'),
 gulp
     .task('default', ['build','doc'] ,function () {})
     .task('build', function() {
-        return gulp.src(['./src/odm.js', './src/util.js', './src/collection.js', './src/query.js'])
+        return gulp.src(['./src/odm.js', './src/util.js', './src/geo.js', './src/collection.js', './src/query.js'])
             .pipe(filesize())
             .pipe(concat('json.odm.min.js'))
             .pipe(uglify())

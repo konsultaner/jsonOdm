@@ -88,7 +88,7 @@ jsonOdm.Query.prototype.$first = function () {
 };
 
 /**
- * Test a collection or colection field against one or more values
+ * Test a collection or collection field against one or more values
  * @param {Array} comparables An array of values to test again
  * @param {function} collectionTest the test function to evaluate the values
  * @return {jsonOdm.Query}
@@ -107,7 +107,7 @@ jsonOdm.Query.prototype.$testCollection = function (comparables,collectionTest) 
 };
 
 /**
- * Test a collection or colection field against one or more values
+ * Test a collection or collection field against one or more values
  * @param {jsonOdm.Query[]} queries A finite number of operators
  * @param {function} operator the test function to evaluate the values
  * @return {jsonOdm.Query}
@@ -160,7 +160,6 @@ jsonOdm.Query.prototype.$eq = function (comparable) {
         return Array.prototype.indexOf.call(possibleValues,collectionValue) > -1;
     });
 };
-
 
 /**
  * Compares the current sub collection value with the comparable

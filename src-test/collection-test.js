@@ -56,6 +56,8 @@ CollectionTest.prototype.testQuery = function () {
     var collection = new jsonOdm.Collection("testCollection");
     assertEquals("test the equality","Mustermann",collection.$query().$branch("name").$eq("Mustermann").$first().name);
     assertEquals("test the not equality","Mustermann",collection.$query().$branch("name").$ne("Musterfrau").$first().name);
+    assertEquals("test the multiple not equality",0,collection.$query().$branch("name").$nin(["Musterfrau","Mustermann"]).$all().length);
+    assertEquals("test the multiple not equality","Mustermann",collection.$query().$branch("name").$nin(["Musterfrau"]).$first().name);
     assertEquals("test greater then","Musterfrau",collection.$query().$branch("id").$gt(1).$all()[0].name);
     assertEquals("test greater then or equal",2,collection.$query().$branch("id").$gte(1).$all().length);
     assertEquals("test less then","Mustermann",collection.$query().$branch("id").$lte(2).$first().name);
@@ -65,7 +67,8 @@ CollectionTest.prototype.testQuery = function () {
     assertEquals("No Result",0, collection.$query().$branch("name").$eq("Jack").$all().length);
 
     collection = new jsonOdm.Collection("aLot");
-    assertEquals("Simple Query","Richi400",collection.$query().$branch("name").$eq("Richi199","Richi400").$all()[1].name);
+    assertEquals("Test multiple quality","Richi400",collection.$query().$branch("name").$eq("Richi199","Richi400").$all()[1].name);
+    assertEquals("Test multiple quality","Richi400",collection.$query().$branch("name").$in(["Richi199","Richi400"]).$all()[1].name);
     var q = collection.$query();
     var subCollection = q.$or(
         q.$branch("name").$eq("Richi400"),
