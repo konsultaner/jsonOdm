@@ -44,10 +44,20 @@ into joinable collections seemed very helpful.</p>
 <a id="road-map" class="anchor" href="#road-map" aria-hidden="true"><span class="octicon octicon-link"></span></a>Road map</h2>
 
 <ul>
-<li>Implement all comparison and projection methods from <a href="http://docs.mongodb.org/manual/reference/operator/query/">mongo db</a>
+<li>Implement query methods from <a href="http://docs.mongodb.org/manual/reference/operator/query/">mongo db</a>
+
+<ul>
+<li>Comparison (<del>$eq</del>,<del>$gt</del>,<del>$gte</del>,<del>$lt</del>,<del>$lte</del>,<del>$ne</del>,<del>$in</del>,<del>$nin</del>) 100%</li>
+<li>Logical (<del>$or</del>,<del>$and</del>,$not,$nor) 50%</li>
+<li>Element (<del>$exists</del>,$type) 50% ($isNull needs renaming)</li>
+<li>Evaluation ($mod,$regex,$text,$where) 0%</li>
+<li>Geospatial ($geoWithin,$geoIntersects,$near,$nearSphere) 5%</li>
+<li>Array (<del>$all</del>,$elementMatch,$size) 33%</li>
+<li>Projection Operators ($,$elemMatch,$meta,$slice) 0%</li>
+</ul>
 </li>
 <li>Support Promise/A+ sources for the odm.addSource</li>
-<li>Full CRUD support CRD is done so far</li>
+<li>Full <del>CR</del>U<del>D</del> support</li>
 <li>Aggregation</li>
 </ul>
 
@@ -111,8 +121,8 @@ people.$hasMany(<span class="pl-s1"><span class="pl-pds">"</span>hobbyIds<span c
 
 <span class="pl-c">// get all but hairdressers and plumbers</span>
 <span class="pl-s">var</span> hairdresser <span class="pl-k">=</span> q.$and(
-   q.$branch(<span class="pl-s1"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$notEq(<span class="pl-c1">1</span>)
-   q.$branch(<span class="pl-s1"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$notEq(<span class="pl-c1">4</span>)
+   q.$branch(<span class="pl-s1"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$ne(<span class="pl-c1">1</span>)
+   q.$branch(<span class="pl-s1"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$ne(<span class="pl-c1">4</span>)
 ).$all();
 
 <span class="pl-c">// delete all plumbers</span>
