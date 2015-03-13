@@ -1,4 +1,4 @@
-JSON ODM by [Konsultaner](http://www.konsultaner.de), Richard Burkhardt
+JSON ODM v 0.0.1 by [Konsultaner](http://www.konsultaner.de), Richard Burkhardt
 ========
 
 This Project aims to be provide a json object document mapper.  
