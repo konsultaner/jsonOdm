@@ -257,7 +257,7 @@ jsonOdm.Query.prototype.$isNull = function () {
 };
 
 /**
- * Compairs result queries with the booleand and
+ * Compares result queries with the boolean and
  * @param {...jsonOdm.Query} queries A finite number of operators
  * @return {jsonOdm.Query}
  */
@@ -272,7 +272,7 @@ jsonOdm.Query.prototype.$and = function (queries) {
 };
 
 /**
- * Compairs result queries with the boolean or
+ * Compares result queries with the boolean or
  * @param {...jsonOdm.Query} queries A finite number of operators
  * @return {jsonOdm.Query}
  */
@@ -283,5 +283,20 @@ jsonOdm.Query.prototype.$or = function (queries) {
             if(queryResults[i]) return true;
         }
         return false;
+    });
+};
+
+/**
+ * Compares result queries with the boolean nor
+ * @param {...jsonOdm.Query} queries A finite number of operators
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$nor = function (queries) {
+    // TODO optimize with generators to only query paths that are needed
+    return this.$binaryOperator(arguments, function (queryResults) {
+        for(var i = 0; i < queryResults.length; i++){
+            if(queryResults[i]) return false;
+        }
+        return true;
     });
 };

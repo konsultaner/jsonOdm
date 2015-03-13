@@ -488,7 +488,7 @@ $q.$branch('child','id').$eq(1,2).$delete();</code></pre>
             </td>
             <td class="description">
                 
-                    Compairs result queries with the booleand and
+                    Compares result queries with the boolean and
                 
 
                 
@@ -797,6 +797,28 @@ like this $nin(['1','2','4']) so 1 or 2 or 4 are not valid fields
         <tr>
             <td class="name">
               
+              <a href="jsonOdm.Query.html#$nor">$nor</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares result queries with the boolean nor
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
               <a href="jsonOdm.Query.html#$or">$or</a>
 
               
@@ -805,7 +827,7 @@ like this $nin(['1','2','4']) so 1 or 2 or 4 are not valid fields
             </td>
             <td class="description">
                 
-                    Compairs result queries with the boolean or
+                    Compares result queries with the boolean or
                 
 
                 
@@ -1059,7 +1081,7 @@ collection.$query()
     
     <div class="description">
         <p>
-        Compairs result queries with the booleand and
+        Compares result queries with the boolean and
         </p>
     </div>
     
@@ -3153,6 +3175,165 @@ Array
     <h3 class="
         subsection-title name
         
+      " id="$nor">
+
+      
+        $nor<span class="signature">(queries)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares result queries with the boolean nor
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">queries
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A finite number of operators</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
       " id="$or">
 
       
@@ -3182,7 +3363,7 @@ Array
     
     <div class="description">
         <p>
-        Compairs result queries with the boolean or
+        Compares result queries with the boolean or
         </p>
     </div>
     

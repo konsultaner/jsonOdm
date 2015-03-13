@@ -12,7 +12,7 @@ var testSource = {
                 onOfALotId:300,
                 keys:[1,2,3,4],
                 childCollection:[
-                    {id:1},{id:2},{id:3},
+                    {id:1},{id:2},{id:3}
                 ]
             }
         ],
@@ -67,8 +67,9 @@ CollectionTest.prototype.testQuery = function () {
     assertEquals("No Result",0, collection.$query().$branch("name").$eq("Jack").$all().length);
 
     collection = new jsonOdm.Collection("aLot");
-    assertEquals("Test multiple quality","Richi400",collection.$query().$branch("name").$eq("Richi199","Richi400").$all()[1].name);
-    assertEquals("Test multiple quality","Richi400",collection.$query().$branch("name").$in(["Richi199","Richi400"]).$all()[1].name);
+    assertEquals("$lt: Less then test",400,collection.$query().$branch("id").$lt(401).$all().length);
+    assertEquals("$eq: Test multiple quality","Richi400",collection.$query().$branch("name").$eq("Richi199","Richi400").$all()[1].name);
+    assertEquals("$in: Test multiple quality","Richi400",collection.$query().$branch("name").$in(["Richi199","Richi400"]).$all()[1].name);
     var q = collection.$query();
     var subCollection = q.$or(
         q.$branch("name").$eq("Richi400"),
@@ -84,6 +85,16 @@ CollectionTest.prototype.testQuery = function () {
     ).$all();
     assertEquals("Should have 1 entry",1,subCollection.length);
     assertEquals("The first one should be Richi401",401,subCollection[0].id);
+
+    subCollection = q.$nor(
+        q.$branch("id").$gt(600),
+        q.$branch("id").$lt(400),
+        q.$branch("id").$eq(500)
+    ).$all();
+    assertEquals("$nor: Test logical nor",200,subCollection.length);
+    assertEquals("$nor: The first one should be Richi400",400,subCollection[0].id);
+    assertEquals("$nor: The 100 should be Richi 501",501,subCollection[100].id);
+    assertEquals("$nor: The 99 should be Richi 499",499,subCollection[99].id);
 
     subCollection = q.$or(
         q.$and(

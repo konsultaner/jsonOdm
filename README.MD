@@ -1,8 +1,8 @@
-JSON ODM
+JSON ODM by [Konsultaner](http://www.konsultaner.de), Richard Burkhardt
 ========
 
-This Project aims to be provide a json object document mapper.
-**Why would I need this?**
+This Project aims to be provide a json object document mapper.  
+**Why would I need this?**  
 There are many cases where you do not want to have the server query your data. You may also see this mapper as a fancy way to filter your data or prepare a view model.
 The original use case was an [ionic](http://ionicframework.com) app that was not interactive so providing a server backend was not needed, but structuring my data
 into joinable collections seemed very helpful.
@@ -12,7 +12,7 @@ Road map
 
 - Implement query methods from [mongo db](http://docs.mongodb.org/manual/reference/operator/query/)
     - Comparison (~~$eq~~,~~$gt~~,~~$gte~~,~~$lt~~,~~$lte~~,~~$ne~~,~~$in~~,~~$nin~~) 100%
-    - Logical (~~$or~~,~~$and~~,$not,$nor) 50%
+    - Logical (~~$or~~,~~$and~~,$not,~~$nor~~) 75%
     - Element (~~$exists~~,$type) 50% ($isNull needs renaming)
     - Evaluation ($mod,$regex,$text,$where) 0%
     - Geospatial ($geoWithin,$geoIntersects,$near,$nearSphere) 5%

@@ -1,18 +1,26 @@
 [
   {
+    "name": "point in polygon with 756 edges",
+    "timestamp": "Fri Mar 13 2015 11:06:56 GMT+0100 (Mitteleuropäische Zeit)",
+    "count": 13816,
+    "cycles": 5,
+    "hz": 265065.27213631605,
+    "suite": "Geo benchmarks"
+  },
+  {
     "name": "Simple Query all 500000 Elements",
-    "timestamp": "Mon Mar 09 2015 11:07:42 GMT+0100 (Mitteleuropäische Zeit)",
+    "timestamp": "Fri Mar 13 2015 11:07:05 GMT+0100 (Mitteleuropäische Zeit)",
     "count": 1,
     "cycles": 1,
-    "hz": 2.5674484269842406,
+    "hz": 2.524552764547594,
     "suite": "Query benchmarks"
   },
   {
     "name": "Complex Query all 500000 Elements",
-    "timestamp": "Mon Mar 09 2015 11:07:58 GMT+0100 (Mitteleuropäische Zeit)",
+    "timestamp": "Fri Mar 13 2015 11:07:21 GMT+0100 (Mitteleuropäische Zeit)",
     "count": 1,
     "cycles": 1,
-    "hz": 0.9252549300715321,
+    "hz": 0.8493375503384364,
     "suite": "Query benchmarks"
   }
 ]
