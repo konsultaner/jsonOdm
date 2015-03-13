@@ -86,6 +86,13 @@ CollectionTest.prototype.testQuery = function () {
     assertEquals("Should have 1 entry",1,subCollection.length);
     assertEquals("The first one should be Richi401",401,subCollection[0].id);
 
+    subCollection = q.$nand(
+        q.$branch("id").$eq(401),
+        q.$branch("name").$eq("Richi401")
+    ).$all();
+    assertEquals("$nand: Should have 1 entry",collection.length-1,subCollection.length);
+    assertEquals("$nand: sub collection should not have Richi401",0,subCollection.$query().$branch("id").$eq(401).$all().length);
+
     subCollection = q.$nor(
         q.$branch("id").$gt(600),
         q.$branch("id").$lt(400),

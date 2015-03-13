@@ -12,7 +12,7 @@ Road map
 
 - Implement query methods from [mongo db](http://docs.mongodb.org/manual/reference/operator/query/)
     - Comparison (~~$eq~~,~~$gt~~,~~$gte~~,~~$lt~~,~~$lte~~,~~$ne~~,~~$in~~,~~$nin~~) 100%
-    - Logical (~~$or~~,~~$and~~,$not,~~$nor~~) 75%
+    - Logical (~~$or~~,~~$and~~,~~$not(= $nand as alias)~~,~~$nor~~) 100%
     - Element (~~$exists~~,$type) 50% ($isNull needs renaming)
     - Evaluation ($mod,$regex,$text,$where) 0%
     - Geospatial ($geoWithin,$geoIntersects,$near,$nearSphere) 5%
