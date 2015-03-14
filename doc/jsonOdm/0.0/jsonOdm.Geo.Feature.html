@@ -407,7 +407,7 @@
 
 <header>
     <h1 class="page-header">
-      JsonOdm
+      Feature
     </h1>
 
     
@@ -445,7 +445,7 @@
     <h3 class="
         subsection-title name
         
-      " id="JsonOdm">
+      " id="Feature">
 
       
         
@@ -459,7 +459,7 @@
     </h3>
 
     
-      <h4>new JsonOdm<span class="signature">()</span><span class="type-signature"></span></h4>
+      <h4>new Feature<span class="signature">(geometry, <span class="optional">properties</span>, <span class="optional">boundaryBox</span>, <span class="optional">id</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -474,7 +474,7 @@
     
     <div class="description">
         <p>
-        The main class holding all sub classes and the data source
+        A GeoJSON feature object
         </p>
     </div>
     
@@ -482,6 +482,138 @@
     
 
     
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">geometry
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Geo.Point.html">jsonOdm.Geo.Point</a>
+|
+
+<a href="jsonOdm.Geo.MultiPoint.html">jsonOdm.Geo.MultiPoint</a>
+|
+
+<a href="jsonOdm.Geo.LineString.html">jsonOdm.Geo.LineString</a>
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Any jsonOdm.Geo.&lt;geometry&gt; object</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">properties
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+*
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Additional properties that belong to this feature</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">boundaryBox
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array with [min. longitude, min. latitude, max. longitude, max. latitude]</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">id
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+*
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A unique identifier</td>
+        </tr>
+
+        
+        </tbody>
+</table>
 
     
 
@@ -492,19 +624,9 @@
     
 
     
-    <dt class="tag-version">Version:</dt>
-    <dd class="tag-version"><ul class="dummy"><li>0.0.1</li></ul></dd>
-    
 
     
 
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Richard Burkhardt - Konsultaner</li>
-        </ul>
-    </dd>
     
 
     
@@ -534,42 +656,6 @@
     
 
     
-        <h4>Example</h4>
-        
-    <pre class="prettyprint"><code>var odm = new jsonOdm();
-odm.addSource('people',{
-   "Person" : [
-       {"id":1,"name":"Richi",jobId:1},
-       {"id":2,"name":"Dave",jobId:2},
-       {"id":3,"name":"Tom",jobId:3},
-       {"id":4,"name":"Lisa",jobId:4},
-       {"id":5,"name":"Hanni",jobId:3},
-       {"id":6,"name":"Selma",jobId:3},
-       {"id":7,"name":"Ralf",jobId:1}
-   ],
-   "Jobs" : [
-       {"id":1,"name":"plumber"},
-       {"id":2,"name":"programmer"},
-       {"id":3,"name":"chef"},
-       {"id":4,"name":"hairdresser"}
-   ]
-});
-
-var people = new jsonOdm.Collection('Person');
-people.$hasOne("jobId","id","Jobs","job");
-
-var q = people.query();
-// get all hairdresser
-var hairdresser = q.$or(
-   q.$branch("jobId").$eq(4)
-).$all();
-
-// get all but hairdressers
-var hairdresser = q.$or(
-   q.$branch("jobId").$ne(4)
-).$all();</code></pre>
-
-    
 
 
 
@@ -589,73 +675,6 @@ var hairdresser = q.$or(
     
 
     
-
-    
-        <h3 class="subsection-title">
-          
-          Methods
-        </h3>
-        <div class="panel panel-default">
-            
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-        <tr>
-            <td class="name">
-              
-              <a href="JsonOdm.html#addSource">addSource</a>
-
-              
-              
-              
-            </td>
-            <td class="description">
-                
-                    Add a data source to the odm that is selectable via the selectSource method
-                
-
-                
-
-
-            </td>
-        </tr>
-
-        
-
-        <tr>
-            <td class="name">
-              
-              <a href="JsonOdm.html#selectSource">selectSource</a>
-
-              
-              
-              
-            </td>
-            <td class="description">
-                
-                    Select a source by its id this will effect all collections
-                
-
-                
-
-
-            </td>
-        </tr>
-
-        
-        </tbody>
-</table>
-
-        </div>
 
     
 
@@ -664,344 +683,6 @@ var hairdresser = q.$or(
     <hr>
 
     <div class="large-listing">
-      
-        
-            
-
-
-<dl class="bs-docs-example bs-members">
-  <dt>
-
-
-    <h3 class="
-        subsection-title name
-        
-      " id="addSource">
-
-      
-        addSource<span class="signature">(sourceId, source, selectSource)</span><span class="type-signature"></span>
-      
-
-      
-
-      
-
-    </h3>
-
-    
-
-    
-
-
-
-    
-
-
-
-  </dt>
-<dd>
-
-
-    
-    <div class="description">
-        <p>
-        Add a data source to the odm that is selectable via the selectSource method
-        </p>
-    </div>
-    
-
-    
-
-    
-
-    
-        <h4>Parameters</h4>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-        <tr>
-                
-                <th>Name</th>
-                
-
-                <th>Type</th>
-
-                
-
-                <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-        <tr>
-            
-                <td class="name">sourceId
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-*
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">There is an override check</td>
-        </tr>
-
-        
-
-        <tr>
-            
-                <td class="name">source
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-object
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">An object with collection arrays</td>
-        </tr>
-
-        
-
-        <tr>
-            
-                <td class="name">selectSource
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-boolean
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">select the source</td>
-        </tr>
-
-        
-        </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-  </dd>
-</dl>
-
-
-        
-            
-
-
-<dl class="bs-docs-example bs-members">
-  <dt>
-
-
-    <h3 class="
-        subsection-title name
-        
-      " id="selectSource">
-
-      
-        selectSource<span class="signature">(sourceId)</span><span class="type-signature"></span>
-      
-
-      
-
-      
-
-    </h3>
-
-    
-
-    
-
-
-
-    
-
-
-
-  </dt>
-<dd>
-
-
-    
-    <div class="description">
-        <p>
-        Select a source by its id this will effect all collections
-        </p>
-    </div>
-    
-
-    
-
-    
-
-    
-        <h4>Parameters</h4>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-        <tr>
-                
-                <th>Name</th>
-                
-
-                <th>Type</th>
-
-                
-
-                <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-        <tr>
-            
-                <td class="name">sourceId
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-*
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-        
-        </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-  </dd>
-</dl>
-
-
-        
       
     </div>
 

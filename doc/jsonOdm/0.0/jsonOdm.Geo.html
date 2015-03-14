@@ -111,6 +111,56 @@
 
     
 
+    <a href="jsonOdm.Geo.Feature.html">Feature</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.FeatureCollection.html">FeatureCollection</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
     <a href="jsonOdm.Geo.html">Geo</a>
   </li>
 
@@ -156,6 +206,131 @@
     
 
     <a href="JsonOdm.html">JsonOdm</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.LineString.html">LineString</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.MultiLineString.html">MultiLineString</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.MultiPoint.html">MultiPoint</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.Point.html">Point</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.Polygon.html">Polygon</a>
   </li>
 
 
@@ -299,7 +474,10 @@
     
     <div class="description">
         <p>
-        The object to provide geographical data
+        The object to provide geographical data and methods. <br>
+<strong style='color:#ff0000'>Warning:</strong> The coordinate reference system is <a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84</a>
+witch uses the coordinate order [<strong>longitude</strong>,<strong>latitude</strong>]!<br>
+Changing the coordinate reference system (CRS) is not supported yet.
         </p>
     </div>
     
@@ -357,6 +535,31 @@
 
     
 
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="jsonOdm.Geo.Feature.html">Feature</a></dt>
+            <dd></dd>
+        
+            <dt><a href="jsonOdm.Geo.FeatureCollection.html">FeatureCollection</a></dt>
+            <dd></dd>
+        
+            <dt><a href="jsonOdm.Geo.LineString.html">LineString</a></dt>
+            <dd></dd>
+        
+            <dt><a href="jsonOdm.Geo.MultiLineString.html">MultiLineString</a></dt>
+            <dd></dd>
+        
+            <dt><a href="jsonOdm.Geo.MultiPoint.html">MultiPoint</a></dt>
+            <dd></dd>
+        
+            <dt><a href="jsonOdm.Geo.Point.html">Point</a></dt>
+            <dd></dd>
+        
+            <dt><a href="jsonOdm.Geo.Polygon.html">Polygon</a></dt>
+            <dd></dd>
+        </dl>
     
 
     
@@ -422,6 +625,1078 @@
 
     <div class="large-listing">
       
+        
+            
+
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="Feature">
+
+      
+        
+        Constructor
+      
+
+      
+
+      
+
+    </h3>
+
+    
+      <h4>new Feature<span class="signature">(geometry, <span class="optional">properties</span>, <span class="optional">boundaryBox</span>, <span class="optional">id</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+    
+
+
+
+
+    
+    <div class="description">
+        <p>
+        A GeoJSON feature object
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">geometry
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Geo.Point.html">jsonOdm.Geo.Point</a>
+|
+
+<a href="jsonOdm.Geo.MultiPoint.html">jsonOdm.Geo.MultiPoint</a>
+|
+
+<a href="jsonOdm.Geo.LineString.html">jsonOdm.Geo.LineString</a>
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Any jsonOdm.Geo.&lt;geometry&gt; object</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">properties
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+*
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Additional properties that belong to this feature</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">boundaryBox
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array with [min. longitude, min. latitude, max. longitude, max. latitude]</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">id
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+*
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A unique identifier</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+        
+            
+
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="FeatureCollection">
+
+      
+        
+        Constructor
+      
+
+      
+
+      
+
+    </h3>
+
+    
+      <h4>new FeatureCollection<span class="signature">(features, <span class="optional">boundaryBox</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+    
+
+
+
+
+    
+    <div class="description">
+        <p>
+        The GeoJSON FeatureCollection object
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">features
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array.&lt;<a href="jsonOdm.Geo.Feature.html">jsonOdm.Geo.Feature</a>>
+|
+
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">boundaryBox
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array with [min. longitude, min. latitude, max. longitude, max. latitude]</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+        
+            
+
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="LineString">
+
+      
+        
+        Constructor
+      
+
+      
+
+      
+
+    </h3>
+
+    
+      <h4>new LineString<span class="signature">(positions, <span class="optional">boundaryBox</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+    
+
+
+
+
+    
+    <div class="description">
+        <p>
+        A GeoJSON LineString object
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">positions
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An at least 2-dimensional array of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude, i.e. [[51,32],[51.4,21]]</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">boundaryBox
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array with [min. longitude, min. latitude, max. longitude, max. latitude]</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var lineString = new jsonOdm.Geo.LineString([
+   [51.5,32],[51.6,21]
+]);</code></pre>
+
+    
+
+
+
+        
+            
+
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="MultiLineString">
+
+      
+        
+        Constructor
+      
+
+      
+
+      
+
+    </h3>
+
+    
+      <h4>new MultiLineString<span class="signature">(positions, <span class="optional">boundaryBox</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+    
+
+
+
+
+    
+    <div class="description">
+        <p>
+        A GeoJSON MultiLineString object
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">positions
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array of arrays with at least 2-dimensional arrays of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude.</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">boundaryBox
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array with [min. longitude, min. latitude, max. longitude, max. latitude]</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var multiLineString = new jsonOdm.Geo.MultiLineString([
+   [[51.2,32],[51.4,21]],
+   [[51.5,32],[51.6,21]]
+]);</code></pre>
+
+    
+
+
+
+        
+            
+
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="MultiPoint">
+
+      
+        
+        Constructor
+      
+
+      
+
+      
+
+    </h3>
+
+    
+      <h4>new MultiPoint<span class="signature">(positions, <span class="optional">boundaryBox</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+    
+
+
+
+
+    
+    <div class="description">
+        <p>
+        A GeoJSON MultiPoint object
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">positions
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude, i.e. [[51,32],[51.4,21]]</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">boundaryBox
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array with [min. longitude, min. latitude, max. longitude, max. latitude]</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var multiPoint = new jsonOdm.Geo.MultiPoint([
+   [51.5,32],[51.6,21]
+]);</code></pre>
+
+    
+
+
+
+        
+            
+
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="Point">
+
+      
+        
+        Constructor
+      
+
+      
+
+      
+
+    </h3>
+
+    
+      <h4>new Point<span class="signature">(position, <span class="optional">boundaryBox</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+    
+
+
+
+
+    
+    <div class="description">
+        <p>
+        A GeoJSON Point object
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">position
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A 2-dimensional array with the first entry being the longitude and the second one being the latitude, i.e. [51,32]</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">boundaryBox
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array with [min. longitude, min. latitude, max. longitude, max. latitude]</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var point = new jsonOdm.Geo.Point([51.5,32]);</code></pre>
+
+    
+
+
+
         
             
 
@@ -603,6 +1878,181 @@ boolean
 
   </dd>
 </dl>
+
+
+        
+            
+
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="Polygon">
+
+      
+        
+        Constructor
+      
+
+      
+
+      
+
+    </h3>
+
+    
+      <h4>new Polygon<span class="signature">(positions, <span class="optional">boundaryBox</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+    
+
+
+
+
+    
+    <div class="description">
+        <p>
+        A GeoJSON Polygon object
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">positions
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array of arrays with at least 2-dimensional arrays of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude.</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">boundaryBox
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array with [min. longitude, min. latitude, max. longitude, max. latitude]</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var polygon = new jsonOdm.Geo.Polygon([
+   // The last position should be equal to the first one to close the polygon
+   [[51.2,32],[51.4,21],[51.6,21],[51.2,21]],
+   // Must be fully inside the n-1th poly-line
+   [[51.5,32],[51.6,21],[51.7,21],[51.5,21]]
+   // more inner holes might follow
+]);</code></pre>
+
+    
+
 
 
         
