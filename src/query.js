@@ -284,6 +284,48 @@ jsonOdm.Query.prototype.$type = function (type) {
 };
 
 /**
+ * Compares the given reminder against the selected field value modulo the given divisor
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * collection.$query()
+ *    // get every fourth element, so elements with id 4,8,12,... when starting with id 1
+ *    .$branch("id").$mod(4,0)
+ *    .$all();
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$mod = function (divisor,remainder) {
+    return this.$testCollection(arguments, function (collectionValue,args) {
+        return collectionValue % args[0] == args[1];
+    });
+};
+
+/**
+ * Tests a selected field against the regular expression
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * collection.$query()
+ *    // gets all elements with a name of "Richard","RiChI","RichI","richard",...
+ *    .$branch("name").$regex(/rich(i|ard)/i)
+ *    .$all();
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * collection.$query()
+ *    // gets all elements with a name of "Richard","RiChI","RichI","richard",...
+ *    .$branch("name").$regex("rich(i|ard)","i")
+ *    .$all();
+ * @param {RegExp|string} regex The regular expression to test against
+ * @param {string} [options] The regular expression options, i.e. "i" for case insensitivity
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$regex = function (regex,options) {
+    return this.$testCollection([regex,options], function (collectionValue,args) {
+        var regex = args[0];
+        if(typeof regex == "string") regex = typeof args[1] == "string" ? new RegExp(regex,args[1]) : new RegExp(regex);
+        return regex.test(collectionValue);
+    });
+};
+
+/**
  * Compares sub query results using the boolean and
  * @param {...jsonOdm.Query} queries A finite number of operators
  * @return {jsonOdm.Query}

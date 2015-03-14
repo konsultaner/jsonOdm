@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>jsonOdm v0.0.1</title>
+    <title>jsonOdm v0.0.2</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -22,7 +22,7 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">
-            jsonOdm v0.0.1
+            jsonOdm v0.0.2
           </a>
           <div class="navbar-right">
             <div class="external-links">
@@ -772,6 +772,28 @@ like this $lte('1') field values less then or equal to 1 are valid
         <tr>
             <td class="name">
               
+              <a href="jsonOdm.Query.html#$mod">$mod</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares the given reminder against the selected field value modulo the given divisor
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
               <a href="jsonOdm.Query.html#$nand">$nand</a>
 
               
@@ -893,6 +915,28 @@ like this $nin(['1','2','4']) so 1 or 2 or 4 are not valid fields
             <td class="description">
                 
                     Compares sub query results using the boolean or
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Query.html#$regex">$regex</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Tests a selected field against the regular expression
                 
 
                 
@@ -3053,6 +3097,126 @@ like this $lte('1') field values less then or equal to 1 are valid
     <h3 class="
         subsection-title name
         
+      " id="$mod">
+
+      
+        $mod<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares the given reminder against the selected field value modulo the given divisor
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+collection.$query()
+   // get every fourth element, so elements with id 4,8,12,... when starting with id 1
+   .$branch("id").$mod(4,0)
+   .$all();</code></pre>
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
       " id="$nand">
 
       
@@ -3995,6 +4159,209 @@ Array
 </div>
 
         
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$regex">
+
+      
+        $regex<span class="signature">(regex, <span class="optional">options</span>)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Tests a selected field against the regular expression
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">regex
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+RegExp
+|
+
+string
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">The regular expression to test against</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">options
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+string
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">The regular expression options, i.e. "i" for case insensitivity</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Examples</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+collection.$query()
+   // gets all elements with a name of "Richard","RiChI","RichI","richard",...
+   .$branch("name").$regex(/rich(i|ard)/i)
+   .$all();</code></pre>
+
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+collection.$query()
+   // gets all elements with a name of "Richard","RiChI","RichI","richard",...
+   .$branch("name").$regex("rich(i|ard)","i")
+   .$all();</code></pre>
 
     
 
