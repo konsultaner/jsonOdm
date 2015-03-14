@@ -318,9 +318,8 @@ jsonOdm.Query.prototype.$mod = function (divisor,remainder) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$regex = function (regex,options) {
-    return this.$testCollection([regex,options], function (collectionValue,args) {
-        var regex = args[0];
-        if(typeof regex == "string") regex = typeof args[1] == "string" ? new RegExp(regex,args[1]) : new RegExp(regex);
+    if(typeof regex == "string") regex = typeof options == "string" ? new RegExp(regex,options) : new RegExp(regex);
+    return this.$testCollection(regex, function (collectionValue,regex) {
         return regex.test(collectionValue);
     });
 };
