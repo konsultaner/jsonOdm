@@ -76,6 +76,13 @@ CollectionTest.prototype.testQuery = function () {
     assertEquals("$lt: Less then test",400,collection.$query().$branch("id").$lt(401).$all().length);
     assertEquals("$eq: Test multiple quality","Richi400",collection.$query().$branch("name").$eq("Richi199","Richi400").$all()[1].name);
     assertEquals("$in: Test multiple quality","Richi400",collection.$query().$branch("name").$in(["Richi199","Richi400"]).$all()[1].name);
+    assertEquals("$mod test should be a fourth of original length",Math.floor(collection.length/4),collection.$query().$branch("id").$mod(4,0).$all().length);
+    assertEquals("$mod test first id should be 4",4,collection.$query().$branch("id").$mod(4,0).$first().id);
+    assertEquals("$regex test should find 99 elements",99,collection.$query().$branch("name").$regex("^richi[0-9]{1,2}$","i").$all().length);
+    assertEquals("$regex test should find 99 elements",99,collection.$query().$branch("name").$regex(/^richi[0-9]{1,2}$/i).$all().length);
+    assertEquals("$regex test should find 0 elements",0,collection.$query().$branch("name").$regex("^richi[0-9]{1,2}$").$all().length);
+    assertEquals("$regex test should find 0 elements",0,collection.$query().$branch("name").$regex(/^richi[0-9]{1,2}$/).$all().length);
+
     var q = collection.$query();
     var subCollection = q.$or(
         q.$branch("name").$eq("Richi400"),
