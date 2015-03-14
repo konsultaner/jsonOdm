@@ -591,6 +591,28 @@ like this $eq('1','2','4') so 1 or 2 or 4 are valid fields
         <tr>
             <td class="name">
               
+              <a href="jsonOdm.Query.html#$exists">$exists</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares the current sub collection value to not be undefined
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
               <a href="jsonOdm.Query.html#$first">$first</a>
 
               
@@ -691,7 +713,6 @@ like this $in(['1','2','4']) so 1 or 2 or 4 are valid fields
             <td class="description">
                 
                     Compares the current sub collection value to be null or undefined
-like this $isNull() field value is null or undefined
                 
 
                 
@@ -894,6 +915,29 @@ like this $nin(['1','2','4']) so 1 or 2 or 4 are not valid fields
             <td class="description">
                 
                     Test a collection or collection field against one or more values
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Query.html#$type">$type</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Compares the current sub collection against the given types using the binary of and the JavaScript typeof
+Supported (case insensitive) types are: number, string, undefined, object, array and RegExp, ArrayBuffer, null, boolean plus all other [object *] types
                 
 
                 
@@ -1876,6 +1920,117 @@ like this $eq('1','2','4') so 1 or 2 or 4 are valid fields
     <h3 class="
         subsection-title name
         
+      " id="$exists">
+
+      
+        $exists<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares the current sub collection value to not be undefined
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
       " id="$first">
 
       
@@ -2497,7 +2652,6 @@ Array
     <div class="description">
         <p>
         Compares the current sub collection value to be null or undefined
-like this $isNull() field value is null or undefined
         </p>
     </div>
     
@@ -4024,6 +4178,175 @@ function
 </div>
 
         
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$type">
+
+      
+        $type<span class="signature">(type)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Compares the current sub collection against the given types using the binary of and the JavaScript typeof
+Supported (case insensitive) types are: number, string, undefined, object, array and RegExp, ArrayBuffer, null, boolean plus all other [object *] types
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">type
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+string
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A list of allowed types for the selected field</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+collection.$query()
+   // id is string or number and not undefined or null
+   .$branch("id").$type("string","number")
+   .$all();</code></pre>
 
     
 

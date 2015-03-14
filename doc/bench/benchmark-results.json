@@ -1,26 +1,34 @@
 [
   {
-    "name": "point in polygon with 756 edges",
-    "timestamp": "Fri Mar 13 2015 11:06:56 GMT+0100 (Mitteleuropäische Zeit)",
-    "count": 13816,
-    "cycles": 5,
-    "hz": 265065.27213631605,
+    "name": "real live example for point in polygon with 756 edges",
+    "timestamp": "Sat Mar 14 2015 09:41:43 GMT+0100 (Mitteleuropäische Zeit)",
+    "count": 14246,
+    "cycles": 6,
+    "hz": 260081.42528653558,
+    "suite": "Geo benchmarks"
+  },
+  {
+    "name": "worst case point in worst case polygon with 2000 edges",
+    "timestamp": "Sat Mar 14 2015 09:41:49 GMT+0100 (Mitteleuropäische Zeit)",
+    "count": 380,
+    "cycles": 3,
+    "hz": 7160.121114733071,
     "suite": "Geo benchmarks"
   },
   {
     "name": "Simple Query all 500000 Elements",
-    "timestamp": "Fri Mar 13 2015 11:07:05 GMT+0100 (Mitteleuropäische Zeit)",
+    "timestamp": "Sat Mar 14 2015 09:41:58 GMT+0100 (Mitteleuropäische Zeit)",
     "count": 1,
     "cycles": 1,
-    "hz": 2.524552764547594,
+    "hz": 2.1226773977009272,
     "suite": "Query benchmarks"
   },
   {
     "name": "Complex Query all 500000 Elements",
-    "timestamp": "Fri Mar 13 2015 11:07:21 GMT+0100 (Mitteleuropäische Zeit)",
+    "timestamp": "Sat Mar 14 2015 09:42:12 GMT+0100 (Mitteleuropäische Zeit)",
     "count": 1,
     "cycles": 1,
-    "hz": 0.8493375503384364,
+    "hz": 0.7771289821487878,
     "suite": "Query benchmarks"
   }
 ]

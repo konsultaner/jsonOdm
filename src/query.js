@@ -247,12 +247,39 @@ jsonOdm.Query.prototype.$lte = function (comparable) {
 
 /**
  * Compares the current sub collection value to be null or undefined
- * like this $isNull() field value is null or undefined
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$isNull = function () {
     return this.$testCollection(null, function (collectionValue) {
         return typeof collectionValue == 'undefined' || collectionValue === null;
+    });
+};
+
+/**
+ * Compares the current sub collection value to not be undefined
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$exists = function () {
+    return this.$testCollection(null, function (collectionValue) {
+        return typeof collectionValue != 'undefined';
+    });
+};
+
+/**
+ * Compares the current sub collection against the given types using the binary of and the JavaScript typeof
+ * Supported (case insensitive) types are: number, string, undefined, object, array and RegExp, ArrayBuffer, null, boolean plus all other [object *] types
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * collection.$query()
+ *    // id is string or number and not undefined or null
+ *    .$branch("id").$type("string","number")
+ *    .$all();
+ * @param {...string} type A list of allowed types for the selected field
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$type = function (type) {
+    return this.$testCollection(arguments, function (collectionValue, possibleTypes) {
+        return jsonOdm.util.is(collectionValue,possibleTypes);
     });
 };
 

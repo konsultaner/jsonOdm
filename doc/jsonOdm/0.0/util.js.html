@@ -253,6 +253,28 @@ jsonOdm.Util.prototype.isArray = function(arrayObject){
     return Array.isArray(arrayObject);
 };
 
+/**
+ * Checks the type of an object. valid type values are:
+ * number, string, undefined, object, array and RegExp, ArrayBuffer, null, boolean plus all other [object *] types
+ * @param {*} object The object to test against a type
+ * @param {string|string[]} type All possible types that will result in a true
+ * @return {boolean}
+ */
+jsonOdm.Util.prototype.is = function(object,type){
+    type = (typeof type == "string") ? [type] : type;
+    var objectType = Object.prototype.toString.call(object);
+    objectType = objectType.substring(8,objectType.length-1).toLowerCase();
+    for(var i = 0; i &lt; type.length; i++) {
+        var lowerType = type[i].toLowerCase();
+        if ("array" == lowerType &amp;&amp; this.isArray(object)) return true;
+        // all object types, i.e. "[object ArrayBuffer]"
+        if(lowerType == objectType) return true;
+        // number string object
+        if (typeof object == lowerType) return true;
+    }
+    return false;
+};
+
 /** Get only the keys of an object
  * @method objectKeys
  * @memberof jsonOdm.Util.prototype

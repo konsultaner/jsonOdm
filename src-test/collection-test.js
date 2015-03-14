@@ -4,8 +4,8 @@ var CollectionTest = TestCase("CollectionTest");
 
 var testSource = {
         "testCollection":[
-            {id:1,name:"Mustermann",firstName:"Tom"},
-            {id:2,name:"Musterfrau",firstName:null}
+            {id:1,name:"Mustermann",firstName:"Tom",married:true},
+            {id:2,name:"Musterfrau",firstName:null,married:false}
         ],
         "parentCollection":[
             {
@@ -55,6 +55,7 @@ CollectionTest.prototype.testCollectionDecoration = function () {
 CollectionTest.prototype.testQuery = function () {
     var collection = new jsonOdm.Collection("testCollection");
     assertEquals("test the equality","Mustermann",collection.$query().$branch("name").$eq("Mustermann").$first().name);
+    assertEquals("No Result",0, collection.$query().$branch("name").$eq("Jack").$all().length);
     assertEquals("test the not equality","Mustermann",collection.$query().$branch("name").$ne("Musterfrau").$first().name);
     assertEquals("test the multiple not equality",0,collection.$query().$branch("name").$nin(["Musterfrau","Mustermann"]).$all().length);
     assertEquals("test the multiple not equality","Mustermann",collection.$query().$branch("name").$nin(["Musterfrau"]).$first().name);
@@ -62,9 +63,14 @@ CollectionTest.prototype.testQuery = function () {
     assertEquals("test greater then or equal",2,collection.$query().$branch("id").$gte(1).$all().length);
     assertEquals("test less then","Mustermann",collection.$query().$branch("id").$lte(2).$first().name);
     assertEquals("test less then or equal",2,collection.$query().$branch("id").$lte(2).$all().length);
-    assertEquals("test is null",1,collection.$query().$branch("firstName").$isNull().$all().length);
-    assertEquals("test is undefined",2,collection.$query().$branch("middleName").$isNull().$all().length);
-    assertEquals("No Result",0, collection.$query().$branch("name").$eq("Jack").$all().length);
+    assertEquals("$isNull test against null",1,collection.$query().$branch("firstName").$isNull().$all().length);
+    assertEquals("$isNull test against an undefined field",2,collection.$query().$branch("middleName").$isNull().$all().length);
+    assertEquals("$exists test should be 0",0,collection.$query().$branch("middleName").$exists().$all().length);
+    assertEquals("$exists test should be 2",2,collection.$query().$branch("firstName").$exists().$all().length);
+    assertEquals("$type test should be 2",2,collection.$query().$branch("firstName").$type("string","null").$all().length);
+    assertEquals("$type test should be 1",1,collection.$query().$branch("firstName").$type("string").$all().length);
+    assertEquals("$type test should be 2",2,collection.$query().$branch("middleName").$type("undefined").$all().length);
+    assertEquals("$type test should be 0",0,collection.$query().$branch("firstName").$type("undefined").$all().length);
 
     collection = new jsonOdm.Collection("aLot");
     assertEquals("$lt: Less then test",400,collection.$query().$branch("id").$lt(401).$all().length);
