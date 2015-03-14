@@ -32,7 +32,7 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a id="json-odm-by-konsultaner-richard-burkhardt" class="anchor" href="#json-odm-by-konsultaner-richard-burkhardt" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON ODM by <a href="http://www.konsultaner.de">Konsultaner</a>, Richard Burkhardt</h1>
+<a id="json-odm-v002-by-konsultaner-richard-burkhardt" class="anchor" href="#json-odm-v002-by-konsultaner-richard-burkhardt" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON ODM v0.0.2 by <a href="http://www.konsultaner.de">Konsultaner</a>, Richard Burkhardt</h1>
 
 <p>This Project aims to be provide a json object document mapper.<br>
 <strong>Why would I need this?</strong><br>
@@ -49,10 +49,10 @@ into joinable collections seemed very helpful.</p>
 <ul>
 <li>Comparison (<del>$eq</del>,<del>$gt</del>,<del>$gte</del>,<del>$lt</del>,<del>$lte</del>,<del>$ne</del>,<del>$in</del>,<del>$nin</del>) 100%</li>
 <li>Logical (<del>$or</del>,<del>$and</del>,<del>$not(= $nand as alias)</del>,<del>$nor</del>) 100%</li>
-<li>Element (<del>$exists</del>,$type) 50% ($isNull needs renaming)</li>
-<li>Evaluation ($mod,$regex,$text,$where) 0%</li>
+<li>Element (<del>$exists</del>,<del>$type</del>) 100% (+ $isNull, for is null or undefined)</li>
+<li>Evaluation (<del>$mod</del>,<del>$regex</del>,$text,$where) 50%</li>
 <li>Geospatial ($geoWithin,$geoIntersects,$near,$nearSphere) 5%</li>
-<li>Array (<del>$all</del>,$elementMatch,$size) 33%</li>
+<li>Array ($all,$elementMatch,$size) 0% // i may not implement the first two</li>
 <li>Projection Operators ($,$elemMatch,$meta,$slice) 0%</li>
 </ul>
 </li>
@@ -134,7 +134,7 @@ q.$branch(<span class="pl-s1"><span class="pl-pds">"</span>job<span class="pl-pd
     <div id="footer_wrap" class="outer">
       <footer class="inner">
         <p class="copyright">JSON ODM maintained by <a href="https://github.com/konsultaner">konsultaner</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 
