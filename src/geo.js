@@ -108,7 +108,7 @@ jsonOdm.Geo.Point = function (position,boundaryBox) {
 /**
  * Checks whether a Point is inside of another geometry
  * @param {jsonOdm.Geo.Point} point
- * @param {jsonOdm.Geo.Point|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
  * @return {boolean}
  */
 jsonOdm.Geo.Point.within = function (point,geometry) {
@@ -139,14 +139,15 @@ jsonOdm.Geo.Point.within = function (point,geometry) {
         }
         return false;
     }
-    if(geometry.type == "MultiGeometry" && jsonOdm.util.isArray(geometry.geometries)) {
+    if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
         // maybe order it by complexity to get a better best case scenario
         for(i = 0; i < geometry.geometries.length; i++){
             if(jsonOdm.Geo.Point.within(point,geometry.geometries[i])) return true;
         }
         return false;
     }
-    return false;
+    // might be a boundary box
+    return jsonOdm.Geo.pointWithinBounds(point.coordinates,geometry);
 };
 
 /**
@@ -373,5 +374,5 @@ jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
  */
 jsonOdm.Geo.pointWithinBounds = function (point, bounds) {
     if(!(jsonOdm.util.isArray(point) && jsonOdm.util.isArray(bounds) && bounds.length == 4)) return false;
-    return point[0] > bounds[0] && point[1] > bounds[1] && point[0] < bounds[3] && point[1] < bounds[4];
+    return point[0] >= bounds[0] && point[1] >= bounds[1] && point[0] <= bounds[2] && point[1] <= bounds[3];
 };
