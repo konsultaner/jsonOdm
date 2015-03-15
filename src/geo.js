@@ -32,7 +32,7 @@ jsonOdm.Geo.detectAsGeometry = function (geometry) {
         }else if( jsonOdm.util.isArray(geometry) && geometry.length >= 1 &&
             jsonOdm.util.isArray(geometry[0]) && geometry[0].length >= 1 &&
             jsonOdm.util.isArray(geometry[0][0]) && geometry[0][0].length >= 1 &&
-            jsonOdm.util.isArray(geometry[0][0][0]) && geometry[0][0][0].length == 2 && !jsonOdm.util.isArray(geometry[0][0][0])){
+            jsonOdm.util.isArray(geometry[0][0][0]) && geometry[0][0][0].length == 2 && !jsonOdm.util.isArray(geometry[0][0][0][0])){
             geometry = new jsonOdm.Geo.MultiPolygon(geometry);
         }else return false;
     }
@@ -352,6 +352,7 @@ jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
 
     // do not enter the last point because the calculation also reads the i+1th index
     for(var i = 0; i < polygon.length - 1; i++){
+        if(polygon[i][0] == point[0] && polygon[i][1] == point[1]) return true; // vertex equals the given point
         if(
             polygon[i][0] < point[0] && polygon[i+1][0] < point[0] || // the vector is only in section 1 or 4 of the coordinate system normalized to the point, so it does not intersect the positive x-axis
             polygon[i][1] < point[1] && polygon[i+1][1] < point[1] || // the vector is only in section 1 or 2 of the coordinate system normalized to the point, so it does not intersect the positive x-axis
@@ -359,10 +360,7 @@ jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
         ){
             continue;
         }
-        var n1 = [polygon[i][0]-point[0],polygon[i][1]-point[1]],
-            n2 = [polygon[i+1][0]-point[0],polygon[i+1][1]-point[1]];
-
-        if((n1[0]-n2[0])*(-n1[1]/n1[1]-n2[1])+n1[0] >= 0) intersection++; // the vector intersects the positive x-axis of the coordinate system normalized to the point
+        if((polygon[i][0]-polygon[i+1][0]) * ((point[1]-polygon[i][1])/(polygon[i][1]-polygon[i+1][1])) + polygon[i][0] >= point[1]) intersection++; // the vector intersects the positive x-axis of the coordinate system normalized to the point
     }
     return intersection%2 == 1; // the normalized x-axis needs to be intersected by a odd amount of intersections
 };
