@@ -176,7 +176,7 @@ jsonOdm.Geo.MultiPoint.within = function (multiPoint,geometry) {
     var i, j, k, found;
     if (!multiPoint.coordinates || !jsonOdm.util.isArray(multiPoint.coordinates)) return false;
     if (geometry.type == "Point") return multiPoint.coordinates.length == 1 && multiPoint.coordinates[0][0] == geometry.coordinates[0] && multiPoint.coordinates[0][1] == geometry.coordinates[1];
-    if (geometry.type == "MultiPoint" || geometry.type == "LineString") {
+    if (geometry.type == "MultiPoint") {
         for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
             found = false;
             for(j = 0 ; multiPoint.coordinates && j < multiPoint.coordinates.length; j++){
@@ -186,17 +186,20 @@ jsonOdm.Geo.MultiPoint.within = function (multiPoint,geometry) {
         }
         return true;
     }
+    if (geometry.type == "LineString") {
+        for (k = 0; multiPoint.coordinates && k < multiPoint.coordinates.length; k++) {
+            if (!jsonOdm.Geo.pointWithinLineString(multiPoint.coordinates[k], geometry.coordinates)) return false;
+        }
+        return true;
+    }
     if (geometry.type == "MultiLineString") {
         for (k = 0; multiPoint.coordinates && k < multiPoint.coordinates.length; k++) {
             found = false;
             for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
-                for (j = 0; geometry.coordinates[i] && j < geometry.coordinates[i].length; j++) {
-                    if (geometry.coordinates[i][j][0] == multiPoint.coordinates[k][0] && geometry.coordinates[i][j][1] == multiPoint.coordinates[k][1]) {
-                        found = true;
-                        break;
-                    }
+                if (jsonOdm.Geo.pointWithinLineString(multiPoint.coordinates[k], geometry.coordinates[i])) {
+                    found = true;
+                    break;
                 }
-                if(found) break;
             }
             if (!found) return false;
         }
@@ -256,13 +259,21 @@ jsonOdm.Geo.LineString = function (positions,boundaryBox) {
 
 /**
  * Checks whether a LineString is inside of another geometry
- * @method within
- * @memberof jsonOdm.Geo.LineString
  * @param {jsonOdm.Geo.LineString} lineString
  * @param {jsonOdm.Geo.Point|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
  * @return {boolean}
  */
-jsonOdm.Geo.LineString.within = jsonOdm.Geo.MultiPoint.within;
+jsonOdm.Geo.LineString.within = function (lineString, geometry) {
+    var i, j, k, found;
+    if (!lineString.coordinates || !jsonOdm.util.isArray(lineString.coordinates)) return false;
+    if (geometry.type == "Point" || geometry.type == "MultiPoint") return false;
+
+
+    // assume we have a BoundaryBox given
+    for(i = 0; i < lineString.coordinates.length; i++){
+        if(!jsonOdm.Geo.pointWithinBounds(lineString.coordinates[i],geometry)) return false;
+    }
+    return true;};
 
 /**
  * A GeoJSON MultiLineString object
@@ -367,7 +378,7 @@ jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
         ){
             continue;
         }
-        if((polygon[i][0]-polygon[i+1][0]) * ((point[1]-polygon[i][1])/(polygon[i][1]-polygon[i+1][1])) + polygon[i][0] >= point[1]) intersection++; // the vector intersects the positive x-axis of the coordinate system normalized to the point
+        if((polygon[i][0]-polygon[i+1][0]) * ((point[1]-polygon[i+1][1])/(polygon[i][1]-polygon[i+1][1])) + polygon[i+1][0] >= point[1]) intersection++; // the vector intersects the positive x-axis of the coordinate system normalized to the point
     }
     return intersection%2 == 1; // the normalized x-axis needs to be intersected by a odd amount of intersections
 };
@@ -394,12 +405,14 @@ jsonOdm.Geo.pointWithinLineString = function (point, lineString) {
             )
         ) {
             // point was on the current path
-            if ((lineString[i][0] - lineString[i + 1][0]) * ((point[1] - lineString[i][1]) / (lineString[i][1] - lineString[i + 1][1])) + lineString[i][0] == point[1]) return true;
+            if (
+                ((lineString[i][1] - lineString[i + 1][1]) != 0 && (lineString[i][0] - lineString[i + 1][0]) * ((point[1] - lineString[i+1][1]) / (lineString[i][1] - lineString[i + 1][1])) + lineString[i+1][0] == point[0]) ||
+                ((lineString[i][0] - lineString[i + 1][0]) != 0 && (lineString[i][1] - lineString[i + 1][1]) * ((point[0] - lineString[i+1][0]) / (lineString[i][0] - lineString[i + 1][0])) + lineString[i+1][1] == point[1])
+            ) return true;
         }
     }
     return false;
-};
-
+}
 /**
  * Checks whether a point is inside a boundary box or not
  * @param point
