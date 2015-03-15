@@ -26,6 +26,7 @@ GeoTest.prototype.testPointOnLineString = function () {
     var line3 = [[0,0],[20,0],[0,20]];
     var line4 = [[0,0],[20,0],[20,20],[0,20]];
 
+    assertTrue("Point in Line corner",jsonOdm.Geo.pointWithinLineString([1,1],[[3,1],[1,1]]));
     assertTrue("Point in Square corner",jsonOdm.Geo.pointWithinLineString(point,line1));
     assertFalse("Point on line but not on path",jsonOdm.Geo.pointWithinLineString(point,line2));
     assertTrue("Point on path but not on vertex",jsonOdm.Geo.pointWithinLineString(point,line3));

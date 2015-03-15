@@ -391,7 +391,6 @@ jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
  */
 jsonOdm.Geo.pointWithinLineString = function (point, lineString) {
     if(!(jsonOdm.util.isArray(point) && jsonOdm.util.isArray(lineString) && lineString.length >= 2)) return false;
-
     for(var i = 0; i < lineString.length - 1; i++) {
         if(
             // out of bounds check
@@ -406,13 +405,17 @@ jsonOdm.Geo.pointWithinLineString = function (point, lineString) {
         ) {
             // point was on the current path
             if (
-                ((lineString[i][1] - lineString[i + 1][1]) != 0 && (lineString[i][0] - lineString[i + 1][0]) * ((point[1] - lineString[i+1][1]) / (lineString[i][1] - lineString[i + 1][1])) + lineString[i+1][0] == point[0]) ||
-                ((lineString[i][0] - lineString[i + 1][0]) != 0 && (lineString[i][1] - lineString[i + 1][1]) * ((point[0] - lineString[i+1][0]) / (lineString[i][0] - lineString[i + 1][0])) + lineString[i+1][1] == point[1])
-            ) return true;
+                (lineString[i]  [0] == point[0] && lineString[i]  [1] == point[1]) ||
+                (lineString[i+1][0] == point[0] && lineString[i+1][1] == point[1]) ||
+
+                ((lineString[i][1] - lineString[i + 1][1]) != 0 && ((lineString[i][0] - lineString[i + 1][0]) * ((point[1] - lineString[i+1][1]) / (lineString[i][1] - lineString[i + 1][1])) + lineString[i+1][0] == point[0])) ||
+                ((lineString[i][0] - lineString[i + 1][0]) != 0 && ((lineString[i][1] - lineString[i + 1][1]) * ((point[0] - lineString[i+1][0]) / (lineString[i][0] - lineString[i + 1][0])) + lineString[i+1][1] == point[1]))
+          ) return true;
         }
     }
     return false;
-}
+};
+
 /**
  * Checks whether a point is inside a boundary box or not
  * @param point
