@@ -13,6 +13,33 @@ jsonOdm.Geo = function () {
 };
 
 /**
+ * Takes an array and puts it into a GeoJSON geometry definition. If it geometry already is a valid GeoJSON it will only be returned
+ * @param {Array|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.Point|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry
+ * @return {boolean|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.Point|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection}
+ */
+jsonOdm.Geo.detectAsGeometry = function (geometry) {
+    if(!geometry.type){
+        if(jsonOdm.util.isArray(geometry) && geometry.length == 2 && !jsonOdm.util.isArray(geometry[0])){
+            geometry = new jsonOdm.Geo.Point(geometry);
+        }else if(jsonOdm.util.isArray(geometry) && geometry.length == 4 && !jsonOdm.util.isArray(geometry[0])){
+            geometry = new jsonOdm.Geo.BoundaryBox(geometry);
+        }else if(jsonOdm.util.isArray(geometry) && geometry.length >= 1 && jsonOdm.util.isArray(geometry[0]) && geometry[0].length == 2 && !jsonOdm.util.isArray(geometry[0][0])){
+            geometry = new jsonOdm.Geo.LineString(geometry);
+        }else if( jsonOdm.util.isArray(geometry) && geometry.length >= 1 &&
+            jsonOdm.util.isArray(geometry[0]) && geometry[0].length >= 1 &&
+            jsonOdm.util.isArray(geometry[0][0]) && geometry[0][0].length == 2 && !jsonOdm.util.isArray(geometry[0][0][0])){
+            geometry = new jsonOdm.Geo.Polygon(geometry);
+        }else if( jsonOdm.util.isArray(geometry) && geometry.length >= 1 &&
+            jsonOdm.util.isArray(geometry[0]) && geometry[0].length >= 1 &&
+            jsonOdm.util.isArray(geometry[0][0]) && geometry[0][0].length >= 1 &&
+            jsonOdm.util.isArray(geometry[0][0][0]) && geometry[0][0][0].length == 2 && !jsonOdm.util.isArray(geometry[0][0][0])){
+            geometry = new jsonOdm.Geo.MultiPolygon(geometry);
+        }else return false;
+    }
+    return geometry;
+};
+
+/**
  * The GeoJSON FeatureCollection object
  * @param {jsonOdm.Geo.Feature[]|Array} features
  * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
@@ -37,6 +64,31 @@ jsonOdm.Geo.Feature = function (geometry,properties,boundaryBox,id) {
     if(properties) this.properties = properties;
     if(boundaryBox) this.bbox = boundaryBox;
     if(id) this.id = id;
+};
+
+/**
+ * A GeoJSON Point object
+ * @param {Array} boundaryBox An array with [min. longitude, min. latitude, max. longitude, max. latitude]
+ * @example
+ * var boundaryBox = new jsonOdm.Geo.BoundaryBox([-180.00,-90.00,180.00,90.00]);
+ * @constructor
+ */
+jsonOdm.Geo.BoundaryBox = function (boundaryBox) {
+    var self = Object.create( Array.prototype );
+    // calls the constructor of Array
+    self = (Array.apply(self) || self);
+    if(jsonOdm.util.isArray(boundaryBox)){
+        self[0] = boundaryBox[0];
+        self[1] = boundaryBox[1];
+        self[2] = boundaryBox[2];
+        self[3] = boundaryBox[3];
+    }else{
+        self[0] = 0;
+        self[1] = 0;
+        self[2] = 0;
+        self[3] = 0;
+    }
+    return self;
 };
 
 /**

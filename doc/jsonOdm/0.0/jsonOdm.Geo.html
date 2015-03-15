@@ -67,6 +67,31 @@
 
     
 
+    <a href="jsonOdm.Geo.BoundaryBox.html">BoundaryBox</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
     <a href="jsonOdm.Collection.html">Collection</a>
   </li>
 
@@ -167,6 +192,25 @@
 
 
           <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#detectAsGeometry">detectAsGeometry</a>
+  </li>
+
+
             
               
 
@@ -665,6 +709,9 @@ Changing the coordinate reference system (CRS) is not supported yet.
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
+            <dt><a href="jsonOdm.Geo.BoundaryBox.html">BoundaryBox</a></dt>
+            <dd></dd>
+        
             <dt><a href="jsonOdm.Geo.Feature.html">Feature</a></dt>
             <dd></dd>
         
@@ -717,6 +764,28 @@ Changing the coordinate reference system (CRS) is not supported yet.
         </thead>
 
         <tbody>
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Geo.html#detectAsGeometry">detectAsGeometry</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Takes an array and puts it into a GeoJSON geometry definition. If it geometry already is a valid GeoJSON it will only be returned
+                
+
+                
+
+
+            </td>
+        </tr>
+
         
 
         <tr>
@@ -779,6 +848,356 @@ Changing the coordinate reference system (CRS) is not supported yet.
 
     <div class="large-listing">
       
+        
+            
+
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="BoundaryBox">
+
+      
+        
+        Constructor
+      
+
+      
+
+      
+
+    </h3>
+
+    
+      <h4>new BoundaryBox<span class="signature">(boundaryBox)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+    
+
+
+
+
+    
+    <div class="description">
+        <p>
+        A GeoJSON Point object
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">boundaryBox
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array with [min. longitude, min. latitude, max. longitude, max. latitude]</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var boundaryBox = new jsonOdm.Geo.BoundaryBox([-180.00,-90.00,180.00,90.00]);</code></pre>
+
+    
+
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="detectAsGeometry">
+
+      
+        detectAsGeometry<span class="signature">(geometry)</span><span class="type-signature"> &rarr; {boolean|<a href="jsonOdm.Geo.BoundaryBox.html">jsonOdm.Geo.BoundaryBox</a>|<a href="jsonOdm.Geo.Point.html">jsonOdm.Geo.Point</a>|<a href="jsonOdm.Geo.MultiPoint.html">jsonOdm.Geo.MultiPoint</a>|<a href="jsonOdm.Geo.LineString.html">jsonOdm.Geo.LineString</a>|<a href="jsonOdm.Geo.MultiLineString.html">jsonOdm.Geo.MultiLineString</a>|<a href="jsonOdm.Geo.Polygon.html">jsonOdm.Geo.Polygon</a>|<a href="jsonOdm.Geo.MultiPolygon.html">jsonOdm.Geo.MultiPolygon</a>|<a href="jsonOdm.Geo.GeometryCollection.html">jsonOdm.Geo.GeometryCollection</a>}</span><span class="label label-info">static</span> 
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Takes an array and puts it into a GeoJSON geometry definition. If it geometry already is a valid GeoJSON it will only be returned
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">geometry
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+|
+
+<a href="jsonOdm.Geo.BoundaryBox.html">jsonOdm.Geo.BoundaryBox</a>
+|
+
+<a href="jsonOdm.Geo.Point.html">jsonOdm.Geo.Point</a>
+|
+
+<a href="jsonOdm.Geo.MultiPoint.html">jsonOdm.Geo.MultiPoint</a>
+|
+
+<a href="jsonOdm.Geo.LineString.html">jsonOdm.Geo.LineString</a>
+|
+
+<a href="jsonOdm.Geo.MultiLineString.html">jsonOdm.Geo.MultiLineString</a>
+|
+
+<a href="jsonOdm.Geo.Polygon.html">jsonOdm.Geo.Polygon</a>
+|
+
+<a href="jsonOdm.Geo.MultiPolygon.html">jsonOdm.Geo.MultiPolygon</a>
+|
+
+<a href="jsonOdm.Geo.GeometryCollection.html">jsonOdm.Geo.GeometryCollection</a>
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+boolean
+|
+
+<a href="jsonOdm.Geo.BoundaryBox.html">jsonOdm.Geo.BoundaryBox</a>
+|
+
+<a href="jsonOdm.Geo.Point.html">jsonOdm.Geo.Point</a>
+|
+
+<a href="jsonOdm.Geo.MultiPoint.html">jsonOdm.Geo.MultiPoint</a>
+|
+
+<a href="jsonOdm.Geo.LineString.html">jsonOdm.Geo.LineString</a>
+|
+
+<a href="jsonOdm.Geo.MultiLineString.html">jsonOdm.Geo.MultiLineString</a>
+|
+
+<a href="jsonOdm.Geo.Polygon.html">jsonOdm.Geo.Polygon</a>
+|
+
+<a href="jsonOdm.Geo.MultiPolygon.html">jsonOdm.Geo.MultiPolygon</a>
+|
+
+<a href="jsonOdm.Geo.GeometryCollection.html">jsonOdm.Geo.GeometryCollection</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
         
             
 

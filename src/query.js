@@ -89,7 +89,7 @@ jsonOdm.Query.prototype.$first = function () {
 
 /**
  * Test a collection or collection field against one or more values
- * @param {Array} comparables An array of values to test again
+ * @param {*} comparables An array of values to test again
  * @param {function} collectionTest the test function to evaluate the values
  * @return {jsonOdm.Query}
  */
@@ -324,6 +324,24 @@ jsonOdm.Query.prototype.$regex = function (regex,options) {
     });
 };
 
+/*-------- GEO ----------*/
+/**
+ * Checks whether the current field geometry is within the given geometry object <br/>
+ * The method automatically transforms arrays into the assumed GeoJSON definitions where: <br/>
+ * [10,10] transforms into a jsonOdm.Geo.Point <br/>
+ * [[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString <br/>
+ * [[[10,10],[10,12],...],...] transforms into a jsonOdm.Geo.Polygon <br/>
+ * [[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon <br/>
+ * @param {Array|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.Point|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$geoWithin = function (geometry) {
+    return this.$testCollection(jsonOdm.Geo.detectAsGeometry(geometry), function (collectionValue,geometry) {
+        return json.Geo[collectionValue.type] && json.Geo[collectionValue.type].within && json.Geo[collectionValue.type].within(collectionValue,geometry);
+    });
+};
+
+/*-------- Logic ---------*/
 /**
  * Compares sub query results using the boolean and
  * @param {...jsonOdm.Query} queries A finite number of operators

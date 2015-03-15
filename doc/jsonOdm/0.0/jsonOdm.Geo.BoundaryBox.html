@@ -577,7 +577,7 @@
 
 <header>
     <h1 class="page-header">
-      MultiPolygon
+      BoundaryBox
     </h1>
 
     
@@ -615,7 +615,7 @@
     <h3 class="
         subsection-title name
         
-      " id="MultiPolygon">
+      " id="BoundaryBox">
 
       
         
@@ -629,7 +629,7 @@
     </h3>
 
     
-      <h4>new MultiPolygon<span class="signature">(positions, <span class="optional">boundaryBox</span>)</span><span class="type-signature"></span></h4>
+      <h4>new BoundaryBox<span class="signature">(boundaryBox)</span><span class="type-signature"></span></h4>
     
 
     
@@ -644,7 +644,7 @@
     
     <div class="description">
         <p>
-        A GeoJSON MultiPolygon object
+        A GeoJSON Point object
         </p>
     </div>
     
@@ -677,33 +677,7 @@
 
         <tr>
             
-                <td class="name">positions
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-Array
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">An array of Polygon position arrays</td>
-        </tr>
-
-        
-
-        <tr>
-            
                 <td class="name">boundaryBox
-                  
-                    <i title="optional parameter" class="fa fa-question-circle"></i>
                   
                 </td>
             
@@ -770,16 +744,7 @@ Array
     
         <h4>Example</h4>
         
-    <pre class="prettyprint"><code>var polygons = new jsonOdm.Geo.MultiPolygon([
-   [
-     [[51.2,32],[51.4,21],[51.6,21],[51.2,21]],
-     [[51.5,32],[51.6,21],[51.7,21],[51.5,21]]
-   ],
-   [
-     [[51.2,32],[51.4,21],[51.6,21],[51.2,21]],
-     [[51.5,32],[51.6,21],[51.7,21],[51.5,21]]
-   ]
-]);</code></pre>
+    <pre class="prettyprint"><code>var boundaryBox = new jsonOdm.Geo.BoundaryBox([-180.00,-90.00,180.00,90.00]);</code></pre>
 
     
 
