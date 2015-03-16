@@ -226,6 +226,25 @@
       <i class="fa fa-cog"></i>
     
 
+    <a href="jsonOdm.Geo.html#lineStringWithinLineString">lineStringWithinLineString</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
     <a href="jsonOdm.Geo.html#pointWithinBounds">pointWithinBounds</a>
   </li>
 
@@ -797,6 +816,28 @@ Changing the coordinate reference system (CRS) is not supported yet.
             <td class="description">
                 
                     Takes an array and puts it into a GeoJSON geometry definition. If it geometry already is a valid GeoJSON it will only be returned
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Geo.html#lineStringWithinLineString">lineStringWithinLineString</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Checks whether a line follows another line or is on the line respectively
                 
 
                 
@@ -1982,6 +2023,189 @@ Array
 
     
 
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="lineStringWithinLineString">
+
+      
+        lineStringWithinLineString<span class="signature">(lineString, inLineString)</span><span class="type-signature"> &rarr; {boolean}</span><span class="label label-info">static</span> 
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Checks whether a line follows another line or is on the line respectively
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">lineString
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array of points, i.e. [[1,1],[1,2],[1,3]]</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">inLineString
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">An array of points, i.e. [[1,1],[1,2],[1,3]]</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+boolean
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
 
 
         

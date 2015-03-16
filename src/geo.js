@@ -268,7 +268,41 @@ jsonOdm.Geo.LineString.within = function (lineString, geometry) {
     if (!lineString.coordinates || !jsonOdm.util.isArray(lineString.coordinates)) return false;
     if (geometry.type == "Point" || geometry.type == "MultiPoint") return false;
 
-
+    if (geometry.type == "LineString") {
+        return jsonOdm.Geo.lineStringWithinLineString(lineString.coordinates,geometry.coordinates);
+    }
+    if (geometry.type == "MultiLineString") {
+        for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+            if (jsonOdm.Geo.lineStringWithinLineString(lineString.coordinates,geometry.coordinates[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+    if (geometry.type == "Polygon") {
+        // easy way: all line points are in the polygon
+        for(i = 0; lineString.coordinates && i < lineString.coordinates.length; i++){
+            if(!jsonOdm.Geo.pointWithinPolygon(lineString.coordinates[i])) return false;
+        }
+        return true;
+        // hard way + worse performance: any poly line segment intersects any lineString segment -> then its not inside anymore
+    }
+    if (geometry.type == "MultiPolygon") {
+        for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+            for(j = 0; lineString.coordinates && j < lineString.coordinates.length; j++){
+                if(!jsonOdm.Geo.pointWithinPolygon(lineString.coordinates[i])) break;
+                if(j+1 == lineString.coordinates.length) return true;
+            }
+        }
+        return false;
+    }
+    if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        // maybe order it by complexity to get a better best case scenario
+        for(i = 0; i < geometry.geometries.length; i++){
+            if(jsonOdm.Geo.MultiPoint.within(lineString,geometry.geometries[i])) return true;
+        }
+        return false;
+    }
     // assume we have a BoundaryBox given
     for(i = 0; i < lineString.coordinates.length; i++){
         if(!jsonOdm.Geo.pointWithinBounds(lineString.coordinates[i],geometry)) return false;
@@ -425,4 +459,39 @@ jsonOdm.Geo.pointWithinLineString = function (point, lineString) {
 jsonOdm.Geo.pointWithinBounds = function (point, bounds) {
     if(!(jsonOdm.util.isArray(point) && jsonOdm.util.isArray(bounds) && bounds.length == 4)) return false;
     return point[0] >= bounds[0] && point[1] >= bounds[1] && point[0] <= bounds[2] && point[1] <= bounds[3];
+};
+
+/**
+ * Checks whether a line follows another line or is on the line respectively
+ * @param {Array} lineString An array of points, i.e. [[1,1],[1,2],[1,3]]
+ * @param {Array} inLineString An array of points, i.e. [[1,1],[1,2],[1,3]]
+ * @return {boolean}
+ */
+jsonOdm.Geo.lineStringWithinLineString = function (lineString,inLineString) {
+    if(!(jsonOdm.util.isArray(lineString) && jsonOdm.util.isArray(inLineString))) return false;
+    var i,j;
+    for (i = 0; lineString && i < lineString.length; i++) {
+        var found = false;
+        for (j = 0; inLineString && j < inLineString.length; j++) {
+            if(lineString[i][0] == inLineString[j][0] && lineString[i][1] == inLineString[j][1]){
+                if(i+1 == lineString.length){
+                    return true; // we have successfully found the last matching line point
+                }
+                // the next vertex needs to match the next geometry point or the previous or the same again
+                if(
+                    !(
+                        // next is not the next one
+                        (lineString[i+1][0] == inLineString[j+1][0] && lineString[i+1][1] == inLineString[j+1][1]) ||
+                        // next is not the same one
+                        (lineString[i+1][0] == inLineString[j][0]   && lineString[i+1][1] == inLineString[j][1]) ||
+                        // next is not the previous one
+                        (j > 0 && lineString[i+1][0] == inLineString[j-1][0] && lineString[i+1][1] == inLineString[j-1][1])
+                    )
+                ) return false;
+                found = true;
+            }
+        }
+        if(!found) return false;
+    }
+    return true;
 };
