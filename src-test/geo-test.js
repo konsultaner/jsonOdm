@@ -17,6 +17,7 @@ GeoTest.prototype.testPointInPolygon = function () {
     assertTrue("Point in Square",jsonOdm.Geo.pointWithinPolygon(point,polygon4));
     assertTrue("Point on Path",jsonOdm.Geo.pointWithinPolygon(point,polygon5));
     assertTrue("Point on Vertex",jsonOdm.Geo.pointWithinPolygon(point,polygon6));
+    assertTrue("Point on Vertex",jsonOdm.Geo.pointWithinPolygon([1,1], [[1,2],[3,1],[1,1],[1,5],[1,2]]));
 };
 
 GeoTest.prototype.testPointOnLineString = function () {
@@ -134,9 +135,9 @@ GeoTest.prototype.testMultiPointInGeometry = function () {
     ])));
 };
 
-
 GeoTest.prototype.testLineStringInGeometry = function () {
     assertFalse("LineString cannot be in Point", jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[1,2],[2,1]]),new jsonOdm.Geo.Point([1,2])));
+    assertFalse("LineString cannot be in MultiPoint", jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[1,2],[2,1]]),new jsonOdm.Geo.MultiPoint([[1,2],[2,1]])));
 
     assertTrue("LineString is in bounds" ,      jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[1,2],[1,1]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
     assertTrue("LineString is just in bounds" , jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[0,0],[2,2]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
@@ -164,20 +165,75 @@ GeoTest.prototype.testLineStringInGeometry = function () {
     assertTrue("LineString is in MultiPolygon[1] on vertex " , jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[1,1],[3,1],[1,2]]), new jsonOdm.Geo.MultiPolygon([[[[10,20],[30,10],[10,10],[10,50],[10,20]]],[[[1,2],[3,1],[1,1],[1,5],[1,2]]]])));
     assertTrue("LineString is in MultiPolygon[0] inside" ,     jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[2,1],[1,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]])));
     assertTrue("LineString is in MultiPolygon[1] inside" ,     jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[2,1],[1,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]],[[[0,0],[2,0],[2,2],[0,2],[0,0]]]])));
-    assertFalse("LineString is in MultiPolygon on vertex " ,   jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[0,0],[1,-1]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]])));
+    assertFalse("LineString not in MultiPolygon" ,             jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[0,0],[1,-1]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]])));
 
-    assertTrue("MultiPoint is in GeometryCollection[0]" , jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]), new jsonOdm.Geo.GeometryCollection([
+    assertTrue("LineString is in GeometryCollection[0]" , jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[1,1],[1,2]]), new jsonOdm.Geo.GeometryCollection([
         new jsonOdm.Geo.MultiLineString([[[1,2],[1,1]],[[3,1],[1,1]]]),
         new jsonOdm.Geo.LineString([[2,1],[1,2]]),
         new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
     ])));
-    assertTrue("MultiPoint is in GeometryCollection[1]" , jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[1,1],[2,2]]), new jsonOdm.Geo.GeometryCollection([
+    assertTrue("LineString is in GeometryCollection[1]" , jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[1,1],[2,2]]), new jsonOdm.Geo.GeometryCollection([
         new jsonOdm.Geo.LineString([[2,1],[1,2]]),
         new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]]),
         new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
     ])));
-    assertFalse("MultiPoint is not in GeometryCollection" , jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[1,1],[0,-2]]), new jsonOdm.Geo.GeometryCollection([
+    assertFalse("LineString is not in GeometryCollection" , jsonOdm.Geo.LineString.within(new jsonOdm.Geo.LineString([[1,1],[0,-2]]), new jsonOdm.Geo.GeometryCollection([
         new jsonOdm.Geo.LineString([[2,1],[1,2]]),
+        new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
+    ])));
+};
+
+GeoTest.prototype.testMultiLineStringInGeometry = function () {
+    assertFalse("MultiLineString cannot be in Point", jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,2],[2,1]]]),new jsonOdm.Geo.Point([1,2])));
+    assertFalse("MultiLineString cannot be in MultiPoint", jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,2],[2,1]]]),new jsonOdm.Geo.MultiPoint([[1,2],[2,1]])));
+
+    assertTrue("MultiLineString is in bounds" ,      jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,2],[1,1]],[[0,2],[1,1],[2,2],[0,1]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
+    assertFalse("MultiLineString is not in bounds" , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,2],[1,1]],[[0,3],[1,1],[2,2],[0,1]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
+    assertFalse("MultiLineString is not in bounds" , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[0,3],[1,1],[2,2],[0,1]],[[1,2],[1,1]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
+    assertFalse("MultiLineString is not in bounds" , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[0,3],[1,1],[2,2],[0,1]],[[1,2],[1,1]]]),new jsonOdm.Geo.BoundaryBox([0,0,-2,-2])));
+
+    assertTrue("MultiLineString is in LineString" ,   jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[2,8],[3,1]],[[1,2],[1,1],[1,2],[3,1]]]),new jsonOdm.Geo.LineString([[1,1],[1,2],[3,1],[2,8]])));
+    assertTrue("MultiLineString is in LineString" ,   jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[2,8],[3,1]]]),new jsonOdm.Geo.LineString([[1,1],[1,2],[3,1],[2,8]])));
+    assertTrue("MultiLineString is in LineString" ,   jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]]]),new jsonOdm.Geo.LineString([[1,1],[1,2],[3,1],[2,8]])));
+    assertTrue("MultiLineString is in LineString" ,   jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[3,1],[2,8]]]),new jsonOdm.Geo.LineString([[1,1],[1,2],[3,1],[2,8]])));
+    assertFalse("MultiLineString not in LineString" , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[2,8]]]),new jsonOdm.Geo.LineString([[1,1],[1,2],[3,1],[2,8]])));
+    assertFalse("MultiLineString not in LineString" , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[2,8],[1,1]],[[1,2],[1,1],[1,2],[3,1]]]),new jsonOdm.Geo.LineString([[1,1],[1,2],[3,1],[2,8]])));
+    assertFalse("MultiLineString not in LineString" , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[2,8],[3,1]],[[1,2],[1,1],[3,1]]]),new jsonOdm.Geo.LineString([[1,1],[1,2],[3,1],[2,8]])));
+
+    assertTrue("MultiLineString is in MultiLineString",   jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]])));
+    assertTrue("MultiLineString is in MultiLineString",   jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]],[[2,1],[1,6]]])));
+    assertTrue("MultiLineString is in MultiLineString",   jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[3,1],[1,5]],[[1,1],[1,2]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]])));
+    assertTrue("MultiLineString is in MultiLineString",   jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[3,1],[1,5]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]])));
+    assertFalse("MultiLineString not in MultiLineString", jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2],[3,1],[1,5]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]])));
+    assertFalse("MultiLineString not in MultiLineString", jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[3,1],[1,5]],[[1,1],[1,3]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]])));
+    assertFalse("MultiLineString not in MultiLineString", jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[3,1],[1,4]],[[1,1],[1,2]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]])));
+    assertFalse("MultiLineString not in MultiLineString", jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,4]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]]])));
+
+    assertTrue("MultiLineString is in Polygon on vertex" , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]]),new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]])));
+    assertTrue("MultiLineString is in Polygon inside" ,    jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[2,1],[1,1]],[[0.5,2],[1,0.5],[1,2]]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]])));
+    assertFalse("MultiLineString intersects in Polygon" ,  jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[2,1],[1,1]],[[0.5,2],[1,0.5],[1,3]]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]])));
+    assertFalse("MultiLineString is not in Polygon" ,      jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[2,1],[1,1]],[[-2,-1],[-1,-1]]]),new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]])));
+    assertFalse("MultiLineString is not in Polygon" ,      jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[-2,-1],[-1,-1]],[[2,1],[1,1]]]),new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]])));
+
+    assertTrue("MultiLineString is in MultiPolygon[0] on vertex " , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]])));
+    assertTrue("MultiLineString is in MultiPolygon[1] on vertex " , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]]), new jsonOdm.Geo.MultiPolygon([[[[10,20],[30,10],[10,10],[10,50],[10,20]]],[[[1,2],[3,1],[1,1],[1,5],[1,2]]]])));
+    assertTrue("MultiLineString is in MultiPolygon[0] inside" ,     jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[2,1],[1,1]],[[0.5,2],[1,0.5],[1,2]]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]])));
+    assertTrue("MultiLineString is in MultiPolygon[1] inside" ,     jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[2,1],[1,1]],[[0.5,2],[1,0.5],[1,2]]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]],[[[0,0],[2,0],[2,2],[0,2],[0,0]]]])));
+    assertFalse("MultiLineString not in MultiPolygon " ,            jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[-2,-1],[-1,-1]],[[2,1],[1,1]]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]])));
+    assertFalse("MultiLineString not in MultiPolygon " ,            jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[2,1],[1,1]],[[-2,-1],[-1,-1]]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]])));
+
+    assertTrue("MultiLineString is in GeometryCollection[0]" , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2],[1,5],[4,2]],[[2,1],[3,1],[1,5]]]), new jsonOdm.Geo.GeometryCollection([
+        new jsonOdm.Geo.BoundaryBox([0,0,8,8]),
+        new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+        new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
+    ])));
+    assertTrue("MultiLineString is in GeometryCollection[1]" , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2],[1,5],[4,2]],[[2,1],[3,1],[1,5]]]), new jsonOdm.Geo.GeometryCollection([
+        new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+        new jsonOdm.Geo.BoundaryBox([0,0,8,8]),
+        new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
+    ])));
+    assertFalse("MultiLineString is not in GeometryCollection" , jsonOdm.Geo.MultiLineString.within(new jsonOdm.Geo.MultiLineString([[[1,1],[1,2],[1,5],[4,2]],[[2,1],[3,1],[1,5]]]), new jsonOdm.Geo.GeometryCollection([
+        new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
         new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
     ])));
 };

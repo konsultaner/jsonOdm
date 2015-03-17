@@ -299,13 +299,15 @@ jsonOdm.Geo.LineString.within = function (lineString, geometry) {
     if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
         // maybe order it by complexity to get a better best case scenario
         for(i = 0; i < geometry.geometries.length; i++){
-            if(jsonOdm.Geo.MultiPoint.within(lineString,geometry.geometries[i])) return true;
+            if(jsonOdm.Geo.LineString.within(lineString,geometry.geometries[i])) return true;
         }
         return false;
     }
     // assume we have a BoundaryBox given
     for(i = 0; i < lineString.coordinates.length; i++){
-        if(!jsonOdm.Geo.pointWithinBounds(lineString.coordinates[i],geometry)) return false;
+        if(!jsonOdm.Geo.pointWithinBounds(lineString.coordinates[i],geometry)){
+            return false;
+        }
     }
     return true;
 };
@@ -348,7 +350,7 @@ jsonOdm.Geo.MultiLineString.within = function (multiLineString, geometry) {
         for (j = 0; multiLineString.coordinates && j < multiLineString.coordinates.length; j++) {
             found = false;
             for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
-                if (jsonOdm.Geo.lineStringWithinLineString(multiLineString.coordinates,geometry.coordinates[i])) {
+                if (jsonOdm.Geo.lineStringWithinLineString(multiLineString.coordinates[j],geometry.coordinates[i])) {
                     found = true;
                     break;
                 }
@@ -368,32 +370,35 @@ jsonOdm.Geo.MultiLineString.within = function (multiLineString, geometry) {
         // hard way + worse performance: any poly line segment intersects any lineString segment -> then its not inside anymore
     }
     if (geometry.type == "MultiPolygon") {
-        for(i = 0; multiLineString.coordinates && i < multiLineString.coordinates.length; i++){
+        for(j = 0; multiLineString.coordinates && j < multiLineString.coordinates.length; j++) {
             found = false;
-            for(j = 0; multiLineString.coordinates && j < multiLineString.coordinates[i].length; j++){
-                for(k = 0; geometry.coordinates && k < geometry.coordinates.length; k++){
-                    if(jsonOdm.Geo.pointWithinPolygon(multiLineString.coordinates[i][j],geometry.coordinates[k][0])){
-                        found = true;
-                        break;
+            for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+                for (k = 0; multiLineString.coordinates[j] && k < multiLineString.coordinates[j].length; k++) {
+                    if (jsonOdm.Geo.pointWithinPolygon(multiLineString.coordinates[j][k], geometry.coordinates[i][0]) && k + 1 == multiLineString.coordinates[j].length) {
+                        found = true; break;
                     }
-                    if(!jsonOdm.Geo.pointWithinPolygon(multiLineString.coordinates[i][j],geometry.coordinates[k][0])) break;
-                    if(j+1 == multiLineString.coordinates.length) found = true;
                 }
             }
-            if(!found) return false;
+            if(!found){
+                return false;
+            }
         }
         return true;
     }
     if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
         // maybe order it by complexity to get a better best case scenario
         for(i = 0; i < geometry.geometries.length; i++){
-            if(jsonOdm.Geo.MultiPoint.within(multiLineString,geometry.geometries[i])) return true;
+            if(jsonOdm.Geo.MultiLineString.within(multiLineString,geometry.geometries[i])) return true;
         }
         return false;
     }
     // assume we have a BoundaryBox given
     for(i = 0; i < multiLineString.coordinates.length; i++){
-        if(!jsonOdm.Geo.pointWithinBounds(multiLineString.coordinates[i],geometry)) return false;
+        for(j = 0; j < multiLineString.coordinates[i].length; j++){
+            if(!jsonOdm.Geo.pointWithinBounds(multiLineString.coordinates[i][j],geometry)){
+                return false;
+            }
+        }
     }
     return true;
 };
