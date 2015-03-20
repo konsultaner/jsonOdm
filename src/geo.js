@@ -501,23 +501,17 @@ jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
  */
 jsonOdm.Geo.edgeWithinPolygon = function (edge, polygon) {
     if(!(jsonOdm.util.isArray(edge) && edge.length == 2 && jsonOdm.util.isArray(polygon) && polygon.length > 2)) return false;
-    var bounds = [Math.min(edge[0][0],edge[1][0]),Math.min(edge[0][1],edge[1][1]),Math.max(edge[0][0],edge[1][0]),Math.max(edge[0][1],edge[1][1])];
-    edge = edge[0][0] > edge[1][0] ? [edge[1],edge[0]] : edge;
 
     // close the polygon
     if(!(polygon[0][0] == polygon[polygon.length-1][0] && polygon[0][1] == polygon[polygon.length-1][1])) polygon = polygon.concat([polygon[0]]);
-    if(!jsonOdm.Geo.pointWithinPolygon(edge[0], polygon)) return false;
+    if(!jsonOdm.Geo.pointWithinPolygon(edge[0], polygon) || !jsonOdm.Geo.pointWithinPolygon(edge[1], polygon)) return false;
 
     for(var i = 0; i < polygon.length - 1; i++){
-        if(
-            polygon[i][0] < bounds[0] && polygon[i+1][0] < bounds[0] ||
-            polygon[i][1] < bounds[1] && polygon[i+1][1] < bounds[1] ||
-            polygon[i][0] > bounds[2] && polygon[i+1][0] > bounds[2] ||
-            polygon[i][1] > bounds[3] && polygon[i+1][1] > bounds[3]
-        ){
-            continue;
+        // All points may be inside the polygon but their might be faces that are outside the polygon
+        if(jsonOdm.Geo.edgeIntersectsEdge(edge,[polygon[i],polygon[i+1]],false)){
+            console.log(edge,[polygon[i],polygon[i+1]]);
+            return false;
         }
-        if(jsonOdm.Geo.edgeIntersectsEdge(edge,[polygon[i],polygon[i-1]])) return false;
     }
     return true;
 };
@@ -526,9 +520,11 @@ jsonOdm.Geo.edgeWithinPolygon = function (edge, polygon) {
  * Method checks whether an edge intersects another edge
  * @param {Array} edge1 A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
  * @param {Array} edge2 A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
+ * @param {boolean} [allowOnEdge=true] also counts it as intersection if the edge is on the other edge
  * @return {boolean}
  */
-jsonOdm.Geo.edgeIntersectsEdge = function (edge1,edge2) {
+jsonOdm.Geo.edgeIntersectsEdge = function (edge1,edge2,allowOnEdge) {
+    allowOnEdge = typeof allowOnEdge == "undefined" ? true : allowOnEdge;
     var directionVector1 = [edge1[1][0]-edge1[0][0],edge1[1][1]-edge1[0][1]],
         bounds1          = [Math.min(edge1[0][0],edge1[1][0]),Math.min(edge1[0][1],edge1[1][1]),Math.max(edge1[0][0],edge1[1][0]),Math.max(edge1[0][1],edge1[1][1])],
         directionVector2 = [edge2[1][0]-edge2[0][0],edge2[1][1]-edge2[0][1]],
@@ -536,9 +532,15 @@ jsonOdm.Geo.edgeIntersectsEdge = function (edge1,edge2) {
     ;
 
     // if not in bounds or if both edges are parallel with not intersection result
-    if(bounds1[0] > bounds2[3] || bounds2[0] > bounds1[3] || bounds1[2] > bounds2[4] || bounds2[2] > bounds1[4]) return false;
+    if(
+        (bounds1[0] > bounds2[0] && bounds1[0] > bounds2[2]) || (bounds1[1] > bounds2[1] && bounds1[1] > bounds2[3]) ||
+        (bounds2[0] > bounds1[0] && bounds2[0] > bounds1[2]) || (bounds2[1] > bounds1[1] && bounds2[1] > bounds1[3])
+    ) {
+        return false;
+    }
+
     if((directionVector2[0]*directionVector1[1] - directionVector1[0]*directionVector2[1]) == 0){
-        return edge1[0][1]+(((edge2[0][0]-edge1[0][0])/(directionVector1[0]))*(directionVector1[1])) == edge2[0][1];
+        return allowOnEdge && edge1[0][1]+(((edge2[0][0]-edge1[0][0])/(directionVector1[0]))*(directionVector1[1])) == edge2[0][1];
     }
 
     var t = (edge1[0][0]*(directionVector2[1]) - edge2[0][0]*(directionVector2[1]) + edge2[0][1]*(directionVector2[0]) - edge1[0][1]*(edge2[1][0]-edge2[0][1])) / ((directionVector1[1])*(directionVector2[0])-(directionVector1[0])*(directionVector2[1])),

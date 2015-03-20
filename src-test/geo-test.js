@@ -31,6 +31,14 @@ GeoTest.prototype.testEdgeIntersectsEdge = function () {
     assertFalse("Parallel",jsonOdm.Geo.edgeIntersectsEdge(                [[0,0], [10,10]],[[-1,0] ,[-11,-10]]));
     assertFalse("Intersects out of bounds",jsonOdm.Geo.edgeIntersectsEdge([[0,0], [10,10]],[[-10,0],[-1,-10]] ));
     assertFalse("Intersects out of bounds",jsonOdm.Geo.edgeIntersectsEdge([[0,0], [10,10]],[[2,0]  ,[11,10]]  ));
+    assertFalse("Intersects out of bounds",jsonOdm.Geo.edgeIntersectsEdge([[0,1], [0,3]]  ,[[0,10] ,[10,10]]  ));
+};
+
+GeoTest.prototype.testEdgeWithinPolygon = function () {
+    assertTrue("Is inside",jsonOdm.Geo.edgeWithinPolygon([[1,1],[3,3]],[[0,0],[0,10],[10,10],[10,0]]));
+    assertTrue("Is on an edge",jsonOdm.Geo.edgeWithinPolygon([[0,1],[0,3]],[[0,0],[0,10],[10,10],[10,0]]));
+    assertFalse("Is on an edge but outside",jsonOdm.Geo.edgeWithinPolygon([[10,1],[10,11]],[[0,0],[0,10],[10,10],[10,0]]));
+    assertFalse("Points inside but intersect",jsonOdm.Geo.edgeWithinPolygon([[2,5],[10,6]],[[0,0],[10,0],[10,10],[6,10],[6,4],[5,10],[0,10]]));
 };
 
 GeoTest.prototype.testPointOnLineString = function () {
