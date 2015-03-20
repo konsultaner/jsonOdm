@@ -20,6 +20,16 @@ GeoTest.prototype.testPointInPolygon = function () {
     assertTrue("Point on Vertex",jsonOdm.Geo.pointWithinPolygon([1,1], [[1,2],[3,1],[1,1],[1,5],[1,2]]));
 };
 
+GeoTest.prototype.testEdgeIntersectsEdge = function () {
+    assertTrue("Intersects",jsonOdm.Geo.edgeIntersectsEdge(                 [[0,0], [10,9] ],[[10,0] ,[0,9]]   )); //10 0
+    assertTrue("Intersects",jsonOdm.Geo.edgeIntersectsEdge(                 [[10,0],[0,10] ],[[0,0]  ,[10,10]] )); //0 0
+    assertTrue("Intersects in Vertex",jsonOdm.Geo.edgeIntersectsEdge(       [[0,0], [10,10]],[[0,0]  ,[11,10]] )); //0 0
+    assertTrue("Intersects in Vertex",jsonOdm.Geo.edgeIntersectsEdge(       [[0,0], [10,10]],[[1,0]  ,[10,10]] )); //NaN NaN
+    assertFalse("Parallel",jsonOdm.Geo.edgeIntersectsEdge(                  [[0,0], [10,10]],[[1,0]  ,[11,10]] )); //-10 0
+    assertFalse("Intersects out of bounds",jsonOdm.Geo.edgeIntersectsEdge(  [[0,0], [10,10]],[[-10,0],[-1,-10]])); //2 0
+    assertFalse("Intersects out of bounds",jsonOdm.Geo.edgeIntersectsEdge(  [[0,0], [10,10]],[[2,0]  ,[11,10]] )); //
+};
+
 GeoTest.prototype.testPointOnLineString = function () {
     var point = [10,10];
     var line1 = [[0,0],[0,10],[10,10],[10,0]];

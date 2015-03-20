@@ -473,11 +473,10 @@ jsonOdm.Geo.GeometryCollection = function (geometries,boundaryBox) {
 jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
     if(!(jsonOdm.util.isArray(point) && jsonOdm.util.isArray(polygon) && polygon.length > 2)) return false;
 
-    var isClosed = polygon[0][0] == polygon[polygon.length-1][0] && polygon[0][1] == polygon[polygon.length-1][1];
     var intersection = 0;
 
     // close the polygon
-    if(!isClosed) polygon = polygon.concat([polygon[0]]);
+    if(!(polygon[0][0] == polygon[polygon.length-1][0] && polygon[0][1] == polygon[polygon.length-1][1])) polygon = polygon.concat([polygon[0]]);
 
     // do not enter the last point because the calculation also reads the i+1th index
     for(var i = 0; i < polygon.length - 1; i++){
@@ -492,6 +491,59 @@ jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
         if((polygon[i][0]-polygon[i+1][0]) * ((point[1]-polygon[i+1][1])/(polygon[i][1]-polygon[i+1][1])) + polygon[i+1][0] >= point[1]) intersection++; // the vector intersects the positive x-axis of the coordinate system normalized to the point
     }
     return intersection%2 == 1; // the normalized x-axis needs to be intersected by a odd amount of intersections
+};
+
+/**
+ * The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+ * @param {Array} edge A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
+ * @param {Array} polygon A polygon representation i.e. [[1,2],[2,3],[4,4],[1,2]]
+ * @return {boolean}
+ */
+jsonOdm.Geo.edgeWithinPolygon = function (edge, polygon) {
+    if(!(jsonOdm.util.isArray(edge) && edge.length == 2 && jsonOdm.util.isArray(polygon) && polygon.length > 2)) return false;
+    var bounds = [Math.min(edge[0][0],edge[1][0]),Math.min(edge[0][1],edge[1][1]),Math.max(edge[0][0],edge[1][0]),Math.max(edge[0][1],edge[1][1])];
+    edge = edge[0][0] > edge[1][0] ? [edge[1],edge[0]] : edge;
+
+    // close the polygon
+    if(!(polygon[0][0] == polygon[polygon.length-1][0] && polygon[0][1] == polygon[polygon.length-1][1])) polygon = polygon.concat([polygon[0]]);
+    if(!jsonOdm.Geo.pointWithinPolygon(edge[0], polygon)) return false;
+
+    for(var i = 0; i < polygon.length - 1; i++){
+        if(
+            polygon[i][0] < bounds[0] && polygon[i+1][0] < bounds[0] ||
+            polygon[i][1] < bounds[1] && polygon[i+1][1] < bounds[1] ||
+            polygon[i][0] > bounds[2] && polygon[i+1][0] > bounds[2] ||
+            polygon[i][1] > bounds[3] && polygon[i+1][1] > bounds[3]
+        ){
+            continue;
+        }
+        if(jsonOdm.Geo.edgeIntersectsEdge(edge,[polygon[i],polygon[i-1]])) return false;
+    }
+    return true;
+};
+
+/**
+ * Method checks whether an edge intersects another edge
+ * @param {Array} edge1 A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
+ * @param {Array} edge2 A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
+ * @return {boolean}
+ */
+jsonOdm.Geo.edgeIntersectsEdge = function (edge1,edge2) {
+    var directionVector1 = [edge1[1][0]-edge1[0][0],edge1[1][1]-edge1[0][1]],
+        bounds1          = [Math.min(edge1[0][0],edge1[1][0]),Math.min(edge1[0][1],edge1[1][1]),Math.max(edge1[0][0],edge1[1][0]),Math.max(edge1[0][1],edge1[1][1])],
+        directionVector2 = [edge2[1][0]-edge2[0][0],edge2[1][1]-edge2[0][1]],
+        bounds2          = [Math.min(edge2[0][0],edge2[1][0]),Math.min(edge2[0][1],edge2[1][1]),Math.max(edge2[0][0],edge2[1][0]),Math.max(edge2[0][1],edge2[1][1])]
+    ;
+
+    // if not in bounds or if both edges are parallel with not intersection result
+    if(bounds1[0] > bounds2[3] || bounds2[0] > bounds1[3] || bounds1[2] > bounds2[4] || bounds2[2] > bounds1[4] || (directionVector2[0]*directionVector1[1] - directionVector1[0]*directionVector2[1]) == 0) return false;
+
+    var t = (edge1[0][0]*(directionVector2[1]) - edge2[0][0]*(directionVector2[1]) + edge2[0][1]*(directionVector2[0]) - edge1[0][1]*(edge2[1][0]-edge2[0][1])) / ((directionVector1[1])*(directionVector2[0])-(directionVector1[0])*(directionVector2[1])),
+        x = edge1[0][0] + (t*(directionVector1[0])),
+        y = edge1[0][1] + (t*(edge1[1][1]-edge1[1][1]));
+
+    // intersection needs to be inside the bounds
+    return !(x < bounds1[0] || x > bounds1[2] || y < bounds1[1] || y > bounds1[3]);
 };
 
 /**
