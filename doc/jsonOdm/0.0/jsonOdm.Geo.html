@@ -1395,7 +1395,7 @@ boolean
       " id="edgeIntersectsEdge">
 
       
-        edgeIntersectsEdge<span class="signature">(edge1, edge2)</span><span class="type-signature"> &rarr; {boolean}</span><span class="label label-info">static</span> 
+        edgeIntersectsEdge<span class="signature">(edge1, edge2, <span class="optional">allowOnEdge</span>)</span><span class="type-signature"> &rarr; {boolean}</span><span class="label label-info">static</span> 
       
 
       
@@ -1444,6 +1444,8 @@ boolean
                 <th>Type</th>
 
                 
+                <th>Default</th>
+                
 
                 <th class="last">Description</th>
         </tr>
@@ -1470,6 +1472,10 @@ Array
             </td>
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]</td>
         </tr>
@@ -1494,8 +1500,44 @@ Array
             </td>
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">allowOnEdge
+                  
+                    <i title="optional parameter" class="fa fa-question-circle"></i>
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+boolean
+
+
+
+            
+            </td>
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">also counts it as intersection if the edge is on the other edge</td>
         </tr>
 
         

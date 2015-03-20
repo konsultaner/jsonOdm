@@ -279,17 +279,15 @@ jsonOdm.Geo.LineString.within = function (lineString, geometry) {
         return false;
     }
     if (geometry.type == "Polygon") {
-        // easy way: all line points are in the polygon
-        for(i = 0; lineString.coordinates && i < lineString.coordinates.length; i++){
-            if(!jsonOdm.Geo.pointWithinPolygon(lineString.coordinates[i],geometry.coordinates[0])) return false;
+        for(i = 0; lineString.coordinates && i < lineString.coordinates.length-1; i++){
+            if(!jsonOdm.Geo.edgeWithinPolygon([lineString.coordinates[i],lineString.coordinates[i+1]],geometry.coordinates[0]))return false;
         }
         return true;
-        // hard way + worse performance: any poly line segment intersects any lineString segment -> then its not inside anymore
     }
     if (geometry.type == "MultiPolygon") {
         for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
-            for(j = 0; lineString.coordinates && j < lineString.coordinates.length; j++){
-                if(jsonOdm.Geo.pointWithinPolygon(lineString.coordinates[j],geometry.coordinates[i][0]) && j+1 == lineString.coordinates.length){
+            for(j = 0; lineString.coordinates && j < lineString.coordinates.length - 1; j++){
+                if(jsonOdm.Geo.edgeWithinPolygon([lineString.coordinates[j],lineString.coordinates[j+1]],geometry.coordinates[i][0]) && j+1 == lineString.coordinates.length - 1){
                     return true;
                 }
             }
@@ -360,21 +358,19 @@ jsonOdm.Geo.MultiLineString.within = function (multiLineString, geometry) {
         return true;
     }
     if (geometry.type == "Polygon") {
-        // easy way: all line points are in the polygon
         for(i = 0; multiLineString.coordinates && i < multiLineString.coordinates.length; i++){
-            for(j = 0; multiLineString.coordinates && j < multiLineString.coordinates[i].length; j++){
-                if(!jsonOdm.Geo.pointWithinPolygon(multiLineString.coordinates[i][j],geometry.coordinates[0])) return false;
+            for(j = 0; multiLineString.coordinates && j < multiLineString.coordinates[i].length - 1; j++){
+                if(!jsonOdm.Geo.edgeWithinPolygon([multiLineString.coordinates[i][j],multiLineString.coordinates[i][j+1]],geometry.coordinates[0])) return false;
             }
         }
         return true;
-        // hard way + worse performance: any poly line segment intersects any lineString segment -> then its not inside anymore
     }
     if (geometry.type == "MultiPolygon") {
         for(j = 0; multiLineString.coordinates && j < multiLineString.coordinates.length; j++) {
             found = false;
             for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
-                for (k = 0; multiLineString.coordinates[j] && k < multiLineString.coordinates[j].length; k++) {
-                    if (jsonOdm.Geo.pointWithinPolygon(multiLineString.coordinates[j][k], geometry.coordinates[i][0]) && k + 1 == multiLineString.coordinates[j].length) {
+                for (k = 0; multiLineString.coordinates[j] && k < multiLineString.coordinates[j].length - 1; k++) {
+                    if (jsonOdm.Geo.edgeWithinPolygon([multiLineString.coordinates[j][k],multiLineString.coordinates[j][k+1]], geometry.coordinates[i][0]) && k + 1 == multiLineString.coordinates[j].length - 1) {
                         found = true; break;
                     }
                 }
@@ -509,7 +505,6 @@ jsonOdm.Geo.edgeWithinPolygon = function (edge, polygon) {
     for(var i = 0; i < polygon.length - 1; i++){
         // All points may be inside the polygon but their might be faces that are outside the polygon
         if(jsonOdm.Geo.edgeIntersectsEdge(edge,[polygon[i],polygon[i+1]],false)){
-            console.log(edge,[polygon[i],polygon[i+1]]);
             return false;
         }
     }
@@ -543,12 +538,12 @@ jsonOdm.Geo.edgeIntersectsEdge = function (edge1,edge2,allowOnEdge) {
         return allowOnEdge && edge1[0][1]+(((edge2[0][0]-edge1[0][0])/(directionVector1[0]))*(directionVector1[1])) == edge2[0][1];
     }
 
-    var t = (edge1[0][0]*(directionVector2[1]) - edge2[0][0]*(directionVector2[1]) + edge2[0][1]*(directionVector2[0]) - edge1[0][1]*(edge2[1][0]-edge2[0][1])) / ((directionVector1[1])*(directionVector2[0])-(directionVector1[0])*(directionVector2[1])),
+    var t = (edge1[0][0]*(directionVector2[1]) - edge2[0][0]*(directionVector2[1]) - edge1[0][1]*(directionVector2[0])) / ((directionVector1[1])*(directionVector2[0])-(directionVector1[0])*(directionVector2[1])),
         x = edge1[0][0] + (t*(directionVector1[0])),
-        y = edge1[0][1] + (t*(edge1[1][1]-edge1[1][1]));
+        y = edge1[0][1] + (t*(directionVector1[1]));
 
     // intersection needs to be inside the bounds
-    return !(x < bounds1[0] || x > bounds1[2] || y < bounds1[1] || y > bounds1[3]);
+    return allowOnEdge ? (x >= bounds1[0] && x <= bounds1[2] && y >= bounds1[1] && y <= bounds1[3]) : (x > bounds1[0] && x < bounds1[2] && y > bounds1[1] && y < bounds1[3]);
 };
 
 /**
