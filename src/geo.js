@@ -420,6 +420,47 @@ jsonOdm.Geo.Polygon = function (positions,boundaryBox) {
 };
 
 /**
+ * Checks whether a Polygon is inside of another geometry
+ * @param {jsonOdm.Geo.Polygon} polygon
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ */
+jsonOdm.Geo.Polygon.within = function (polygon,geometry) {
+    var i, j;
+    if (!polygon.coordinates || !jsonOdm.util.isArray(polygon.coordinates)) return false;
+    if (geometry.type == "Point" || geometry.type == "MultiPoint" || geometry.type == "LineString" || geometry.type == "MultiLineString") return false;
+
+    if (geometry.type == "Polygon") {
+        for(i = 0; polygon.coordinates[0] && i < polygon.coordinates[0].length - 1; i++){
+            if(!jsonOdm.Geo.edgeWithinPolygon([polygon.coordinates[0][i],polygon.coordinates[0][i+1]],geometry.coordinates[0])) return false;
+        }
+        return true;
+    }
+    if (geometry.type == "MultiPolygon") {
+        for(i = 0; geometry.coordinates && i < geometry.coordinates.length - 1; i++) {
+            for (j = 0; polygon.coordinates[0] && j < polygon.coordinates[0].length - 1; j++) {
+                if (jsonOdm.Geo.edgeWithinPolygon([polygon.coordinates[0][j], polygon.coordinates[0][j + 1]], geometry.coordinates[i][0]) && j + 1 == polygon.coordinates[0].length - 1) return true;
+            }
+        }
+        return false;
+    }
+    if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        // maybe order it by complexity to get a better best case scenario
+        for(i = 0; i < geometry.geometries.length; i++){
+            if(jsonOdm.Geo.Polygon.within(polygon,geometry.geometries[i])) return true;
+        }
+        return false;
+    }
+    // assume we have a BoundaryBox given
+    for(i = 0;polygon.coordinates[0] && i < polygon.coordinates[0].length; i++){
+        if(!jsonOdm.Geo.pointWithinBounds(polygon.coordinates[0][i],geometry)){
+            return false;
+        }
+    }
+    return true;
+};
+
+/**
  * A GeoJSON MultiPolygon object
  * @param {Array} positions An array of Polygon position arrays
  * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
@@ -443,6 +484,56 @@ jsonOdm.Geo.MultiPolygon = function (positions,boundaryBox) {
 };
 
 /**
+ * Checks whether a MultiPolygon is inside of another geometry
+ * @param {jsonOdm.Geo.MultiPolygon} multiPolygon
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ */
+jsonOdm.Geo.MultiPolygon.within = function (multiPolygon,geometry) {
+    var i, j, k, found;
+    if (!polygon.coordinates || !jsonOdm.util.isArray(polygon.coordinates)) return false;
+    if (geometry.type == "Point" || geometry.type == "MultiPoint" || geometry.type == "LineString" || geometry.type == "MultiLineString") return false;
+
+    if (geometry.type == "Polygon") {
+        for(i = 0; multiPolygon.coordinates && i < multiPolygon.coordinates.length; i++) {
+            for (j = 0; j < multiPolygon.coordinates[i][0].length - 1; j++) {
+                if (!jsonOdm.Geo.edgeWithinPolygon([multiPolygon.coordinates[i][0][j], multiPolygon.coordinates[i][0][j + 1]], geometry.coordinates[0])) return false;
+            }
+        }
+        return true;
+    }
+    if (geometry.type == "MultiPolygon") {
+        for (i = 0; polygon.coordinates && i < polygon.coordinates.length; i++) {
+            found = false;
+            for (j = 0; geometry.coordinates && j < geometry.coordinates.length - 1; j++) {
+                for (k = 0; polygon.coordinates[i][0] && k < polygon.coordinates[i][0].length - 1; k++) {
+                    if (jsonOdm.Geo.edgeWithinPolygon([polygon.coordinates[i][0][k], polygon.coordinates[i][0][k + 1]], geometry.coordinates[j][0]) && k + 1 == polygon.coordinates[i][0].length - 1){
+                        found = true; break;
+                    }
+                }
+            }
+            if(!found) return false;
+        }
+        return true;
+    }
+    if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        for(i = 0; i < geometry.geometries.length; i++){
+            if(jsonOdm.Geo.MultiPolygon.within(multiPolygon,geometry.geometries[i])) return true;
+        }
+        return false;
+    }
+    // assume we have a BoundaryBox given
+    for(i = 0; i < multiPolygon.coordinates.length; i++) {
+        for (j = 0; j < multiPolygon.coordinates[i][0].length; j++) {
+            if (!jsonOdm.Geo.pointWithinBounds(multiPolygon.coordinates[i][0][j], geometry)) {
+                return false;
+            }
+        }
+    }
+    return true;
+};
+
+/**
  * A GeoJSON GeometryCollection object
  * @param {Array} geometries An array of GeoJSON geometry objects
  * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
@@ -458,6 +549,16 @@ jsonOdm.Geo.GeometryCollection = function (geometries,boundaryBox) {
     this.type = "GeometryCollection";
     this.geometries = geometries;
     if(boundaryBox) this.bbox = boundaryBox;
+};
+
+/**
+ * Checks whether a GeometryCollection is inside of another geometry
+ * @param {jsonOdm.Geo.GeometryCollection} geometryCollection
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ */
+jsonOdm.Geo.GeometryCollection.within = function(geometryCollection,geometry){
+
 };
 
 /**
