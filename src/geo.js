@@ -536,7 +536,10 @@ jsonOdm.Geo.edgeIntersectsEdge = function (edge1,edge2) {
     ;
 
     // if not in bounds or if both edges are parallel with not intersection result
-    if(bounds1[0] > bounds2[3] || bounds2[0] > bounds1[3] || bounds1[2] > bounds2[4] || bounds2[2] > bounds1[4] || (directionVector2[0]*directionVector1[1] - directionVector1[0]*directionVector2[1]) == 0) return false;
+    if(bounds1[0] > bounds2[3] || bounds2[0] > bounds1[3] || bounds1[2] > bounds2[4] || bounds2[2] > bounds1[4]) return false;
+    if((directionVector2[0]*directionVector1[1] - directionVector1[0]*directionVector2[1]) == 0){
+        return edge1[0][1]+(((edge2[0][0]-edge1[0][0])/(directionVector1[0]))*(directionVector1[1])) == edge2[0][1];
+    }
 
     var t = (edge1[0][0]*(directionVector2[1]) - edge2[0][0]*(directionVector2[1]) + edge2[0][1]*(directionVector2[0]) - edge1[0][1]*(edge2[1][0]-edge2[0][1])) / ((directionVector1[1])*(directionVector2[0])-(directionVector1[0])*(directionVector2[1])),
         x = edge1[0][0] + (t*(directionVector1[0])),

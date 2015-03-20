@@ -226,6 +226,44 @@
       <i class="fa fa-cog"></i>
     
 
+    <a href="jsonOdm.Geo.html#edgeIntersectsEdge">edgeIntersectsEdge</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#edgeWithinPolygon">edgeWithinPolygon</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
     <a href="jsonOdm.Geo.html#lineStringWithinLineString">lineStringWithinLineString</a>
   </li>
 
@@ -848,6 +886,50 @@ Changing the coordinate reference system (CRS) is not supported yet.
         <tr>
             <td class="name">
               
+              <a href="jsonOdm.Geo.html#edgeIntersectsEdge">edgeIntersectsEdge</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Method checks whether an edge intersects another edge
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Geo.html#edgeWithinPolygon">edgeWithinPolygon</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
               <a href="jsonOdm.Geo.html#lineStringWithinLineString">lineStringWithinLineString</a>
 
               
@@ -1283,6 +1365,372 @@ boolean
 |
 
 <a href="jsonOdm.Geo.GeometryCollection.html">jsonOdm.Geo.GeometryCollection</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="edgeIntersectsEdge">
+
+      
+        edgeIntersectsEdge<span class="signature">(edge1, edge2)</span><span class="type-signature"> &rarr; {boolean}</span><span class="label label-info">static</span> 
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Method checks whether an edge intersects another edge
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">edge1
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">edge2
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+boolean
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="edgeWithinPolygon">
+
+      
+        edgeWithinPolygon<span class="signature">(edge, polygon)</span><span class="type-signature"> &rarr; {boolean}</span><span class="label label-info">static</span> 
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">edge
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">polygon
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A polygon representation i.e. [[1,2],[2,3],[4,4],[1,2]]</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+boolean
 
 
 

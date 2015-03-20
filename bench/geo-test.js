@@ -28,6 +28,12 @@ module.exports = {
             }
         },
         {
+            name: 'edgeIntersectsEdge: random edges',
+            fn: function() {
+                jsonOdm.Geo.edgeIntersectsEdge([[Math.random(),Math.random()],[Math.random(),Math.random()]],[[Math.random(),Math.random()],[Math.random(),Math.random()]]);
+            }
+        },
+        {
             name: 'pointWithinPolygon: worst case point in worst case polygon with 2000 edges',
             fn: function() {
                 jsonOdm.Geo.pointWithinPolygon(worstCasePoint,worstCasePoly);
