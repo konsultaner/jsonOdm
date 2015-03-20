@@ -19,7 +19,7 @@ Road map
     - Logical (~~$or~~,~~$and~~,~~$not(= $nand as alias)~~,~~$nor~~) 100%
     - Element (~~$exists~~,~~$type~~) 100% (+ $isNull, for is null or undefined)
     - Evaluation (~~$mod~~,~~$regex~~,$text,$where) 50%
-    - Geospatial ($geoWithin,$geoIntersects,$near,$nearSphere) 5%
+    - Geospatial ($geoWithin,$geoIntersects,$near,$nearSphere) 20% (maybe have a hard and a soft check -> performance)
     - Array ($all,$elementMatch,$size) 0% // i may not implement the first two
     - Projection Operators ($,$elemMatch,$meta,$slice) 0%
 - Support Promise/A+ sources for the odm.addSource
