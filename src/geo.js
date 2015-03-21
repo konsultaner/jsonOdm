@@ -8,9 +8,7 @@
  * @module jsonOdm.Geo
  * @constructor
  */
-jsonOdm.Geo = function () {
-
-};
+jsonOdm.Geo = function () {};
 
 /**
  * Takes an array and puts it into a GeoJSON geometry definition. If it geometry already is a valid GeoJSON it will only be returned
@@ -67,7 +65,7 @@ jsonOdm.Geo.Feature = function (geometry,properties,boundaryBox,id) {
 };
 
 /**
- * A GeoJSON Point object
+ * A GeoJSON BoundaryBox object
  * @param {Array} boundaryBox An array with [min. longitude, min. latitude, max. longitude, max. latitude]
  * @example
  * var boundaryBox = new jsonOdm.Geo.BoundaryBox([-180.00,-90.00,180.00,90.00]);
@@ -89,6 +87,18 @@ jsonOdm.Geo.BoundaryBox = function (boundaryBox) {
         self[3] = 0;
     }
     return self;
+};
+
+/**
+ * Checks whether a BoundaryBox is inside of another geometry
+ * @param {jsonOdm.Geo.BoundaryBox} bounds
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ */
+jsonOdm.Geo.BoundaryBox.within = function (bounds,geometry) {
+    if(!jsonOdm.util.isArray(bounds) || bounds.length != 4) return false;
+    // a boundary box is equal to a polygonal box
+    return jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[bounds[0],bounds[1]],[bounds[2],bounds[1]],[bounds[2],bounds[3]],[bounds[0],bounds[3]],[bounds[0],bounds[1]]]]),geometry)
 };
 
 /**
@@ -558,7 +568,12 @@ jsonOdm.Geo.GeometryCollection = function (geometries,boundaryBox) {
  * @return {boolean}
  */
 jsonOdm.Geo.GeometryCollection.within = function(geometryCollection,geometry){
-
+    if(!jsonOdm.util.isArray(geometryCollection.geometries) || !geometryCollection.geometries.length || !geometry.type) return false
+    for(var i = 0; i < geometryCollection.geometries.length; i++){
+        if(jsonOdm.Geo[geometryCollection.geometries[i].type] && jsonOdm.Geo[geometryCollection.geometries[i].type].within){
+            if(!jsonOdm.Geo[geometryCollection.geometries[i].type].within(geometryCollection.geometries[i],geometry)) return false;
+        }
+    }
 };
 
 /**

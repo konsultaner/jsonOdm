@@ -1,4 +1,4 @@
-JSON ODM v0.0.2 by [Konsultaner](http://www.konsultaner.de), Richard Burkhardt
+JSON ODM v0.0.3 by [Konsultaner](http://www.konsultaner.de), Richard Burkhardt
 ========
 
 This Project aims to be provide a json object document mapper.  
@@ -19,7 +19,7 @@ Road map
     - Logical (~~$or~~,~~$and~~,~~$not(= $nand as alias)~~,~~$nor~~) 100%
     - Element (~~$exists~~,~~$type~~) 100% (+ $isNull, for is null or undefined)
     - Evaluation (~~$mod~~,~~$regex~~,$text,$where) 50%
-    - Geospatial ($geoWithin,$geoIntersects,$near,$nearSphere) 20% (maybe have a hard and a soft check -> performance)
+    - Geospatial (~~$geoWithin~~,$geoIntersects,$near,$nearSphere) 25% (maybe have a hard and a soft check -> performance)
     - Array ($all,$elementMatch,$size) 0% // i may not implement the first two
     - Projection Operators ($,$elemMatch,$meta,$slice) 0%
 - Support Promise/A+ sources for the odm.addSource
