@@ -505,7 +505,7 @@ jsonOdm.Geo.MultiPolygon = function (positions,boundaryBox) {
  */
 jsonOdm.Geo.MultiPolygon.within = function (multiPolygon,geometry) {
     var i, j, k, found;
-    if (!polygon.coordinates || !jsonOdm.util.isArray(polygon.coordinates)) return false;
+    if (!multiPolygon.coordinates || !jsonOdm.util.isArray(multiPolygon.coordinates)) return false;
     if (geometry.type == "Point" || geometry.type == "MultiPoint" || geometry.type == "LineString" || geometry.type == "MultiLineString") return false;
 
     if (geometry.type == "Polygon") {
@@ -517,11 +517,13 @@ jsonOdm.Geo.MultiPolygon.within = function (multiPolygon,geometry) {
         return true;
     }
     if (geometry.type == "MultiPolygon") {
-        for (i = 0; polygon.coordinates && i < polygon.coordinates.length; i++) {
+        for (i = 0; multiPolygon.coordinates && i < multiPolygon.coordinates.length; i++) {
             found = false;
-            for (j = 0; geometry.coordinates && j < geometry.coordinates.length - 1; j++) {
-                for (k = 0; polygon.coordinates[i][0] && k < polygon.coordinates[i][0].length - 1; k++) {
-                    if (jsonOdm.Geo.edgeWithinPolygon([polygon.coordinates[i][0][k], polygon.coordinates[i][0][k + 1]], geometry.coordinates[j][0]) && k + 1 == polygon.coordinates[i][0].length - 1){
+            for (j = 0; geometry.coordinates && j < geometry.coordinates.length; j++) {
+                for (k = 0; multiPolygon.coordinates[i][0] && k < multiPolygon.coordinates[i][0].length - 1; k++) {
+                    var inside = jsonOdm.Geo.edgeWithinPolygon([multiPolygon.coordinates[i][0][k], multiPolygon.coordinates[i][0][k + 1]], geometry.coordinates[j][0]);
+                    if(!inside) break;
+                    if (inside && k + 1 == multiPolygon.coordinates[i][0].length - 1) {
                         found = true; break;
                     }
                 }
@@ -589,7 +591,7 @@ jsonOdm.Geo.GeometryCollection.within = function(geometryCollection,geometry){
 jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
     if(!(jsonOdm.util.isArray(point) && jsonOdm.util.isArray(polygon) && polygon.length > 2)) return false;
 
-    var intersection = 0;
+    var intersection = 0,foundX;
 
     // close the polygon
     if(!(polygon[0][0] == polygon[polygon.length-1][0] && polygon[0][1] == polygon[polygon.length-1][1])) polygon = polygon.concat([polygon[0]]);
@@ -604,7 +606,11 @@ jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
         ){
             continue;
         }
-        if((polygon[i][0]-polygon[i+1][0]) * ((point[1]-polygon[i+1][1])/(polygon[i][1]-polygon[i+1][1])) + polygon[i+1][0] >= point[1]) intersection++; // the vector intersects the positive x-axis of the coordinate system normalized to the point
+        foundX = (polygon[i][0]-polygon[i+1][0]) * ((point[1]-polygon[i+1][1])/(polygon[i][1]-polygon[i+1][1])) + polygon[i+1][0];
+        // on the edge
+        if(foundX == point[0] && point[1] <= Math.max(polygon[i][1],polygon[i+1][1]) && point[1] >= Math.min(polygon[i][1],polygon[i+1][1]))return true;
+        // the vector intersects the positive x-axis of the coordinate system normalized to the point
+        if(foundX > point[0])intersection++;
     }
     return intersection%2 == 1; // the normalized x-axis needs to be intersected by a odd amount of intersections
 };
