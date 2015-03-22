@@ -654,7 +654,7 @@ jsonOdm.Geo.edgeIntersectsEdge = function (edge1,edge2,allowOnEdge) {
         return allowOnEdge && edge1[0][1]+(((edge2[0][0]-edge1[0][0])/(directionVector1[0]))*(directionVector1[1])) == edge2[0][1];
     }
 
-    var t = (edge1[0][0]*(directionVector2[1]) - edge2[0][0]*(directionVector2[1]) - edge1[0][1]*(directionVector2[0])) / ((directionVector1[1])*(directionVector2[0])-(directionVector1[0])*(directionVector2[1])),
+    var t = (edge2[0][1]*(directionVector2[0]) + edge1[0][0]*(directionVector2[1]) - edge2[0][0]*(directionVector2[1]) - edge1[0][1]*(directionVector2[0])) / ((directionVector1[1])*(directionVector2[0])-(directionVector1[0])*(directionVector2[1])),
         x = edge1[0][0] + (t*(directionVector1[0])),
         y = edge1[0][1] + (t*(directionVector1[1]));
 
