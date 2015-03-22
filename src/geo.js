@@ -447,9 +447,13 @@ jsonOdm.Geo.Polygon.within = function (polygon,geometry) {
         return true;
     }
     if (geometry.type == "MultiPolygon") {
-        for(i = 0; geometry.coordinates && i < geometry.coordinates.length - 1; i++) {
+        for(i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
             for (j = 0; polygon.coordinates[0] && j < polygon.coordinates[0].length - 1; j++) {
-                if (jsonOdm.Geo.edgeWithinPolygon([polygon.coordinates[0][j], polygon.coordinates[0][j + 1]], geometry.coordinates[i][0]) && j + 1 == polygon.coordinates[0].length - 1) return true;
+                var inside = jsonOdm.Geo.edgeWithinPolygon([polygon.coordinates[0][j], polygon.coordinates[0][j + 1]], geometry.coordinates[i][0]);
+                if(!inside) break;
+                if (inside && j + 1 == polygon.coordinates[0].length - 1) {
+                    return true;
+                }
             }
         }
         return false;

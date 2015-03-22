@@ -1195,9 +1195,13 @@ jsonOdm.Geo.Polygon.within = function (polygon,geometry) {
         return true;
     }
     if (geometry.type == "MultiPolygon") {
-        for(i = 0; geometry.coordinates &amp;&amp; i &lt; geometry.coordinates.length - 1; i++) {
+        for(i = 0; geometry.coordinates &amp;&amp; i &lt; geometry.coordinates.length; i++) {
             for (j = 0; polygon.coordinates[0] &amp;&amp; j &lt; polygon.coordinates[0].length - 1; j++) {
-                if (jsonOdm.Geo.edgeWithinPolygon([polygon.coordinates[0][j], polygon.coordinates[0][j + 1]], geometry.coordinates[i][0]) &amp;&amp; j + 1 == polygon.coordinates[0].length - 1) return true;
+                var inside = jsonOdm.Geo.edgeWithinPolygon([polygon.coordinates[0][j], polygon.coordinates[0][j + 1]], geometry.coordinates[i][0]);
+                if(!inside) break;
+                if (inside &amp;&amp; j + 1 == polygon.coordinates[0].length - 1) {
+                    return true;
+                }
             }
         }
         return false;
@@ -1402,7 +1406,7 @@ jsonOdm.Geo.edgeIntersectsEdge = function (edge1,edge2,allowOnEdge) {
         return allowOnEdge &amp;&amp; edge1[0][1]+(((edge2[0][0]-edge1[0][0])/(directionVector1[0]))*(directionVector1[1])) == edge2[0][1];
     }
 
-    var t = (edge1[0][0]*(directionVector2[1]) - edge2[0][0]*(directionVector2[1]) - edge1[0][1]*(directionVector2[0])) / ((directionVector1[1])*(directionVector2[0])-(directionVector1[0])*(directionVector2[1])),
+    var t = (edge2[0][1]*(directionVector2[0]) + edge1[0][0]*(directionVector2[1]) - edge2[0][0]*(directionVector2[1]) - edge1[0][1]*(directionVector2[0])) / ((directionVector1[1])*(directionVector2[0])-(directionVector1[0])*(directionVector2[1])),
         x = edge1[0][0] + (t*(directionVector1[0])),
         y = edge1[0][1] + (t*(directionVector1[1]));
 
