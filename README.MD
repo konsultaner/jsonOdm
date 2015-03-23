@@ -9,7 +9,7 @@ into joinable collections seemed very helpful.
 
 Docs
 ----
-You can find the [documentation here](https://cdn.rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html) or compiled to the folder [/doc/jsonOdm/0.0/*](https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.0/index.html). 
+You can find the [documentation here](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html) or compiled to the folder [/doc/jsonOdm/0.0/*](https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.0/index.html). 
 
 Road map
 ----
@@ -46,7 +46,7 @@ npm install --save-dev gulp-bench
 
 Example
 ------
-This is only a basic example. Find more in the [docs](https://cdn.rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html), i.e. how to use [$geoWithin](https://cdn.rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/jsonOdm.Query.html#$geoWithin)
+This is only a basic example. Find more in the [docs](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html), i.e. how to use [$geoWithin](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/jsonOdm.Query.html#$geoWithin)
 ```javascript
 // initialize The mapper
 var odm = new jsonOdm();
