@@ -335,23 +335,27 @@ jsonOdm.Query.prototype.$regex = function (regex,options) {
  * [[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon <br/>
  * or simply use a GeoJSON object definition from jsonOdm.Geo
  * @example
- * "geo":[
- *     {
- *         "type": "Feature",
- *         "properties": {...},
- *         "geometry": {
- *             "type": "Polygon",
- *             "coordinates": [ ... ]
- *         }
- *     },
- *     {
- *         "type": "Feature",
- *         "properties": {...},
- *         "geometry": {
- *             "type": "Polygon",
- *             "coordinates": [ ... ]
- *         }
- *     }
+ * {
+ *     "geo":[
+ *         {
+ *             "type": "Feature",
+ *             "properties": {...},
+ *             "geometry": {
+ *                 "type": "Polygon",
+ *                 "coordinates": [ ... ]
+ *             }
+ *         },
+ *         {
+ *             "type": "Feature",
+ *             "properties": {...},
+ *             "geometry": {
+ *                 "type": "Polygon",
+ *                 "coordinates": [ ... ]
+ *             }
+ *         },
+ *         ...
+ *     ]
+ * }
  *
  * var collection = new jsonOdm.Collection("geo"),
  *     q = collection.$query().$branch("geometry").$geoWithin(new jsonOdm.Geo.BoundaryBox([129.049317,-31.434555,139.464356,-19.068644]));
