@@ -1165,6 +1165,7 @@ The method automatically transforms arrays into the assumed GeoJSON definitions 
 [[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString <br/>
 [[[10,10],[10,12],...],...] transforms into a jsonOdm.Geo.Polygon <br/>
 [[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon <br/>
+or simply use a GeoJSON object definition from jsonOdm.Geo
                 
 
                 
@@ -2764,6 +2765,7 @@ The method automatically transforms arrays into the assumed GeoJSON definitions 
 [[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString <br/>
 [[[10,10],[10,12],...],...] transforms into a jsonOdm.Geo.Polygon <br/>
 [[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon <br/>
+or simply use a GeoJSON object definition from jsonOdm.Geo
         </p>
     </div>
     
@@ -2898,6 +2900,32 @@ Array
 </div>
 
         
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>"geo":[
+    {
+        "type": "Feature",
+        "properties": {...},
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [ ... ]
+        }
+    },
+    {
+        "type": "Feature",
+        "properties": {...},
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [ ... ]
+        }
+    }
+
+var collection = new jsonOdm.Collection("geo"),
+    q = collection.$query().$branch("geometry").$geoWithin(new jsonOdm.Geo.BoundaryBox([129.049317,-31.434555,139.464356,-19.068644]));
+    //found geometries
+    geometries = q.$all();</code></pre>
 
     
 
