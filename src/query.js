@@ -327,7 +327,7 @@ jsonOdm.Query.prototype.$regex = function (regex,options) {
 /*-------- GEO ----------*/
 /**
  * Checks whether the current field geometry is within the given geometry object <br/>
- * <strong style="color:#ff0000">Warning:</strong> The coordinate reference system is <a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84</a>witch uses the coordinate order [<strong>longitude</strong>,<strong>latitude</strong>]!
+ * <strong style="color:#ff0000">Warning:</strong> The coordinate reference system is <a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84</a>witch uses the coordinate order [<strong>longitude</strong>,<strong>latitude</strong>]!<br/>
  * The method automatically transforms arrays into the assumed GeoJSON definitions where: <br/>
  * [10,10] transforms into a jsonOdm.Geo.Point <br/>
  * [[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString <br/>
