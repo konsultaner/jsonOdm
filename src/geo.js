@@ -187,10 +187,12 @@ jsonOdm.Geo.MultiPoint.within = function (multiPoint,geometry) {
     if (!multiPoint.coordinates || !jsonOdm.util.isArray(multiPoint.coordinates)) return false;
     if (geometry.type == "Point") return multiPoint.coordinates.length == 1 && multiPoint.coordinates[0][0] == geometry.coordinates[0] && multiPoint.coordinates[0][1] == geometry.coordinates[1];
     if (geometry.type == "MultiPoint") {
-        for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+        for(j = 0 ; multiPoint.coordinates && j < multiPoint.coordinates.length; j++){
             found = false;
-            for(j = 0 ; multiPoint.coordinates && j < multiPoint.coordinates.length; j++){
-                found = found || geometry.coordinates[i][0] == multiPoint.coordinates[j][0] && geometry.coordinates[i][1] == multiPoint.coordinates[j][1];
+            for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+                if(geometry.coordinates[i][0] == multiPoint.coordinates[j][0] && geometry.coordinates[i][1] == multiPoint.coordinates[j][1]){
+                    found = true; break;
+                }
             }
             if(!found) return false;
         }
@@ -273,7 +275,7 @@ jsonOdm.Geo.LineString = function (positions,boundaryBox) {
  * @return {boolean}
  */
 jsonOdm.Geo.LineString.within = function (lineString, geometry) {
-    var i, j, found;
+    var i, j;
     if (!lineString.coordinates || !jsonOdm.util.isArray(lineString.coordinates)) return false;
     if (geometry.type == "Point" || geometry.type == "MultiPoint") return false;
 
@@ -574,12 +576,15 @@ jsonOdm.Geo.GeometryCollection = function (geometries,boundaryBox) {
  * @return {boolean}
  */
 jsonOdm.Geo.GeometryCollection.within = function(geometryCollection,geometry){
-    if(!jsonOdm.util.isArray(geometryCollection.geometries) || !geometryCollection.geometries.length || !geometry.type) return false
+    if(!jsonOdm.util.isArray(geometryCollection.geometries) || !geometryCollection.geometries.length || !geometry.type) return false;
     for(var i = 0; i < geometryCollection.geometries.length; i++){
         if(jsonOdm.Geo[geometryCollection.geometries[i].type] && jsonOdm.Geo[geometryCollection.geometries[i].type].within){
-            if(!jsonOdm.Geo[geometryCollection.geometries[i].type].within(geometryCollection.geometries[i],geometry)) return false;
-        }
+            if(!jsonOdm.Geo[geometryCollection.geometries[i].type].within(geometryCollection.geometries[i],geometry)) {
+                return false;
+            }
+        }else return false;
     }
+    return true;
 };
 
 /**

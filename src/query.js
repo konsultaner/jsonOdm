@@ -337,7 +337,7 @@ jsonOdm.Query.prototype.$regex = function (regex,options) {
  */
 jsonOdm.Query.prototype.$geoWithin = function (geometry) {
     return this.$testCollection(jsonOdm.Geo.detectAsGeometry(geometry), function (collectionValue,geometry) {
-        return json.Geo[collectionValue.type] && json.Geo[collectionValue.type].within && json.Geo[collectionValue.type].within(collectionValue,geometry);
+        return jsonOdm.Geo[collectionValue.type] && jsonOdm.Geo[collectionValue.type].within && jsonOdm.Geo[collectionValue.type].within(collectionValue,geometry);
     });
 };
 

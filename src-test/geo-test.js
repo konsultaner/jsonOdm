@@ -117,6 +117,10 @@ GeoTest.prototype.testMultiPointInGeometry = function () {
     assertTrue("MultiPoint is just in bounds" , jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[0,0],[2,2]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
     assertFalse("MultiPoint is not in bounds" , jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[-1,0],[2,2]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
 
+    assertTrue("MultiPoint is in MultiPoint" ,      jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.MultiPoint([[1,1],[1,2]])));
+    assertFalse("MultiPoint is not in MultiPoint" , jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.MultiPoint([[2,1],[1,2]])));
+    assertFalse("MultiPoint is not in MultiPoint" , jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.MultiPoint([1,1])));
+
     assertTrue("MultiPoint is in LineString" ,      jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.LineString([[1,1],[1,2]])));
     assertFalse("MultiPoint is not in LineString" , jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.LineString([[2,1],[1,2]])));
     assertFalse("MultiPoint is not in LineString" , jsonOdm.Geo.MultiPoint.within(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.LineString([1,1])));
@@ -297,4 +301,79 @@ GeoTest.prototype.testPolygonInGeometry = function () {
         new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
         new jsonOdm.Geo.Polygon([[[1,2],[1,2]],[[3,1],[1,5]]])
     ])));
+};
+
+GeoTest.prototype.testMultiPolygonInGeometry = function () {
+    assertFalse("MultiPolygon cannot be in Point", jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,2],[2,1]]]]),new jsonOdm.Geo.Point([1,2])));
+    assertFalse("MultiPolygon cannot be in MultiPoint", jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,2],[2,1]]]]),new jsonOdm.Geo.MultiPoint([[1,2],[2,1]])));
+    assertFalse("MultiPolygon cannot be in LineString", jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,8],[3,1]]],[[[1,2],[1,1],[1,2],[3,1]]]]),new jsonOdm.Geo.LineString([[1,1],[1,2],[3,1],[2,8]])));
+    assertFalse("MultiPolygon cannot be in MultiLineString", jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2]]],[[[3,1],[1,5]]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]])));
+
+    assertTrue("MultiPolygon is in bounds",         jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,2],[1,1],[0,2],[1,1],[2,2],[0,1]]],[[[1,1],[1,2],[2,2],[1,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
+    assertTrue("MultiPolygon is in bounds",         jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[2,2],[1,1]]],[[[1,2],[1,1],[0,2],[1,1],[2,2],[0,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
+    assertFalse("MultiPolygon [0] is not in bounds",jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[0,3],[1,1],[2,2],[0,1]]],[[[1,2],[1,1],[0,2],[1,1],[2,2],[0,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
+    assertFalse("MultiPolygon [1] is not in bounds",jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,2],[1,1],[0,2],[1,1],[2,2],[0,1]]],[[[0,3],[1,1],[2,2],[0,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
+    assertFalse("MultiPolygon is not in bounds",    jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[0,3],[1,1],[2,2],[0,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2])));
+    assertFalse("MultiPolygon is not in bounds",    jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[0,3],[1,1],[2,2],[0,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,-2,-2])));
+
+    assertTrue("MultiPolygon is in Polygon on vertex",          jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]]]),new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]])));
+    assertTrue("MultiPolygon is in Polygon on vertex and in",   jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]],[[[1,2],[2,2],[1,3]]]]),new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]])));
+    assertTrue("MultiPolygon is in Polygon inside",             jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[0.5,2],[1,0.5],[1,2]]]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]])));
+    assertFalse("MultiPolygon only [0] is in Polygon on vertex",jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]],[[[2,1],[1,1],[-2,-1],[-1,-1]]]]),new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]])));
+    assertFalse("MultiPolygon intersects in Polygon",           jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[0.5,2],[1,0.5],[1,3]]],[[[1,1],[0,1],[0,0],[0.3,0.6]]]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]])));
+    assertFalse("MultiPolygon is not in Polygon",               jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[-2,-1],[-1,-1]]],[[[-1,-1],[0,-1],[0,0],[-0.3,-0.6]]]]),new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]])));
+    assertFalse("MultiPolygon is not in Polygon",               jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[-2,-1],[-1,-1],[2,1],[1,1]]]]),new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]])));
+
+    assertTrue("MultiPolygon is in MultiPolygon[0] on vertex " , jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]],[[[1,2],[2,2],[1,3]]]]), new jsonOdm.Geo.MultiPolygon([[[[-1,-1],[3,0],[5,5],[1,5],[-1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]])));
+    assertTrue("MultiPolygon is in MultiPolygon[1] on vertex " , jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]],[[[1,2],[2,2],[1,3]]]]), new jsonOdm.Geo.MultiPolygon([[[[10,20],[30,10],[10,10],[10,50],[10,20]]],[[[-1,-1],[3,0],[5,5],[1,5],[-1,2]]]])));
+    assertTrue("MultiPolygon is in MultiPolygon[0] inside" ,     jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[0.5,2],[1,0.5],[1,2]]]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]])));
+    assertTrue("MultiPolygon is in MultiPolygon[1] inside" ,     jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[0.5,2],[1,0.5],[1,2]]]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]],[[[0,0],[2,0],[2,2],[0,2],[0,0]]]])));
+    assertFalse("MultiPolygon not in MultiPolygon ",             jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]],[[[1,-2],[2,2],[1,3]]]]), new jsonOdm.Geo.MultiPolygon([[[[-1,-1],[3,0],[5,5],[1,5],[-1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]])));
+    assertFalse("MultiPolygon not in MultiPolygon " ,            jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[-2,-1],[-1,-1],[2,1],[1,1]]]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]])));
+    assertFalse("MultiPolygon not in MultiPolygon " ,            jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[-2,-1],[-1,-1]]]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]])));
+
+    assertTrue("MultiPolygon is in GeometryCollection[0]" , jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[1,5],[4,2],[2,1],[3,1],[1,5]]],[[[1,2],[2,2],[1,3]]]]), new jsonOdm.Geo.GeometryCollection([
+        new jsonOdm.Geo.BoundaryBox([0,0,8,8]),
+        new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+        new jsonOdm.Geo.MultiPolygon([[[1,2],[1,2]],[[3,1],[1,5]]])
+    ])));
+    assertTrue("MultiPolygon is in GeometryCollection[1]" , jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,2],[2,2],[1,3]]],[[[1,1],[1,2],[1,5],[4,2],[2,1],[3,1],[1,5]]]]), new jsonOdm.Geo.GeometryCollection([
+        new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+        new jsonOdm.Geo.BoundaryBox([0,0,8,8]),
+        new jsonOdm.Geo.MultiPolygon([[[1,2],[1,2]],[[3,1],[1,5]]])
+    ])));
+    assertFalse("MultiPolygon is not in GeometryCollection" , jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[-1,-2],[-2,-2],[-2,-1]]],[[[1,1],[1,2],[1,5],[4,2],[2,1],[3,1],[1,5]]]]), new jsonOdm.Geo.GeometryCollection([
+        new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+        new jsonOdm.Geo.MultiPolygon([[[1,2],[1,2]],[[3,1],[1,5]]])
+    ])));
+};
+
+GeoTest.prototype.testGeometryCollectionInGeometry = function () {
+    // there are a lot of geometry specific tests, so only simple tests are needed
+    assertTrue("Collection in MultiPoint",jsonOdm.Geo.GeometryCollection.within(
+        new jsonOdm.Geo.GeometryCollection([
+            new jsonOdm.Geo.Point([1,1]),
+            new jsonOdm.Geo.Point([2,2]),
+            new jsonOdm.Geo.MultiPoint([[2,2],[3,3]])
+        ]),
+        new jsonOdm.Geo.MultiPoint([[1,1],[2,2],[3,3]])
+    ));
+
+    assertTrue("Collection in MultiPoint",jsonOdm.Geo.GeometryCollection.within(
+        new jsonOdm.Geo.GeometryCollection([
+            new jsonOdm.Geo.Point([1,1]),
+            new jsonOdm.Geo.Point([2,2]),
+            new jsonOdm.Geo.MultiPoint([[2,2],[3,3]])
+        ]),
+        new jsonOdm.Geo.MultiPoint([[1,1],[2,2],[3,3],[4,4]])
+    ));
+
+    assertFalse("Collection not in MultiPoint",jsonOdm.Geo.GeometryCollection.within(
+        new jsonOdm.Geo.GeometryCollection([
+            new jsonOdm.Geo.Point([1,1]),
+            new jsonOdm.Geo.Point([2,2]),
+            new jsonOdm.Geo.MultiPoint([[2,2],[3,3]])
+        ]),
+        new jsonOdm.Geo.MultiPoint([[1,1],[2,2],[4,4]])
+    ));
 };
