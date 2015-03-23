@@ -46,6 +46,7 @@ npm install --save-dev gulp-bench
 
 Example
 ------
+This is only a basic example. Find more in the [docs](https://cdn.rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html), i.e. how to use [$geoWithin](https://cdn.rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/jsonOdm.Query.html#$geoWithin)
 ```javascript
 // initialize The mapper
 var odm = new jsonOdm();
