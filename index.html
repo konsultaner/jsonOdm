@@ -32,7 +32,10 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a id="json-odm-v003-by-konsultaner-richard-burkhardt" class="anchor" href="#json-odm-v003-by-konsultaner-richard-burkhardt" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON ODM v0.0.3 by <a href="http://www.konsultaner.de">Konsultaner</a>, Richard Burkhardt</h1>
+<a id="json-odm-v003" class="anchor" href="#json-odm-v003" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON ODM v0.0.3</h1>
+
+<h2>
+<a id="by-konsultaner-richard-burkhardt" class="anchor" href="#by-konsultaner-richard-burkhardt" aria-hidden="true"><span class="octicon octicon-link"></span></a>by <a href="http://www.konsultaner.de">Konsultaner</a>, Richard Burkhardt</h2>
 
 <p>This Project aims to be provide a json object document mapper.<br>
 <strong>Why would I need this?</strong><br>
@@ -40,10 +43,14 @@ There are many cases where you do not want to have the server query your data. Y
 The original use case was an <a href="http://ionicframework.com">ionic</a> app that was not interactive so providing a server backend was not needed, but structuring my data
 into joinable collections seemed very helpful.  </p>
 
+<p>If you like the project please support it with a star here on <a href="https://github.com/konsultaner/jsonOdm">GitHub</a>  </p>
+
+<p>If commercial support is needed please <a href="mailto:burkhardt@konsultaner.de">contact me</a>.  </p>
+
 <h2>
 <a id="docs" class="anchor" href="#docs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docs</h2>
 
-<p>You can find the <a href="https://cdn.rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html">documentation here</a> or compiled to the folder <a href="https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.0/index.html">/doc/jsonOdm/0.0/*</a>. </p>
+<p>You can find the <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html">documentation here</a> or compiled to the folder <a href="https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.0/index.html">/doc/jsonOdm/0.0/*</a>. </p>
 
 <h2>
 <a id="road-map" class="anchor" href="#road-map" aria-hidden="true"><span class="octicon octicon-link"></span></a>Road map</h2>
@@ -85,7 +92,7 @@ npm install --save-dev jsdoc3-bootstrap</pre></div>
 <h2>
 <a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
 
-<p>This is only a basic example. Find more in the <a href="https://cdn.rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html">docs</a>, i.e. how to use <a href="https://cdn.rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/jsonOdm.Query.html#%24geoWithin">$geoWithin</a></p>
+<p>This is only a basic example. Find more in the <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html">docs</a>, i.e. how to use <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/jsonOdm.Query.html#%24geoWithin">$geoWithin</a></p>
 
 <div class="highlight highlight-javascript"><pre><span class="pl-c">// initialize The mapper</span>
 <span class="pl-k">var</span> odm <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">jsonOdm</span>();
@@ -134,6 +141,19 @@ people.$hasMany(<span class="pl-s"><span class="pl-pds">"</span>hobbyIds<span cl
 
 <span class="pl-c">// delete all plumbers</span>
 q.$branch(<span class="pl-s"><span class="pl-pds">"</span>job<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>).$eq(<span class="pl-s"><span class="pl-pds">"</span>plumber<span class="pl-pds">"</span></span>).$<span class="pl-k">delete</span>();</pre></div>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>The MIT License (MIT)  </p>
+
+<p>Copyright (c) 2015 Richard Burkhardt - Konsultaner GmbH &amp; Co. KG </p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:  </p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  </p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
       </section>
     </div>
 
