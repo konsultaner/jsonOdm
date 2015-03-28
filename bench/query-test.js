@@ -3,7 +3,7 @@ var jsonOdm = require('../bin/json.odm.min.js');
 
 var testSource = {bigCollection:[]};
 for(var i = 1; i < 500000; i++){
-    testSource.bigCollection.push({id:i,name:'name'+i,profession:(['plumber','hairdresser','sailor','student','teacher','unemployed','programmer','designer'])[(Math.random()*10*i)%8]});
+    testSource.bigCollection.push({id:i,name:'name'+i,profession:(['plumber','hairdresser','misha','sailor','student','teacher','fishers man','crab fisher','super programmer','unemployed','programmer','designer'])[(Math.random()*10*i)%11]});
 }
 jsonOdm.addSource("test",testSource,true);
 var bigCollection =  new jsonOdm.Collection("bigCollection");
@@ -13,14 +13,14 @@ module.exports = {
     maxTime: 2,
     tests: [
         {
-            name: 'Simple Query all 500000 Elements',
+            name: 'Simple Query all 500,000 Elements',
             fn: function() {
                 bigCollection.$query().$branch("id").$gte(0).$all();
                 return;
             }
         },
         {
-            name: 'Complex Query all 500000 Elements',
+            name: 'Complex Query all 500,000 Elements',
             fn: function() {
                 var $q = bigCollection.$query();
                 $q.$and(
@@ -32,6 +32,12 @@ module.exports = {
                     $q.$branch("name").$ne('name49999')
                 ).$all();
                 return;
+            }
+        },
+        {
+            name: 'Simple text search within 500,000 Elements',
+            fn : function(){
+                bigCollection.$query().$branch("profession").$text('"ish" mish fish -crab').$all();
             }
         }
     ]

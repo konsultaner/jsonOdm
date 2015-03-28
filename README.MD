@@ -1,4 +1,4 @@
-JSON ODM v0.0.3
+JSON ODM v0.0.4
 ========
 by [Konsultaner](http://www.konsultaner.de), Richard Burkhardt
 -------------
@@ -24,7 +24,7 @@ Road map
     - Comparison (~~$eq~~,~~$gt~~,~~$gte~~,~~$lt~~,~~$lte~~,~~$ne~~,~~$in~~,~~$nin~~) 100%
     - Logical (~~$or~~,~~$and~~,~~$not(= $nand as alias)~~,~~$nor~~) 100%
     - Element (~~$exists~~,~~$type~~) 100% (+ $isNull, for is null or undefined)
-    - Evaluation (~~$mod~~,~~$regex~~,$text,$where) 50%
+    - Evaluation (~~$mod~~,~~$regex~~,~~$text~~,$where) 75%
     - Geospatial (~~$geoWithin~~,$geoIntersects,$near,$nearSphere) 25% (maybe have a hard and a soft check -> performance)
     - Array ($all,$elementMatch,$size) 0% // i may not implement the first two
     - Projection Operators ($,$elemMatch,$meta,$slice) 0%

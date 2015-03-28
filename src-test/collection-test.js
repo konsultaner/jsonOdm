@@ -20,6 +20,14 @@ var testSource = {
             {id:1,foreignName:"Mustermann"},
             {id:2,foreignName:"Musterfrau"}
         ],
+        "goldenRuleCollection":[
+            {id:1,lang:'en',cite:"One should treat others as one would like others to treat oneself."},
+            {id:2,lang:'da',cite:"Du skal elske din næste som dig selv!"},
+            {id:3,lang:'eo',cite:"Kiel vi volas, ke la homoj faru al vi, faru ankaŭ al ili tiel same."},
+            {id:4,lang:'de',cite:"Behandle andere so, wie du von ihnen behandelt werden willst."},
+            {id:5,lang:'pl',cite:"Rób innym to, co byś chciał, żeby tobie robili."},
+            {id:6,lang:'en',cite:"One should not treat others in ways that one would not like to be treated."}
+        ],
         "aLot":[],
         "geo":[
             // google example https://storage.googleapis.com/maps-devrel/google.json
@@ -273,6 +281,18 @@ CollectionTest.prototype.testQuery = function () {
     assertEquals("Should have 2 sub entries",2,subCollection.length);
     assertEquals("The first one should be Richi401",401,subCollection[0].id);
     assertEquals("The second one should be Richi1002",1002,subCollection[1].id);
+};
+
+CollectionTest.prototype.testTextSearch = function() {
+    var collection = new jsonOdm.Collection("goldenRuleCollection");
+    assertEquals("Should find both english rules",2,collection.$query().$branch("cite").$text("One treat").$all().length)
+    assertEquals("Should find only first english rule",1,collection.$query().$branch("cite").$text("One treat -not").$all().length)
+    assertEquals("Should find only first english rule",1,collection.$query().$branch("cite").$text("\"One should treat\"").$all().length)
+    assertEquals("Should find two 'da' and 'pl'",2,collection.$query().$branch("cite").$text("næste Rób").$all().length)
+    assertEquals("Should find only 'da' and first 'en'",2,collection.$query().$branch("cite").$text("to -treated").$all().length)
+    assertEquals("Should find both english rules",2,collection.$query().$branch("cite").$text("trea").$all().length)
+    assertEquals("Should find only english rules",2,collection.$query().$branch("cite").$text("\"trea\" innym").$all().length)
+    assertEquals("Should find first english rules",1,collection.$query().$branch("cite").$text("\"trea\" -treated").$all().length)
 };
 
 CollectionTest.prototype.testDelete = function () {

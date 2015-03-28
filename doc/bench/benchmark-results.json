@@ -1,58 +1,67 @@
 [
   {
     "name": "pointWithinPolygon: real live example for point in polygon with 756 edges",
-    "timestamp": "Mon Mar 23 2015 09:24:56 GMT+0100 (Mitteleuropäische Zeit)",
-    "count": 11802,
+    "timestamp": "Sat Mar 28 2015 13:01:52 GMT+0100 (Mitteleuropäische Zeit)",
+    "count": 11803,
     "cycles": 4,
-    "hz": 191824.27451145236,
+    "hz": 231150.48685201688,
     "suite": "Geo benchmarks"
   },
   {
     "name": "pointWithinLineString: real live example for point on polygon line with 756 edges",
-    "timestamp": "Mon Mar 23 2015 09:25:01 GMT+0100 (Mitteleuropäische Zeit)",
-    "count": 30395,
+    "timestamp": "Sat Mar 28 2015 13:01:58 GMT+0100 (Mitteleuropäische Zeit)",
+    "count": 30315,
     "cycles": 4,
-    "hz": 478707.35507024376,
+    "hz": 575714.5267999222,
     "suite": "Geo benchmarks"
   },
   {
     "name": "edgeIntersectsEdge: random edges",
-    "timestamp": "Mon Mar 23 2015 09:25:07 GMT+0100 (Mitteleuropäische Zeit)",
-    "count": 219721,
-    "cycles": 5,
-    "hz": 3040738.060566535,
+    "timestamp": "Sat Mar 28 2015 13:02:03 GMT+0100 (Mitteleuropäische Zeit)",
+    "count": 224094,
+    "cycles": 4,
+    "hz": 3150673.2939504143,
     "suite": "Geo benchmarks"
   },
   {
     "name": "pointWithinPolygon: worst case point in worst case polygon with 2000 edges",
-    "timestamp": "Mon Mar 23 2015 09:25:12 GMT+0100 (Mitteleuropäische Zeit)",
-    "count": 466,
-    "cycles": 3,
-    "hz": 8844.581425087712,
+    "timestamp": "Sat Mar 28 2015 13:02:09 GMT+0100 (Mitteleuropäische Zeit)",
+    "count": 471,
+    "cycles": 6,
+    "hz": 9202.760052746176,
     "suite": "Geo benchmarks"
   },
   {
     "name": "pointWithinLineString: worst case point on worst case polygon line with 2000 edges",
-    "timestamp": "Mon Mar 23 2015 09:25:17 GMT+0100 (Mitteleuropäische Zeit)",
-    "count": 1062383,
+    "timestamp": "Sat Mar 28 2015 13:02:14 GMT+0100 (Mitteleuropäische Zeit)",
+    "count": 1085338,
     "cycles": 5,
-    "hz": 19083137.14217461,
+    "hz": 20429809.78979747,
     "suite": "Geo benchmarks"
   },
   {
-    "name": "Simple Query all 500000 Elements",
-    "timestamp": "Mon Mar 23 2015 09:25:27 GMT+0100 (Mitteleuropäische Zeit)",
+    "name": "Simple Query all 500,000 Elements",
+    "timestamp": "Sat Mar 28 2015 13:02:23 GMT+0100 (Mitteleuropäische Zeit)",
     "count": 1,
     "cycles": 1,
-    "hz": 2.4600005723974054,
+    "hz": 2.6392006937892396,
     "suite": "Query benchmarks"
   },
   {
-    "name": "Complex Query all 500000 Elements",
-    "timestamp": "Mon Mar 23 2015 09:25:44 GMT+0100 (Mitteleuropäische Zeit)",
+    "name": "Complex Query all 500,000 Elements",
+    "timestamp": "Sat Mar 28 2015 13:02:38 GMT+0100 (Mitteleuropäische Zeit)",
     "count": 1,
     "cycles": 1,
-    "hz": 0.8576659964335269,
+    "hz": 0.9184245912725004,
+    "suite": "Query benchmarks"
+  },
+  {
+    "name": "Simple text search within 500,000 Elements",
+    "timestamp": "Sat Mar 28 2015 13:02:38 GMT+0100 (Mitteleuropäische Zeit)",
+    "error": {},
+    "count": 0,
+    "cycles": 0,
+    "hz": 0,
     "suite": "Query benchmarks"
   }
 ]

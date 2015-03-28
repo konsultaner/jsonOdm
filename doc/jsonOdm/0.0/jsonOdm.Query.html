@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>jsonOdm v0.0.3</title>
+    <title>jsonOdm v0.0.4</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -22,7 +22,7 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">
-            jsonOdm v0.0.3
+            jsonOdm v0.0.4
           </a>
           <div class="navbar-right">
             <div class="external-links">
@@ -1504,6 +1504,29 @@ like this $nin(['1','2','4']) so 1 or 2 or 4 are not valid fields
             <td class="description">
                 
                     Test a collection or collection field against one or more values
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Query.html#$text">$text</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Performs a text search on a given collection with the same notation used by mongodb<br/>
+In contrast to mongodb this method does not implement stop words elimination or word stamming at the moment
                 
 
                 
@@ -5310,6 +5333,174 @@ function
 </div>
 
         
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$text">
+
+      
+        $text<span class="signature">(text)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Performs a text search on a given collection with the same notation used by mongodb<br/>
+In contrast to mongodb this method does not implement stop words elimination or word stamming at the moment
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">text
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+String
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>collection.$query()
+   // Must find "Ralf Tomson" and ("Jack" or "Josh") and not("Matteo")
+   .$branch("name").$text("Jack Josh \"Ralf Tomson\" -Matteo")
+   .$all();</code></pre>
 
     
 

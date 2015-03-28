@@ -324,6 +324,49 @@ jsonOdm.Query.prototype.$regex = function (regex,options) {
     });
 };
 
+/**
+ * Performs a text search on a given collection with the same notation used by mongodb<br/>
+ * In contrast to mongodb this method does not implement stop words elimination or word stamming at the moment
+ * @example
+ * collection.$query()
+ *    // Must find "Ralf Tomson" and ("Jack" or "Josh") and not("Matteo")
+ *    .$branch("name").$text("Jack Josh \"Ralf Tomson\" -Matteo")
+ *    .$all();
+ * @param {String} text
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$text = function (text) {
+    var notRegExp = /(^| )-([^ ]+)( |$)/g;
+    var andRegExp = /"([^"]+)"/g;
+    var nots = [],ands = [];
+    var notMatches,andMatches;
+    while ((notMatches = notRegExp.exec(text)) !== null) {
+        nots.push(notMatches[2]);
+    }
+    text = text.replace(notRegExp,"");
+    while ((andMatches = andRegExp.exec(text)) !== null) {
+        ands.push(andMatches[1]);
+    }
+    text = text.replace(andRegExp,"");
+    var ors = text.split(" ");
+    return this.$testCollection([nots,ands,ors], function (collectionValue,logics) {
+        // nots
+        for(var i = 0;i < logics[0].length; i++){
+            if(collectionValue.indexOf(logics[0][i]) > -1) return false;
+        }
+        // ands
+        for(i = 0;i < logics[1].length; i++){
+            if(collectionValue.indexOf(logics[1][i]) < 0) return false;
+        }
+        // ors
+        for(i = 0; i < logics[2].length; i++){
+            if(collectionValue.indexOf(logics[2][i]) > -1) return true;
+        }
+        // if there are no ors, matching all ands is enough
+        return !!logics[1].length;
+    });
+};
+
 /*-------- GEO ----------*/
 /**
  * Checks whether the current field geometry is within the given geometry object <br/>

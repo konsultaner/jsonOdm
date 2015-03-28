@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>jsonOdm v0.0.3</title>
+    <title>jsonOdm v0.0.4</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -22,7 +22,7 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">
-            jsonOdm v0.0.3
+            jsonOdm v0.0.4
           </a>
           <div class="navbar-right">
             <div class="external-links">
@@ -1069,6 +1069,49 @@ jsonOdm.Query.prototype.$regex = function (regex,options) {
     if(typeof regex == "string") regex = typeof options == "string" ? new RegExp(regex,options) : new RegExp(regex);
     return this.$testCollection(regex, function (collectionValue,regex) {
         return regex.test(collectionValue);
+    });
+};
+
+/**
+ * Performs a text search on a given collection with the same notation used by mongodb&lt;br/>
+ * In contrast to mongodb this method does not implement stop words elimination or word stamming at the moment
+ * @example
+ * collection.$query()
+ *    // Must find "Ralf Tomson" and ("Jack" or "Josh") and not("Matteo")
+ *    .$branch("name").$text("Jack Josh \"Ralf Tomson\" -Matteo")
+ *    .$all();
+ * @param {String} text
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$text = function (text) {
+    var notRegExp = /(^| )-([^ ]+)( |$)/g;
+    var andRegExp = /"([^"]+)"/g;
+    var nots = [],ands = [];
+    var notMatches,andMatches;
+    while ((notMatches = notRegExp.exec(text)) !== null) {
+        nots.push(notMatches[2]);
+    }
+    text = text.replace(notRegExp,"");
+    while ((andMatches = andRegExp.exec(text)) !== null) {
+        ands.push(andMatches[1]);
+    }
+    text = text.replace(andRegExp,"");
+    var ors = text.split(" ");
+    return this.$testCollection([nots,ands,ors], function (collectionValue,logics) {
+        // nots
+        for(var i = 0;i &lt; logics[0].length; i++){
+            if(collectionValue.indexOf(logics[0][i]) > -1) return false;
+        }
+        // ands
+        for(i = 0;i &lt; logics[1].length; i++){
+            if(collectionValue.indexOf(logics[1][i]) &lt; 0) return false;
+        }
+        // ors
+        for(i = 0; i &lt; logics[2].length; i++){
+            if(collectionValue.indexOf(logics[2][i]) > -1) return true;
+        }
+        // if there are no ors, matching all ands is enough
+        return !!logics[1].length;
     });
 };
 
