@@ -58,6 +58,11 @@ To be tested: Safari on OSX, IE8(test driver does not run in IE < 9 so it will b
 Example
 ------
 This is only a basic example. Find more in the [docs](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html), i.e. how to use [$geoWithin](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/jsonOdm.Query.html#$geoWithin)
+```html
+<!-- add minified version from https://github.com/konsultaner/jsonOdm/tree/master/bin to the html head -->
+<script type="text/javascript" src="js/json.odm.min.js"></script>
+```
+
 ```javascript
 // initialize The mapper
 var odm = new jsonOdm();
