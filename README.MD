@@ -50,6 +50,11 @@ To execute the benchmark use command ```gulp bench``` after adding:
 npm install --save-dev gulp-bench
 ```
 
+Browser Support
+---------------
+Unit test ran successfully under Chrome,iOS7+,IE9+,Firefox,Android 4.4.2+  
+To be tested: Safari on OSX, IE8(test driver does not run in IE < 9 so it will be hard to test)
+
 Example
 ------
 This is only a basic example. Find more in the [docs](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html), i.e. how to use [$geoWithin](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/jsonOdm.Query.html#$geoWithin)

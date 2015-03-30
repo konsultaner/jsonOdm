@@ -37,7 +37,9 @@ module.exports = {
         {
             name: 'Simple text search within 500,000 Elements',
             fn : function(){
-                bigCollection.$query().$branch("profession").$text('"ish" mish fish -crab').$all();
+                var $q = bigCollection.$query();
+                $q.$branch("profession").$text('"ish" mish fish -crab').$all();
+                return;
             }
         }
     ]

@@ -157,7 +157,8 @@ jsonOdm.Query.prototype.$branch = function (node) {
  */
 jsonOdm.Query.prototype.$eq = function (comparable) {
     return this.$testCollection(arguments,function (collectionValue, possibleValues) {
-        return Array.prototype.indexOf.call(possibleValues,collectionValue) > -1;
+        for(var i = 0; i < possibleValues.length; i++) if(possibleValues[i] == collectionValue) return true;
+        return false;
     });
 };
 
@@ -169,7 +170,8 @@ jsonOdm.Query.prototype.$eq = function (comparable) {
  */
 jsonOdm.Query.prototype.$in = function (comparable) {
     return this.$testCollection(comparable,function (collectionValue, possibleValues) {
-        return Array.prototype.indexOf.call(possibleValues,collectionValue) > -1;
+        for(var i = 0; i < possibleValues.length; i++) if(possibleValues[i] == collectionValue) return true;
+        return false;
     });
 };
 
@@ -181,7 +183,8 @@ jsonOdm.Query.prototype.$in = function (comparable) {
  */
 jsonOdm.Query.prototype.$ne = function (comparable) {
     return this.$testCollection(arguments, function (collectionValue, possibleValues) {
-        return Array.prototype.indexOf.call(possibleValues,collectionValue) == -1;
+        for(var i = 0; i < possibleValues.length; i++) if(possibleValues[i] == collectionValue) return false;
+        return true;
     });
 };
 
@@ -193,7 +196,8 @@ jsonOdm.Query.prototype.$ne = function (comparable) {
  */
 jsonOdm.Query.prototype.$nin = function (comparable) {
     return this.$testCollection(comparable, function (collectionValue, possibleValues) {
-        return Array.prototype.indexOf.call(possibleValues,collectionValue) == -1;
+        for(var i = 0; i < possibleValues.length; i++) if(possibleValues[i] == collectionValue) return false;
+        return true;
     });
 };
 
