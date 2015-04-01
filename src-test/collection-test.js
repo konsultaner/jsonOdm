@@ -295,6 +295,15 @@ CollectionTest.prototype.testTextSearch = function() {
     assertEquals("Should find first english rules",1,collection.$query().$branch("cite").$text("\"trea\" -treated").$all().length)
 };
 
+CollectionTest.prototype.testWhereSearch = function () {
+    var collection = new jsonOdm.Collection("goldenRuleCollection");
+    assertEquals("Should find all english rules",2,collection.$query().$where("return this.lang == 'en'").$all().length)
+    assertEquals("Should find first english rules",1,collection.$query().$where("return this.lang == 'en'").$first().id)
+    assertEquals("Should find all english rules",2,collection.$query().$where(function(){return this.lang == 'en';}).$all().length)
+    assertEquals("Should find first english rules",1,collection.$query().$where(function(){return this.lang == 'en';}).$first().id)
+    assertEquals("Should find all english rules",2,collection.$query().$branch("lang").$where(function(){return this == 'en';}).$all().length)
+};
+
 CollectionTest.prototype.testDelete = function () {
     var collection = new jsonOdm.Collection("aLot");
     collection.$query().$branch("id").$gt(500).$delete();

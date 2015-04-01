@@ -23,7 +23,7 @@ gulp
             .pipe(jsdoc.parser({
                 name:"jsonOdm",
                 description:"A light weight but fast object document mapper for JavaScript objects.",
-                version:"0.0.4"
+                version:"0.1.0"
             }, "jsonOdm"))
             .pipe(jsdoc.generator('./doc',
                 {
