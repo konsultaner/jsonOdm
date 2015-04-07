@@ -161,6 +161,17 @@ jsonOdm.Geo.Point.within = function (point,geometry) {
 };
 
 /**
+ * Checks whether a Point intersects a geometry witch is equal to the Point being inside a geometry. This is an alias of jsonOdm.Geo.Point.within
+ * @param {jsonOdm.Geo.Point} point
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ * @type function
+ * @method intersects
+ * @memberof jsonOdm.Geo.Point
+ */
+jsonOdm.Geo.Point.intersects = jsonOdm.Geo.Point.within;
+
+/**
  * A GeoJSON MultiPoint object
  * @param {Array} positions An array of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude, i.e. [[51,32],[51.4,21]]
  * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
@@ -253,6 +264,68 @@ jsonOdm.Geo.MultiPoint.within = function (multiPoint,geometry) {
 };
 
 /**
+ * Checks whether a MultiPoint intersects another geometry
+ * @param {jsonOdm.Geo.MultiPoint} multiPoint
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ */
+jsonOdm.Geo.MultiPoint.intersects = function (multiPoint,geometry) {
+    var i, j, k;
+    if (!multiPoint.coordinates || !jsonOdm.util.isArray(multiPoint.coordinates)) return false;
+    if (geometry.type == "Point") {
+        return jsonOdm.Geo.Point.intersects(geometry,multiPoint);
+    }
+    if (geometry.type == "MultiPoint") {
+        for(j = 0 ; multiPoint.coordinates && j < multiPoint.coordinates.length; j++){
+            for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+                if(geometry.coordinates[i][0] == multiPoint.coordinates[j][0] && geometry.coordinates[i][1] == multiPoint.coordinates[j][1]) return true;
+            }
+        }
+        return false;
+    }
+    if (geometry.type == "LineString") {
+        for (k = 0; multiPoint.coordinates && k < multiPoint.coordinates.length; k++) {
+            if (jsonOdm.Geo.pointWithinLineString(multiPoint.coordinates[k], geometry.coordinates)) return true;
+        }
+        return false;
+    }
+    if (geometry.type == "MultiLineString") {
+        for (k = 0; multiPoint.coordinates && k < multiPoint.coordinates.length; k++) {
+            for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+                if (jsonOdm.Geo.pointWithinLineString(multiPoint.coordinates[k], geometry.coordinates[i])) return true;
+            }
+        }
+        return false;
+    }
+    if (geometry.type == "Polygon") {
+        for(i = 0; multiPoint.coordinates && i < multiPoint.coordinates.length; i++) {
+            if(jsonOdm.Geo.pointWithinPolygon(multiPoint.coordinates[i], geometry.coordinates ? geometry.coordinates[0] : null)) return true;
+        }
+        return false;
+    }
+    if (geometry.type == "MultiPolygon") {
+        for(j = 0; multiPoint.coordinates && j < multiPoint.coordinates.length; j++) {
+            for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+                // we assume that polygon wholes do not intersect the outer polygon
+                if(jsonOdm.Geo.pointWithinPolygon(multiPoint.coordinates[j], geometry.coordinates[i] ? geometry.coordinates[i][0] : null)) return true;
+            }
+        }
+        return false;
+    }
+    if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        for(i = 0; i < geometry.geometries.length; i++){
+            if(jsonOdm.Geo.MultiPoint.intersects(multiPoint,geometry.geometries[i])) return true;
+        }
+        return false;
+    }
+    // assume we have a BoundaryBox given
+    for(i = 0; i < multiPoint.coordinates.length; i++){
+        if(jsonOdm.Geo.pointWithinBounds(multiPoint.coordinates[i],geometry)) return true;
+    }
+    return false;
+};
+
+/**
  * A GeoJSON LineString object
  * @param {Array} positions An at least 2-dimensional array of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude, i.e. [[51,32],[51.4,21]]
  * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
@@ -320,6 +393,65 @@ jsonOdm.Geo.LineString.within = function (lineString, geometry) {
         }
     }
     return true;
+};
+
+
+/**
+ * Checks whether a LineString intersects another geometry
+ * @param {jsonOdm.Geo.LineString} lineString
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ */
+jsonOdm.Geo.LineString.intersects = function (lineString, geometry) {
+    var i, j;
+    if (!lineString.coordinates || !jsonOdm.util.isArray(lineString.coordinates)) return false;
+    if (geometry.type == "Point") {
+        return jsonOdm.Geo.Point.intersects(geometry,lineString);
+    }
+    if(geometry.type == "MultiPoint") {
+        return jsonOdm.Geo.MultiPoint.intersects(geometry,lineString);
+    }
+
+    if (geometry.type == "LineString") {
+        for(i = 0; i < lineString.coordinates.length; i++){
+            if(jsonOdm.Geo.pointWithinLineString(lineString.coordinates[i],geometry.coordinates)) return true;
+        }
+        return false;
+    }
+    if (geometry.type == "MultiLineString") {
+        for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+            for(j = 0; j < lineString.coordinates[i].length; j++){
+                if(jsonOdm.Geo.pointWithinLineString(lineString.coordinates[j],geometry.coordinates[i])) return true;
+            }
+        }
+        return false;
+    }
+    if (geometry.type == "Polygon") {
+        for(i = 0; lineString.coordinates && i < lineString.coordinates.length; i++){
+            if(jsonOdm.Geo.pointWithinPolygon(lineString.coordinates[i],geometry.coordinates[0]))return true;
+        }
+        return false;
+    }
+    if (geometry.type == "MultiPolygon") {
+        for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+            for(j = 0; lineString.coordinates && j < lineString.coordinates.length; j++){
+                if(jsonOdm.Geo.pointWithinPolygon(lineString.coordinates[j],geometry.coordinates[i][0])) return true;
+            }
+        }
+        return false;
+    }
+    if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        // maybe order it by complexity to get a better best case scenario
+        for(i = 0; i < geometry.geometries.length; i++){
+            if(jsonOdm.Geo.LineString.intersects(lineString,geometry.geometries[i])) return true;
+        }
+        return false;
+    }
+    // assume we have a BoundaryBox given
+    for(i = 0; i < lineString.coordinates.length; i++){
+        if(jsonOdm.Geo.pointWithinBounds(lineString.coordinates[i],geometry))return true;
+    }
+    return false;
 };
 
 /**
@@ -409,6 +541,68 @@ jsonOdm.Geo.MultiLineString.within = function (multiLineString, geometry) {
         }
     }
     return true;
+};
+
+/**
+ * Checks whether a MultiLineString intersects another geometry
+ * @param {jsonOdm.Geo.MultiLineString} multiLineString
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ */
+jsonOdm.Geo.MultiLineString.intersects = function (multiLineString, geometry) {
+    var i, j, k;
+    if (!multiLineString.coordinates || !jsonOdm.util.isArray(multiLineString.coordinates)) return false;
+    if (geometry.type == "Point") {
+        return jsonOdm.Geo.Point.intersects(geometry,multiLineString);
+    }
+    if(geometry.type == "MultiPoint") {
+        return jsonOdm.Geo.MultiPoint.intersects(geometry,multiLineString);
+    }
+    if (geometry.type == "LineString") {
+        return jsonOdm.Geo.LineString.intersects(geometry,multiLineString);
+    }
+    if (geometry.type == "MultiLineString") {
+        for (j = 0; multiLineString.coordinates && j < multiLineString.coordinates.length; j++) {
+            for (k = 0; multiLineString.coordinates[j] && k < multiLineString.coordinates[j].length; k++) {
+                for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+                    if (jsonOdm.Geo.pointWithinLineString(multiLineString.coordinates[j][k], geometry.coordinates[i])) return true;
+                }
+            }
+        }
+        return false;
+    }
+    if (geometry.type == "Polygon") {
+        for(i = 0; multiLineString.coordinates && i < multiLineString.coordinates.length; i++){
+            for(j = 0; multiLineString.coordinates && j < multiLineString.coordinates[i].length; j++){
+                if(jsonOdm.Geo.pointWithinPolygon(multiLineString.coordinates[i][j],geometry.coordinates[0])) return true;
+            }
+        }
+        return false;
+    }
+    if (geometry.type == "MultiPolygon") {
+        for(j = 0; multiLineString.coordinates && j < multiLineString.coordinates.length; j++) {
+            for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+                for (k = 0; multiLineString.coordinates[j] && k < multiLineString.coordinates[j].length; k++) {
+                    if (jsonOdm.Geo.pointWithinPolygon(multiLineString.coordinates[j][k], geometry.coordinates[i][0])) return true;
+                }
+            }
+        }
+        return false;
+    }
+    if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        // maybe order it by complexity to get a better best case scenario
+        for(i = 0; i < geometry.geometries.length; i++){
+            if(jsonOdm.Geo.MultiLineString.intersects(multiLineString,geometry.geometries[i])) return true;
+        }
+        return false;
+    }
+    // assume we have a BoundaryBox given
+    for(i = 0; i < multiLineString.coordinates.length; i++){
+        for(j = 0; j < multiLineString.coordinates[i].length; j++){
+            if(jsonOdm.Geo.pointWithinBounds(multiLineString.coordinates[i][j],geometry)) return true;
+        }
+    }
+    return false;
 };
 
 /**
