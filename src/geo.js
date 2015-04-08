@@ -671,6 +671,58 @@ jsonOdm.Geo.Polygon.within = function (polygon,geometry) {
 };
 
 /**
+ * Checks whether a Polygon intersects another geometry
+ * @param {jsonOdm.Geo.Polygon} polygon
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ */
+jsonOdm.Geo.Polygon.intersects = function (polygon,geometry) {
+    var i, j, k;
+    if (!polygon.coordinates || !jsonOdm.util.isArray(polygon.coordinates)) return false;
+    if (geometry.type == "Point") {
+        return jsonOdm.Geo.Point.intersects(geometry,polygon);
+    }
+    if(geometry.type == "MultiPoint") {
+        return jsonOdm.Geo.MultiPoint.intersects(geometry,polygon);
+    }
+    if (geometry.type == "LineString") {
+        return jsonOdm.Geo.LineString.intersects(geometry,polygon);
+    }
+    if (geometry.type == "MultiLineString") {
+        return jsonOdm.Geo.MultiLineString.intersects(geometry,polygon);
+    }
+
+    if (geometry.type == "Polygon") {
+        for(i = 0; polygon.coordinates[0] && i < polygon.coordinates[0].length; i++){
+            if(jsonOdm.Geo.pointWithinPolygon(polygon.coordinates[0][i],geometry.coordinates[0])) return true;
+        }
+        return false;
+    }
+    if (geometry.type == "MultiPolygon") {
+        for(i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
+            for (j = 0; polygon.coordinates[0] && j < polygon.coordinates[0].length - 1; j++) {
+                if(jsonOdm.Geo.pointWithinPolygon(polygon.coordinates[0][j], geometry.coordinates[i][0])) return true;
+            }
+        }
+        return false;
+    }
+    if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        // maybe order it by complexity to get a better best case scenario
+        for(i = 0; i < geometry.geometries.length; i++){
+            if(jsonOdm.Geo.Polygon.intersects(polygon,geometry.geometries[i])) return true;
+        }
+        return false;
+    }
+    // assume we have a BoundaryBox given
+    for(i = 0;polygon.coordinates[0] && i < polygon.coordinates[0].length; i++){
+        if(jsonOdm.Geo.pointWithinBounds(polygon.coordinates[0][i],geometry)){
+            return true;
+        }
+    }
+    return false;
+};
+
+/**
  * A GeoJSON MultiPolygon object
  * @param {Array} positions An array of Polygon position arrays
  * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
@@ -746,6 +798,58 @@ jsonOdm.Geo.MultiPolygon.within = function (multiPolygon,geometry) {
 };
 
 /**
+ * Checks whether a MultiPolygon intersects another geometry
+ * @param {jsonOdm.Geo.MultiPolygon} multiPolygon
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ */
+jsonOdm.Geo.MultiPolygon.intersects = function (multiPolygon,geometry) {
+    var i, j, k;
+    if (!multiPolygon.coordinates || !jsonOdm.util.isArray(multiPolygon.coordinates)) return false;
+    if (geometry.type == "Point") {
+        return jsonOdm.Geo.Point.intersects(geometry,multiPolygon);
+    }
+    if(geometry.type == "MultiPoint") {
+        return jsonOdm.Geo.MultiPoint.intersects(geometry,multiPolygon);
+    }
+    if (geometry.type == "LineString") {
+        return jsonOdm.Geo.LineString.intersects(geometry,multiPolygon);
+    }
+    if (geometry.type == "MultiLineString") {
+        return jsonOdm.Geo.MultiLineString.intersects(geometry,multiPolygon);
+    }
+    if (geometry.type == "Polygon") {
+        return jsonOdm.Geo.Polygon.intersects(geometry,multiPolygon);
+    }
+
+    if (geometry.type == "MultiPolygon") {
+        for (i = 0; multiPolygon.coordinates && i < multiPolygon.coordinates.length; i++) {
+            for (j = 0; geometry.coordinates && j < geometry.coordinates.length; j++) {
+                for (k = 0; multiPolygon.coordinates[i][0] && k < multiPolygon.coordinates[i][0].length - 1; k++) {
+                    if(jsonOdm.Geo.pointWithinPolygon(multiPolygon.coordinates[i][0][k], geometry.coordinates[j][0])) return true;
+                }
+            }
+        }
+        return false;
+    }
+    if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        for(i = 0; i < geometry.geometries.length; i++){
+            if(jsonOdm.Geo.MultiPolygon.within(multiPolygon,geometry.geometries[i])) return true;
+        }
+        return false;
+    }
+    // assume we have a BoundaryBox given
+    for(i = 0; i < multiPolygon.coordinates.length; i++) {
+        for (j = 0; j < multiPolygon.coordinates[i][0].length; j++) {
+            if (jsonOdm.Geo.pointWithinBounds(multiPolygon.coordinates[i][0][j], geometry)) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
+/**
  * A GeoJSON GeometryCollection object
  * @param {Array} geometries An array of GeoJSON geometry objects
  * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
@@ -779,6 +883,24 @@ jsonOdm.Geo.GeometryCollection.within = function(geometryCollection,geometry){
         }else return false;
     }
     return true;
+};
+
+/**
+ * Checks whether a GeometryCollection intersects another geometry
+ * @param {jsonOdm.Geo.GeometryCollection} geometryCollection
+ * @param {jsonOdm.Geo.Point|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry Any jsonOdm.Geo.&lt;geometry&gt; object
+ * @return {boolean}
+ */
+jsonOdm.Geo.GeometryCollection.intersects = function(geometryCollection,geometry){
+    if(!jsonOdm.util.isArray(geometryCollection.geometries) || !geometryCollection.geometries.length || !geometry.type) return false;
+    for(var i = 0; i < geometryCollection.geometries.length; i++){
+        if(jsonOdm.Geo[geometryCollection.geometries[i].type] && jsonOdm.Geo[geometryCollection.geometries[i].type].intersects){
+            if(jsonOdm.Geo[geometryCollection.geometries[i].type].intersects(geometryCollection.geometries[i],geometry)) {
+                return true;
+            }
+        }
+    }
+    return false;
 };
 
 /**
