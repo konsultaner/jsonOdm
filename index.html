@@ -1,38 +1,26 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="JSON ODM : A JSON ODM (object document mapper) for JavaScript to use on the server or in the browser.">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>JSON ODM</title>
+    <meta charset="UTF-8">
+    <title>JSON ODM by konsultaner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
+    <section class="page-header">
+      <h1 class="project-name">JSON ODM</h1>
+      <h2 class="project-tagline">A JSON ODM (object document mapper) for JavaScript to use on the server or in the browser.</h2>
+      <a href="https://github.com/konsultaner/jsonOdm" class="btn">View on GitHub</a>
+      <a href="https://github.com/konsultaner/jsonOdm/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/konsultaner/jsonOdm/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/konsultaner/jsonOdm">View on GitHub</a>
-
-          <h1 id="project_title">JSON ODM</h1>
-          <h2 id="project_tagline">A JSON ODM (object document mapper) for JavaScript to use on the server or in the browser.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/konsultaner/jsonOdm/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/konsultaner/jsonOdm/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
-<a id="json-odm-v004" class="anchor" href="#json-odm-v004" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON ODM v0.0.4</h1>
+    <section class="main-content">
+      <h1>
+<a id="json-odm-v011" class="anchor" href="#json-odm-v011" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON ODM v0.1.1</h1>
 
 <h2>
 <a id="by-konsultaner-richard-burkhardt" class="anchor" href="#by-konsultaner-richard-burkhardt" aria-hidden="true"><span class="octicon octicon-link"></span></a>by <a href="http://www.konsultaner.de">Konsultaner</a>, Richard Burkhardt</h2>
@@ -50,7 +38,7 @@ into joinable collections seemed very helpful.  </p>
 <h2>
 <a id="docs" class="anchor" href="#docs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docs</h2>
 
-<p>You can find the <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html">documentation here</a> or compiled to the folder <a href="https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.0/index.html">/doc/jsonOdm/0.0/*</a>. </p>
+<p>You can find the <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.1/index.html">documentation here</a> or compiled to the folder <a href="https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.1/index.html">/doc/jsonOdm/0.1/*</a>. </p>
 
 <h2>
 <a id="road-map" class="anchor" href="#road-map" aria-hidden="true"><span class="octicon octicon-link"></span></a>Road map</h2>
@@ -62,8 +50,8 @@ into joinable collections seemed very helpful.  </p>
 <li>Comparison (<del>$eq</del>,<del>$gt</del>,<del>$gte</del>,<del>$lt</del>,<del>$lte</del>,<del>$ne</del>,<del>$in</del>,<del>$nin</del>) 100%</li>
 <li>Logical (<del>$or</del>,<del>$and</del>,<del>$not(= $nand as alias)</del>,<del>$nor</del>) 100%</li>
 <li>Element (<del>$exists</del>,<del>$type</del>) 100% (+ $isNull, for is null or undefined)</li>
-<li>Evaluation (<del>$mod</del>,<del>$regex</del>,<del>$text</del>,$where) 75%</li>
-<li>Geospatial (<del>$geoWithin</del>,$geoIntersects,$near,$nearSphere) 25% (maybe have a hard and a soft check -&gt; performance)</li>
+<li>Evaluation (<del>$mod</del>,<del>$regex</del>,<del>$text</del>,<del>$where</del>) 100%</li>
+<li>Geospatial (<del>$geoWithin</del>,<del>$geoIntersects</del>,$near,$nearSphere) 50% (maybe have a hard and a soft check -&gt; performance)</li>
 <li>Array ($all,$elementMatch,$size) 0% // i may not implement the first two</li>
 <li>Projection Operators ($,$elemMatch,$meta,$slice) 0%</li>
 </ul>
@@ -98,7 +86,7 @@ To be tested: Safari on OSX, IE8(test driver does not run in IE &lt; 9 so it wil
 <h2>
 <a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
 
-<p>This is only a basic example. Find more in the <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/index.html">docs</a>, i.e. how to use <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.0/jsonOdm.Query.html#%24geoWithin">$geoWithin</a></p>
+<p>This is only a basic example. Find more in the <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.1/index.html">docs</a>, i.e. how to use <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.1/jsonOdm.Query.html#%24geoWithin">$geoWithin</a></p>
 
 <div class="highlight highlight-html"><pre><span class="pl-c">&lt;!-- add minified version from https://github.com/konsultaner/jsonOdm/tree/master/bin to the html head --&gt;</span>
 &lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>js/json.odm.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
@@ -163,18 +151,16 @@ q.$branch(<span class="pl-s"><span class="pl-pds">"</span>job<span class="pl-pds
 <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  </p>
 
 <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-      </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">JSON ODM maintained by <a href="https://github.com/konsultaner">konsultaner</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/konsultaner/jsonOdm">JSON ODM</a> is maintained by <a href="https://github.com/konsultaner">konsultaner</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
 
-              <script type="text/javascript">
+    </section>
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -185,6 +171,6 @@ q.$branch(<span class="pl-s"><span class="pl-pds">"</span>job<span class="pl-pds
             } catch(err) {}
           </script>
 
-
   </body>
 </html>
+
