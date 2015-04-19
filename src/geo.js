@@ -413,29 +413,29 @@ jsonOdm.Geo.LineString.intersects = function (lineString, geometry) {
     }
 
     if (geometry.type == "LineString") {
-        for(i = 0; i < lineString.coordinates.length; i++){
-            if(jsonOdm.Geo.pointWithinLineString(lineString.coordinates[i],geometry.coordinates)) return true;
+        for(i = 0; i < lineString.coordinates.length - 1; i++){
+            if(jsonOdm.Geo.edgeIntersectsLine([lineString.coordinates[i],lineString.coordinates[i+1]],geometry.coordinates)) return true;
         }
         return false;
     }
     if (geometry.type == "MultiLineString") {
         for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
-            for(j = 0; j < lineString.coordinates[i].length; j++){
-                if(jsonOdm.Geo.pointWithinLineString(lineString.coordinates[j],geometry.coordinates[i])) return true;
+            for(j = 0; j < lineString.coordinates.length - 1; j++){
+                if(jsonOdm.Geo.edgeIntersectsLine([lineString.coordinates[j],lineString.coordinates[j+1]],geometry.coordinates[i])) return true;
             }
         }
         return false;
     }
     if (geometry.type == "Polygon") {
-        for(i = 0; lineString.coordinates && i < lineString.coordinates.length; i++){
-            if(jsonOdm.Geo.pointWithinPolygon(lineString.coordinates[i],geometry.coordinates[0]))return true;
+        for(i = 0; lineString.coordinates && i < lineString.coordinates.length - 1; i++){
+            if(jsonOdm.Geo.edgeIntersectsPolygon([lineString.coordinates[i],lineString.coordinates[i+1]],geometry.coordinates[0]))return true;
         }
         return false;
     }
     if (geometry.type == "MultiPolygon") {
         for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
-            for(j = 0; lineString.coordinates && j < lineString.coordinates.length; j++){
-                if(jsonOdm.Geo.pointWithinPolygon(lineString.coordinates[j],geometry.coordinates[i][0])) return true;
+            for(j = 0; lineString.coordinates && j < lineString.coordinates.length - 1; j++){
+                if(jsonOdm.Geo.edgeIntersectsPolygon([lineString.coordinates[j],lineString.coordinates[j+1]],geometry.coordinates[i][0])) return true;
             }
         }
         return false;
@@ -448,8 +448,8 @@ jsonOdm.Geo.LineString.intersects = function (lineString, geometry) {
         return false;
     }
     // assume we have a BoundaryBox given
-    for(i = 0; i < lineString.coordinates.length; i++){
-        if(jsonOdm.Geo.pointWithinBounds(lineString.coordinates[i],geometry))return true;
+    for(i = 0; lineString.coordinates && i < lineString.coordinates.length - 1; i++){
+        if(jsonOdm.Geo.edgeIntersectsBounds([lineString.coordinates[i],lineString.coordinates[i + 1]],geometry))return true;
     }
     return false;
 };
@@ -563,9 +563,9 @@ jsonOdm.Geo.MultiLineString.intersects = function (multiLineString, geometry) {
     }
     if (geometry.type == "MultiLineString") {
         for (j = 0; multiLineString.coordinates && j < multiLineString.coordinates.length; j++) {
-            for (k = 0; multiLineString.coordinates[j] && k < multiLineString.coordinates[j].length; k++) {
+            for (k = 0; multiLineString.coordinates[j] && k < multiLineString.coordinates[j].length - 1; k++) {
                 for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
-                    if (jsonOdm.Geo.pointWithinLineString(multiLineString.coordinates[j][k], geometry.coordinates[i])) return true;
+                    if (jsonOdm.Geo.edgeIntersectsLine([multiLineString.coordinates[j][k],multiLineString.coordinates[j][k+1]], geometry.coordinates[i])) return true;
                 }
             }
         }
@@ -573,8 +573,8 @@ jsonOdm.Geo.MultiLineString.intersects = function (multiLineString, geometry) {
     }
     if (geometry.type == "Polygon") {
         for(i = 0; multiLineString.coordinates && i < multiLineString.coordinates.length; i++){
-            for(j = 0; multiLineString.coordinates && j < multiLineString.coordinates[i].length; j++){
-                if(jsonOdm.Geo.pointWithinPolygon(multiLineString.coordinates[i][j],geometry.coordinates[0])) return true;
+            for(j = 0; multiLineString.coordinates && j < multiLineString.coordinates[i].length - 1; j++){
+                if(jsonOdm.Geo.edgeIntersectsPolygon([multiLineString.coordinates[i][j],multiLineString.coordinates[i][j+1]],geometry.coordinates[0])) return true;
             }
         }
         return false;
@@ -582,8 +582,8 @@ jsonOdm.Geo.MultiLineString.intersects = function (multiLineString, geometry) {
     if (geometry.type == "MultiPolygon") {
         for(j = 0; multiLineString.coordinates && j < multiLineString.coordinates.length; j++) {
             for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
-                for (k = 0; multiLineString.coordinates[j] && k < multiLineString.coordinates[j].length; k++) {
-                    if (jsonOdm.Geo.pointWithinPolygon(multiLineString.coordinates[j][k], geometry.coordinates[i][0])) return true;
+                for (k = 0; multiLineString.coordinates[j] && k < multiLineString.coordinates[j].length - 1; k++) {
+                    if (jsonOdm.Geo.edgeIntersectsPolygon([multiLineString.coordinates[j][k],multiLineString.coordinates[j][k+1]], geometry.coordinates[i][0])) return true;
                 }
             }
         }
@@ -597,9 +597,9 @@ jsonOdm.Geo.MultiLineString.intersects = function (multiLineString, geometry) {
         return false;
     }
     // assume we have a BoundaryBox given
-    for(i = 0; i < multiLineString.coordinates.length; i++){
-        for(j = 0; j < multiLineString.coordinates[i].length; j++){
-            if(jsonOdm.Geo.pointWithinBounds(multiLineString.coordinates[i][j],geometry)) return true;
+    for(i = 0; multiLineString.coordinates && i < multiLineString.coordinates.length; i++){
+        for(j = 0; j < multiLineString.coordinates[i].length - 1; j++){
+            if(jsonOdm.Geo.edgeIntersectsBounds([multiLineString.coordinates[i][j],multiLineString.coordinates[i][j+1]],geometry)) return true;
         }
     }
     return false;
@@ -677,7 +677,7 @@ jsonOdm.Geo.Polygon.within = function (polygon,geometry) {
  * @return {boolean}
  */
 jsonOdm.Geo.Polygon.intersects = function (polygon,geometry) {
-    var i, j, k;
+    var i, j;
     if (!polygon.coordinates || !jsonOdm.util.isArray(polygon.coordinates)) return false;
     if (geometry.type == "Point") {
         return jsonOdm.Geo.Point.intersects(geometry,polygon);
@@ -693,15 +693,15 @@ jsonOdm.Geo.Polygon.intersects = function (polygon,geometry) {
     }
 
     if (geometry.type == "Polygon") {
-        for(i = 0; polygon.coordinates[0] && i < polygon.coordinates[0].length; i++){
-            if(jsonOdm.Geo.pointWithinPolygon(polygon.coordinates[0][i],geometry.coordinates[0])) return true;
+        for(i = 0; polygon.coordinates[0] && i < polygon.coordinates[0].length - 1; i++){
+            if(jsonOdm.Geo.edgeIntersectsPolygon([polygon.coordinates[0][i],polygon.coordinates[0][i+1]],geometry.coordinates[0])) return true;
         }
         return false;
     }
     if (geometry.type == "MultiPolygon") {
         for(i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
             for (j = 0; polygon.coordinates[0] && j < polygon.coordinates[0].length - 1; j++) {
-                if(jsonOdm.Geo.pointWithinPolygon(polygon.coordinates[0][j], geometry.coordinates[i][0])) return true;
+                if(jsonOdm.Geo.edgeIntersectsPolygon([polygon.coordinates[0][j],polygon.coordinates[0][j-1]], geometry.coordinates[i][0])) return true;
             }
         }
         return false;
@@ -714,8 +714,8 @@ jsonOdm.Geo.Polygon.intersects = function (polygon,geometry) {
         return false;
     }
     // assume we have a BoundaryBox given
-    for(i = 0;polygon.coordinates[0] && i < polygon.coordinates[0].length; i++){
-        if(jsonOdm.Geo.pointWithinBounds(polygon.coordinates[0][i],geometry)){
+    for(i = 0;polygon.coordinates[0] && i < polygon.coordinates[0].length - 1; i++){
+        if(jsonOdm.Geo.edgeIntersectsBounds([polygon.coordinates[0][i],polygon.coordinates[0][i+1]],geometry)){
             return true;
         }
     }
@@ -840,8 +840,8 @@ jsonOdm.Geo.MultiPolygon.intersects = function (multiPolygon,geometry) {
     }
     // assume we have a BoundaryBox given
     for(i = 0; i < multiPolygon.coordinates.length; i++) {
-        for (j = 0; j < multiPolygon.coordinates[i][0].length; j++) {
-            if (jsonOdm.Geo.pointWithinBounds(multiPolygon.coordinates[i][0][j], geometry)) {
+        for (j = 0; j < multiPolygon.coordinates[i][0].length - 1; j++) {
+            if (jsonOdm.Geo.edgeIntersectsBounds([multiPolygon.coordinates[i][0][j],multiPolygon.coordinates[i][0][j+1]], geometry)) {
                 return true;
             }
         }
@@ -943,7 +943,7 @@ jsonOdm.Geo.pointWithinPolygon = function (point,polygon) {
  * @return {boolean}
  */
 jsonOdm.Geo.edgeWithinPolygon = function (edge, polygon) {
-    if(!(jsonOdm.util.isArray(edge) && edge.length == 2 && jsonOdm.util.isArray(polygon) && polygon.length > 2)) return false;
+    if(!(jsonOdm.util.isArray(edge) && edge.length == 2 && jsonOdm.util.isArray(polygon) && polygon.length >= 2)) return false;
 
     // close the polygon
     if(!(polygon[0][0] == polygon[polygon.length-1][0] && polygon[0][1] == polygon[polygon.length-1][1])) polygon = polygon.concat([polygon[0]]);
@@ -956,6 +956,44 @@ jsonOdm.Geo.edgeWithinPolygon = function (edge, polygon) {
         }
     }
     return true;
+};
+
+/**
+ * The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+ * @param {Array} edge A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
+ * @param {Array} polygon A polygon representation i.e. [[1,2],[2,3],[4,4],[1,2]]
+ * @return {boolean}
+ */
+jsonOdm.Geo.edgeIntersectsPolygon = function (edge, polygon) {
+    if(!(jsonOdm.util.isArray(edge) && edge.length == 2 && jsonOdm.util.isArray(polygon) && polygon.length >= 2)) return false;
+
+    // close the polygon
+    if(!(polygon[0][0] == polygon[polygon.length-1][0] && polygon[0][1] == polygon[polygon.length-1][1])) polygon = polygon.concat([polygon[0]]);
+    if(jsonOdm.Geo.pointWithinPolygon(edge[0], polygon) || jsonOdm.Geo.pointWithinPolygon(edge[1], polygon)) return true;
+
+    for(var i = 0; i < polygon.length - 1; i++){
+        // All points may be outside the polygon but their might be faces that are inside the polygon
+        if(jsonOdm.Geo.edgeIntersectsEdge(edge,[polygon[i],polygon[i+1]])){
+            return true;
+        }
+    }
+    return false;
+};
+
+/**
+ * The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+ * @param {Array} edge A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
+ * @param {Array} polygon A polygon representation i.e. [[1,2],[2,3],[4,4],[1,2]]
+ * @return {boolean}
+ */
+jsonOdm.Geo.edgeIntersectsLine = function (edge, polygon) {
+    if(!(jsonOdm.util.isArray(edge) && edge.length == 2 && jsonOdm.util.isArray(polygon))) return false;
+    for(var i = 0; i < polygon.length - 1; i++){
+        if(jsonOdm.Geo.edgeIntersectsEdge(edge,[polygon[i],polygon[i+1]])){
+            return true;
+        }
+    }
+    return false;
 };
 
 /**
@@ -990,7 +1028,9 @@ jsonOdm.Geo.edgeIntersectsEdge = function (edge1,edge2,allowOnEdge) {
         y = edge1[0][1] + (t*(directionVector1[1]));
 
     // intersection needs to be inside the bounds
-    return allowOnEdge ? (x >= bounds1[0] && x <= bounds1[2] && y >= bounds1[1] && y <= bounds1[3]) : (x > bounds1[0] && x < bounds1[2] && y > bounds1[1] && y < bounds1[3]);
+    return allowOnEdge ?
+        (x >= bounds1[0] && x <= bounds1[2] && y >= bounds1[1] && y <= bounds1[3]  && x >= bounds2[0] && x <= bounds2[2] && y >= bounds2[1] && y <= bounds2[3]) :
+        (x > bounds1[0] && x < bounds1[2] && y > bounds1[1] && y < bounds1[3]      && x > bounds2[0] && x < bounds2[2] && y > bounds2[1] && y < bounds2[3]);
 };
 
 /**
@@ -1028,13 +1068,24 @@ jsonOdm.Geo.pointWithinLineString = function (point, lineString) {
 
 /**
  * Checks whether a point is inside a boundary box or not
- * @param point
- * @param bounds
+ * @param {Array} point
+ * @param {Array} bounds
  * @return {boolean}
  */
 jsonOdm.Geo.pointWithinBounds = function (point, bounds) {
     if(!(jsonOdm.util.isArray(point) && jsonOdm.util.isArray(bounds) && bounds.length == 4)) return false;
     return point[0] >= bounds[0] && point[1] >= bounds[1] && point[0] <= bounds[2] && point[1] <= bounds[3];
+};
+
+/**
+ * Checks whether an edge intersects a boundary box or not
+ * @param {Array} edge
+ * @param {Array} bounds
+ * @return {boolean}
+ */
+jsonOdm.Geo.edgeIntersectsBounds = function (edge, bounds) {
+    if(!(jsonOdm.util.isArray(edge) && jsonOdm.util.isArray(bounds) && bounds.length == 4)) return false;
+    return jsonOdm.Geo.edgeIntersectsPolygon(edge,[[bounds[0],bounds[1]],[bounds[2],bounds[1]],[bounds[2],bounds[3]],[bounds[0],bounds[3]]]);
 };
 
 /**
