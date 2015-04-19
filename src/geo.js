@@ -414,14 +414,14 @@ jsonOdm.Geo.LineString.intersects = function (lineString, geometry) {
 
     if (geometry.type == "LineString") {
         for(i = 0; i < lineString.coordinates.length - 1; i++){
-            if(jsonOdm.Geo.edgeIntersectsLine([lineString.coordinates[i],lineString.coordinates[i+1]],geometry.coordinates)) return true;
+            if(jsonOdm.Geo.edgeIntersectsLineString([lineString.coordinates[i],lineString.coordinates[i+1]],geometry.coordinates)) return true;
         }
         return false;
     }
     if (geometry.type == "MultiLineString") {
         for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
             for(j = 0; j < lineString.coordinates.length - 1; j++){
-                if(jsonOdm.Geo.edgeIntersectsLine([lineString.coordinates[j],lineString.coordinates[j+1]],geometry.coordinates[i])) return true;
+                if(jsonOdm.Geo.edgeIntersectsLineString([lineString.coordinates[j],lineString.coordinates[j+1]],geometry.coordinates[i])) return true;
             }
         }
         return false;
@@ -565,7 +565,7 @@ jsonOdm.Geo.MultiLineString.intersects = function (multiLineString, geometry) {
         for (j = 0; multiLineString.coordinates && j < multiLineString.coordinates.length; j++) {
             for (k = 0; multiLineString.coordinates[j] && k < multiLineString.coordinates[j].length - 1; k++) {
                 for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
-                    if (jsonOdm.Geo.edgeIntersectsLine([multiLineString.coordinates[j][k],multiLineString.coordinates[j][k+1]], geometry.coordinates[i])) return true;
+                    if (jsonOdm.Geo.edgeIntersectsLineString([multiLineString.coordinates[j][k],multiLineString.coordinates[j][k+1]], geometry.coordinates[i])) return true;
                 }
             }
         }
@@ -701,7 +701,7 @@ jsonOdm.Geo.Polygon.intersects = function (polygon,geometry) {
     if (geometry.type == "MultiPolygon") {
         for(i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
             for (j = 0; polygon.coordinates[0] && j < polygon.coordinates[0].length - 1; j++) {
-                if(jsonOdm.Geo.edgeIntersectsPolygon([polygon.coordinates[0][j],polygon.coordinates[0][j-1]], geometry.coordinates[i][0])) return true;
+                if(jsonOdm.Geo.edgeIntersectsPolygon([polygon.coordinates[0][j],polygon.coordinates[0][j+1]], geometry.coordinates[i][0])) return true;
             }
         }
         return false;
@@ -834,7 +834,7 @@ jsonOdm.Geo.MultiPolygon.intersects = function (multiPolygon,geometry) {
     }
     if(geometry.type == "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
         for(i = 0; i < geometry.geometries.length; i++){
-            if(jsonOdm.Geo.MultiPolygon.within(multiPolygon,geometry.geometries[i])) return true;
+            if(jsonOdm.Geo.MultiPolygon.intersects(multiPolygon,geometry.geometries[i])) return true;
         }
         return false;
     }
@@ -959,7 +959,7 @@ jsonOdm.Geo.edgeWithinPolygon = function (edge, polygon) {
 };
 
 /**
- * The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+ * The method checks whether a edge intersects a polygon or not. The polygon will be auto closed
  * @param {Array} edge A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
  * @param {Array} polygon A polygon representation i.e. [[1,2],[2,3],[4,4],[1,2]]
  * @return {boolean}
@@ -981,15 +981,15 @@ jsonOdm.Geo.edgeIntersectsPolygon = function (edge, polygon) {
 };
 
 /**
- * The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+ * The method checks whether a edge intersects a lineString or not. The polygon will be auto closed
  * @param {Array} edge A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
- * @param {Array} polygon A polygon representation i.e. [[1,2],[2,3],[4,4],[1,2]]
+ * @param {Array} lineString A line representation i.e. [[1,2],[2,3],[4,4],[1,2]]
  * @return {boolean}
  */
-jsonOdm.Geo.edgeIntersectsLine = function (edge, polygon) {
-    if(!(jsonOdm.util.isArray(edge) && edge.length == 2 && jsonOdm.util.isArray(polygon))) return false;
-    for(var i = 0; i < polygon.length - 1; i++){
-        if(jsonOdm.Geo.edgeIntersectsEdge(edge,[polygon[i],polygon[i+1]])){
+jsonOdm.Geo.edgeIntersectsLineString = function (edge, lineString) {
+    if(!(jsonOdm.util.isArray(edge) && edge.length == 2 && jsonOdm.util.isArray(lineString))) return false;
+    for(var i = 0; i < lineString.length - 1; i++){
+        if(jsonOdm.Geo.edgeIntersectsEdge(edge,[lineString[i],lineString[i+1]])){
             return true;
         }
     }

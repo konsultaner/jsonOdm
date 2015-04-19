@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>jsonOdm v0.1.0</title>
+    <title>jsonOdm v0.1.1</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -22,7 +22,7 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">
-            jsonOdm v0.1.0
+            jsonOdm v0.1.1
           </a>
           <div class="navbar-right">
             <div class="external-links">
@@ -283,7 +283,7 @@
       <i class="fa fa-cog"></i>
     
 
-    <a href="jsonOdm.Geo.html#edgeIntersectsLine">edgeIntersectsLine</a>
+    <a href="jsonOdm.Geo.html#edgeIntersectsLineString">edgeIntersectsLineString</a>
   </li>
 
 
@@ -1196,7 +1196,7 @@ Changing the coordinate reference system (CRS) is not supported yet.
         <tr>
             <td class="name">
               
-              <a href="jsonOdm.Geo.html#edgeIntersectsLine">edgeIntersectsLine</a>
+              <a href="jsonOdm.Geo.html#edgeIntersectsLineString">edgeIntersectsLineString</a>
 
               
               
@@ -1204,7 +1204,7 @@ Changing the coordinate reference system (CRS) is not supported yet.
             </td>
             <td class="description">
                 
-                    The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+                    The method checks whether a edge intersects a lineString or not. The polygon will be auto closed
                 
 
                 
@@ -1226,7 +1226,7 @@ Changing the coordinate reference system (CRS) is not supported yet.
             </td>
             <td class="description">
                 
-                    The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+                    The method checks whether a edge intersects a polygon or not. The polygon will be auto closed
                 
 
                 
@@ -2132,10 +2132,10 @@ boolean
     <h3 class="
         subsection-title name
         
-      " id="edgeIntersectsLine">
+      " id="edgeIntersectsLineString">
 
       
-        edgeIntersectsLine<span class="signature">(edge, polygon)</span><span class="type-signature"> &rarr; {boolean}</span><span class="label label-info">static</span> 
+        edgeIntersectsLineString<span class="signature">(edge, lineString)</span><span class="type-signature"> &rarr; {boolean}</span><span class="label label-info">static</span> 
       
 
       
@@ -2161,7 +2161,7 @@ boolean
     
     <div class="description">
         <p>
-        The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+        The method checks whether a edge intersects a lineString or not. The polygon will be auto closed
         </p>
     </div>
     
@@ -2218,7 +2218,7 @@ Array
 
         <tr>
             
-                <td class="name">polygon
+                <td class="name">lineString
                   
                 </td>
             
@@ -2235,7 +2235,7 @@ Array
 
             
 
-            <td class="description last">A polygon representation i.e. [[1,2],[2,3],[4,4],[1,2]]</td>
+            <td class="description last">A line representation i.e. [[1,2],[2,3],[4,4],[1,2]]</td>
         </tr>
 
         
@@ -2344,7 +2344,7 @@ boolean
     
     <div class="description">
         <p>
-        The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+        The method checks whether a edge intersects a polygon or not. The polygon will be auto closed
         </p>
     </div>
     

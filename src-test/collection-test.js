@@ -318,3 +318,12 @@ CollectionTest.prototype.testGeoWithin = function () {
     q = collection.$query().$branch("geometry").$geoWithin(new jsonOdm.Geo.BoundaryBox([129.049317,-35.434555,140.870606,-19.068644]));
     assertEquals("Should find the 2nd O and G in Google",2, q.$all().length);
 };
+
+CollectionTest.prototype.testGeoIntersects = function () {
+    var collection = new jsonOdm.Collection("geo"),
+        q = collection.$query().$branch("geometry").$geoIntersects(new jsonOdm.Geo.BoundaryBox([129.049317,-31.434555,139.464356,-19.068644]));
+    assertEquals("Should find the Goo in Google",3, q.$all().length);
+
+    q = collection.$query().$branch("geometry").$geoIntersects(new jsonOdm.Geo.BoundaryBox([129.049317,-35.434555,140.870606,-19.068644]));
+    assertEquals("Should find the Goog in Google",4, q.$all().length);
+};

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>jsonOdm v0.1.0</title>
+    <title>jsonOdm v0.1.1</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -22,7 +22,7 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">
-            jsonOdm v0.1.0
+            jsonOdm v0.1.1
           </a>
           <div class="navbar-right">
             <div class="external-links">
@@ -283,7 +283,7 @@
       <i class="fa fa-cog"></i>
     
 
-    <a href="jsonOdm.Geo.html#edgeIntersectsLine">edgeIntersectsLine</a>
+    <a href="jsonOdm.Geo.html#edgeIntersectsLineString">edgeIntersectsLineString</a>
   </li>
 
 
@@ -1328,6 +1328,35 @@ like this $eq('1','2','4') so 1 or 2 or 4 are valid fields
             <td class="description">
                 
                     Short hand version for $all(true)
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Query.html#$geoIntersects">$geoIntersects</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Checks whether the current field geometry intersects the given geometry object <br/>
+<strong style="color:#ff0000">Warning:</strong> The coordinate reference system is <a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84</a>witch uses the coordinate order [<strong>longitude</strong>,<strong>latitude</strong>]!<br/>
+The method automatically transforms arrays into the assumed GeoJSON definitions where: <br/>
+[10,10] transforms into a jsonOdm.Geo.Point <br/>
+[[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString <br/>
+[[[10,10],[10,12],...],...] transforms into a jsonOdm.Geo.Polygon <br/>
+[[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon <br/>
+or simply use a GeoJSON object definition from jsonOdm.Geo
                 
 
                 
@@ -2947,6 +2976,226 @@ like this $eq('1','2','4') so 1 or 2 or 4 are valid fields
 </div>
 
         
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$geoIntersects">
+
+      
+        $geoIntersects<span class="signature">(geometry)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Checks whether the current field geometry intersects the given geometry object <br/>
+<strong style="color:#ff0000">Warning:</strong> The coordinate reference system is <a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84</a>witch uses the coordinate order [<strong>longitude</strong>,<strong>latitude</strong>]!<br/>
+The method automatically transforms arrays into the assumed GeoJSON definitions where: <br/>
+[10,10] transforms into a jsonOdm.Geo.Point <br/>
+[[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString <br/>
+[[[10,10],[10,12],...],...] transforms into a jsonOdm.Geo.Polygon <br/>
+[[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon <br/>
+or simply use a GeoJSON object definition from jsonOdm.Geo
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">geometry
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+Array
+|
+
+<a href="jsonOdm.Geo.BoundaryBox.html">jsonOdm.Geo.BoundaryBox</a>
+|
+
+<a href="jsonOdm.Geo.Point.html">jsonOdm.Geo.Point</a>
+|
+
+<a href="jsonOdm.Geo.MultiPoint.html">jsonOdm.Geo.MultiPoint</a>
+|
+
+<a href="jsonOdm.Geo.LineString.html">jsonOdm.Geo.LineString</a>
+|
+
+<a href="jsonOdm.Geo.MultiLineString.html">jsonOdm.Geo.MultiLineString</a>
+|
+
+<a href="jsonOdm.Geo.Polygon.html">jsonOdm.Geo.Polygon</a>
+|
+
+<a href="jsonOdm.Geo.MultiPolygon.html">jsonOdm.Geo.MultiPolygon</a>
+|
+
+<a href="jsonOdm.Geo.GeometryCollection.html">jsonOdm.Geo.GeometryCollection</a>
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>{
+    "geo":[
+        {
+            "type": "Feature",
+            "properties": {...},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [ ... ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {...},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [ ... ]
+            }
+        },
+        ...
+    ]
+}
+
+var collection = new jsonOdm.Collection("geo"),
+    q = collection.$query().$branch("geometry").$geoIntersects(new jsonOdm.Geo.BoundaryBox([129.049317,-31.434555,139.464356,-19.068644]));
+    //found geometries
+    geometries = q.$all();</code></pre>
 
     
 

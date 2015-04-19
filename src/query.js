@@ -439,6 +439,51 @@ jsonOdm.Query.prototype.$geoWithin = function (geometry) {
     });
 };
 
+/**
+ * Checks whether the current field geometry intersects the given geometry object <br/>
+ * <strong style="color:#ff0000">Warning:</strong> The coordinate reference system is <a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84</a>witch uses the coordinate order [<strong>longitude</strong>,<strong>latitude</strong>]!<br/>
+ * The method automatically transforms arrays into the assumed GeoJSON definitions where: <br/>
+ * [10,10] transforms into a jsonOdm.Geo.Point <br/>
+ * [[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString <br/>
+ * [[[10,10],[10,12],...],...] transforms into a jsonOdm.Geo.Polygon <br/>
+ * [[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon <br/>
+ * or simply use a GeoJSON object definition from jsonOdm.Geo
+ * @example
+ * {
+ *     "geo":[
+ *         {
+ *             "type": "Feature",
+ *             "properties": {...},
+ *             "geometry": {
+ *                 "type": "Polygon",
+ *                 "coordinates": [ ... ]
+ *             }
+ *         },
+ *         {
+ *             "type": "Feature",
+ *             "properties": {...},
+ *             "geometry": {
+ *                 "type": "Polygon",
+ *                 "coordinates": [ ... ]
+ *             }
+ *         },
+ *         ...
+ *     ]
+ * }
+ *
+ * var collection = new jsonOdm.Collection("geo"),
+ *     q = collection.$query().$branch("geometry").$geoIntersects(new jsonOdm.Geo.BoundaryBox([129.049317,-31.434555,139.464356,-19.068644]));
+ *     //found geometries
+ *     geometries = q.$all();
+ * @param {Array|jsonOdm.Geo.BoundaryBox|jsonOdm.Geo.Point|jsonOdm.Geo.MultiPoint|jsonOdm.Geo.LineString|jsonOdm.Geo.MultiLineString|jsonOdm.Geo.Polygon|jsonOdm.Geo.MultiPolygon|jsonOdm.Geo.GeometryCollection} geometry
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$geoIntersects = function (geometry) {
+    return this.$testCollection(jsonOdm.Geo.detectAsGeometry(geometry), function (collectionValue,geometry) {
+        return jsonOdm.Geo[collectionValue.type] && jsonOdm.Geo[collectionValue.type].intersects && jsonOdm.Geo[collectionValue.type].intersects(collectionValue,geometry);
+    });
+};
+
 /*-------- Logic ---------*/
 /**
  * Compares sub query results using the boolean and
