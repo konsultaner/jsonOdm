@@ -21,6 +21,9 @@
  */
 jsonOdm.Query = function (collection) {
     this.$$commandQueue = [];
+    this.$$aggregationAfterValidationQueue = [];
+    this.$$aggregationBeforeCollectQueue = [];
+    this.$$aggregationResultQueue = [];
     this.$$collection = collection;
 };
 
@@ -51,9 +54,37 @@ jsonOdm.Query.prototype.$delete = function () {
     return this;
 };
 
+jsonOdm.Query.prototype.$result = function (start,length) {
+    if(this.$$commandQueue.length < 1) return this.$$collection;
+    start  = typeof start  == "undefined" ? 0 : start;
+    length = typeof length == "undefined" ? this.$$collection.length : length;
+
+    var filterCollection = new jsonOdm.Collection(),
+        resultingElement, i,j;
+
+    for(i = 0; i < this.$$collection.length; i++){
+        var validCollection = true;
+        for(j = 0; j < this.$$commandQueue.length; j++){
+            if(!(validCollection = validCollection && this.$$commandQueue[j](this.$$collection[i]))){
+                break;
+            }
+        }
+        if(validCollection){
+            if(start > 0) {start--;continue;}
+            if(length <= 0){return filterCollection}
+            resultingElement = this.$$collection[i];
+            for(j = 0; j < this.$$aggregationAfterValidationQueue.length; j++){
+                resultingElement = this.$$aggregationAfterValidationQueue(resultingElement);
+            }
+            filterCollection.push(resultingElement);
+            length--;
+        }
+    }
+    return filterCollection;
+};
+
 /**
  * Returns a collection containing all matching elements
- * @param {boolean} [first] only return the first element, used by jsonOdm.Query.prototype.$first
  * @example
  * var collection = new jsonOdm.Collection("myCollection");
  * collection.$query()
@@ -61,22 +92,8 @@ jsonOdm.Query.prototype.$delete = function () {
  *    .$all();
  * @return {jsonOdm.Collection}
  */
-jsonOdm.Query.prototype.$all = function (first) {
-    if(this.$$commandQueue.length < 1) return this.$$collection;
-    var filterCollection = new jsonOdm.Collection();
-    for(var i = 0; i < this.$$collection.length; i++){
-        var validCollection = true;
-        for(var j = 0; j < this.$$commandQueue.length; j++){
-            if(!(validCollection = validCollection && this.$$commandQueue[j](this.$$collection[i]))){
-                break;
-            }
-        }
-        if(validCollection){
-            if(first) return this.$$collection[i];
-            filterCollection.push(this.$$collection[i]);
-        }
-    }
-    return filterCollection;
+jsonOdm.Query.prototype.$all = function () {
+    return this.$result();
 };
 
 /**
@@ -84,8 +101,46 @@ jsonOdm.Query.prototype.$all = function (first) {
  * @return {jsonOdm.Collection}
  */
 jsonOdm.Query.prototype.$first = function () {
-    return this.$all(true);
+    return this.$result(0,1)[0];
 };
+
+//////////////////////////////////// COLLECTION AGGREGATION
+
+/**
+ *
+ * @param {function[]} afterValidation Push into the commandQueue after all commands have been executed. Returning false will result in a skip of this value
+ * @param {function} beforeCollect Push into the before collect queue to change or replace the collection element
+ * @param {function} aggregation If the result of the whole aggregation changes, i.e. for searching
+ * @param {int} start return a subset starting at n; default = 0
+ * @param {int} length return a subset with the length n; default = collection length
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$aggregateCollection = function (afterValidation,beforeCollect,aggregation,start,length) {
+
+};
+
+/**
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * var $query = collection.$query()
+ *    .$branch("id").$gt(12) // querying
+ *    .$project({
+ *        "name" : 1,
+ *        "value" : 1,
+ *        "newValue" : $query.$branch("name").$subString(0,4)
+ *    }).$group("name").$orderBy("id","ASC")
+ *
+ */
+jsonOdm.Query.prototype.$project = function (projection) {
+    var projectionResultSet = [];
+    return this.$aggregateCollection(null, function (index,element) {
+        jsonOdm.util.projectElement(projection,element)
+    }, function (lastCollectionResult) {
+
+    })
+};
+
+//////////////////////////////////// COLLECTION QUERYING AND FILTERING
 
 /**
  * Test a collection or collection field against one or more values

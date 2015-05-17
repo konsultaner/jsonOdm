@@ -105,4 +105,23 @@ jsonOdm.Util.prototype.branch = function(object,path){
     return goDown.apply(object,path);
 };
 
+/**
+ * Projects an element to a projectionDefinition
+ * @param projection
+ * @param element
+ */
+jsonOdm.Util.prototype.projectElement = function(projection,element){
+    var projectionResult = {};
+    for(var key in projection){
+        if(!projection.hasOwnProperty(key)) continue;
+        if(projection[key] == 1){
+            projectionResult[key] = element[key]; // might be undefined or raises an error
+        }else if(typeof projection[key] === 'function'){
+            projectionResult[key] = projection[key](element);
+        }else if(typeof projection[key] === 'object'){
+            projectionResult[key] = jsonOdm.Util.projectElement(projection[key],element);
+        }
+    }
+};
+
 jsonOdm.util = new jsonOdm.Util();
