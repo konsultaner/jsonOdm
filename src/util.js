@@ -107,21 +107,33 @@ jsonOdm.Util.prototype.branch = function(object,path){
 
 /**
  * Projects an element to a projectionDefinition
- * @param projection
- * @param element
+ * @param {object} projection The projection definition object
+ * @param {object} element The element that is projected from
+ * @param {object} [parentElement] for internal recursion purpose
+ * @return {object} The projected element
+ * @example
+ * jsonOdm.util.projectElement({
+ *  key1:'value1',
+ *  key2:'value2'
+ * },{
+ *  key1:1,
+ *  key12:function(element){return element.key1 + element.key2}
+ * })
+ * // will return {key1:'value1',key12:'value1value2'}
  */
-jsonOdm.Util.prototype.projectElement = function(projection,element){
+jsonOdm.Util.prototype.projectElement = function(projection,element,parentElement){
     var projectionResult = {};
     for(var key in projection){
         if(!projection.hasOwnProperty(key)) continue;
         if(projection[key] == 1){
             projectionResult[key] = element[key]; // might be undefined or raises an error
         }else if(typeof projection[key] === 'function'){
-            projectionResult[key] = projection[key](element);
+            projectionResult[key] = projection[key](parentElement || element);
         }else if(typeof projection[key] === 'object'){
-            projectionResult[key] = jsonOdm.Util.projectElement(projection[key],element);
+            projectionResult[key] = this.projectElement(projection[key],element[key],parentElement || element);
         }
     }
+    return projectionResult;
 };
 
 jsonOdm.util = new jsonOdm.Util();

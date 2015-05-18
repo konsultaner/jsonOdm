@@ -39,4 +39,40 @@ UtilTest.prototype.testBranch = function () {
     assertEquals("Simple Branching","myValue",jsonOdm.util.branch(myObject,["myKey"]));
     assertEquals("Deep Branching","value",jsonOdm.util.branch(myObject,["myArray",0,"myKey"]));
     assertFalse("Deep Branching","myValue" == jsonOdm.util.branch(myObject,["myArray",0,"myKey"]));
-}
+};
+
+UtilTest.prototype.testProjection = function () {
+    var myObject = {
+            key1:"value1",
+            key2:"value2",
+            key3:{
+                key4:"value4",
+                key5:"value5",
+                key6:{
+                    key7:"value7",
+                    key8:"value8"
+                }
+            }
+        },
+        projectedObject = jsonOdm.util.projectElement({
+            key1:1,
+            key4: function (element) {
+                return element.key2;
+            },
+            key3 : {
+                key5:1,
+                concat:function (element){
+                    return element.key1 + element.key3.key4;
+                },
+                key6:{
+                    key8:1
+                }
+            }
+        },myObject);
+    assertEquals("Key1 should exist",myObject.key1,projectedObject.key1);
+    assertEquals("Key4 should equal key2",myObject.key2,projectedObject.key4);
+    assertEquals("Key5 should exist",myObject.key3.key5,projectedObject.key3.key5);
+    assertEquals("Key8 should exist",myObject.key3.key6.key8,projectedObject.key3.key6.key8);
+    assertEquals("Key concat should exist","value1value4",projectedObject.key3.concat);
+    assertUndefined("Key2 should not exist",projectedObject.key2);
+};

@@ -21,7 +21,6 @@
  */
 jsonOdm.Query = function (collection) {
     this.$$commandQueue = [];
-    this.$$aggregationAfterValidationQueue = [];
     this.$$aggregationBeforeCollectQueue = [];
     this.$$aggregationResultQueue = [];
     this.$$collection = collection;
@@ -54,6 +53,12 @@ jsonOdm.Query.prototype.$delete = function () {
     return this;
 };
 
+/**
+ * Returns a collection containing all matching elements within a certain range
+ * @param {int} [start] return a subset starting at n; default = 0
+ * @param {int} [length] return a subset with the length n; default = collection length
+ * @return {*}
+ */
 jsonOdm.Query.prototype.$result = function (start,length) {
     if(this.$$commandQueue.length < 1) return this.$$collection;
     start  = typeof start  == "undefined" ? 0 : start;
@@ -73,8 +78,8 @@ jsonOdm.Query.prototype.$result = function (start,length) {
             if(start > 0) {start--;continue;}
             if(length <= 0){return filterCollection}
             resultingElement = this.$$collection[i];
-            for(j = 0; j < this.$$aggregationAfterValidationQueue.length; j++){
-                resultingElement = this.$$aggregationAfterValidationQueue(resultingElement);
+            for(j = 0; j < this.$$aggregationBeforeCollectQueue.length; j++){
+                resultingElement = this.$$aggregationBeforeCollectQueue[j](resultingElement);
             }
             filterCollection.push(resultingElement);
             length--;
@@ -108,14 +113,12 @@ jsonOdm.Query.prototype.$first = function () {
 
 /**
  *
- * @param {function[]} afterValidation Push into the commandQueue after all commands have been executed. Returning false will result in a skip of this value
- * @param {function} beforeCollect Push into the before collect queue to change or replace the collection element
- * @param {function} aggregation If the result of the whole aggregation changes, i.e. for searching
- * @param {int} start return a subset starting at n; default = 0
- * @param {int} length return a subset with the length n; default = collection length
+ * @param {function[]|function} afterValidation Push into the query queue after all commands have been executed. Returning false will result in a skip of this value
+ * @param {function[]|function} [beforeCollect] Push into the before collect queue to change or replace the collection element
+ * @param {function[]|function} [aggregation] If the result of the whole aggregation changes, i.e. for searching
  * @return {jsonOdm.Query}
  */
-jsonOdm.Query.prototype.$aggregateCollection = function (afterValidation,beforeCollect,aggregation,start,length) {
+jsonOdm.Query.prototype.$aggregateCollection = function (afterValidation,beforeCollect,aggregation) {
 
 };
 
@@ -127,16 +130,13 @@ jsonOdm.Query.prototype.$aggregateCollection = function (afterValidation,beforeC
  *    .$project({
  *        "name" : 1,
  *        "value" : 1,
- *        "newValue" : $query.$branch("name").$subString(0,4)
+ *        "newValue" : $query.$branch("name").$subString(0,4) // should return a function
  *    }).$group("name").$orderBy("id","ASC")
  *
  */
 jsonOdm.Query.prototype.$project = function (projection) {
-    var projectionResultSet = [];
     return this.$aggregateCollection(null, function (index,element) {
-        jsonOdm.util.projectElement(projection,element)
-    }, function (lastCollectionResult) {
-
+        return jsonOdm.util.projectElement(projection,element)
     })
 };
 
