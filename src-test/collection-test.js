@@ -283,16 +283,23 @@ CollectionTest.prototype.testQuery = function () {
     assertEquals("The second one should be Richi1002",1002,subCollection[1].id);
 };
 
+CollectionTest.prototype.testStringModification = function () {
+    var collection = new jsonOdm.Collection("goldenRuleCollection");
+    var firstCite = collection.$query().$first();
+    assertEquals("Should substring the result",firstCite.id,collection.$query().$branch("cite").$substr(3,12).$eq(firstCite.cite.substr(3,12)).$first().id);
+    assertEquals("Should double substring the result",firstCite.id,collection.$query().$branch("cite").$substr(3,12).$substr(0,2).$eq(firstCite.cite.substr(3,12).substr(0,2)).$first().id);
+};
+
 CollectionTest.prototype.testTextSearch = function() {
     var collection = new jsonOdm.Collection("goldenRuleCollection");
-    assertEquals("Should find both english rules",2,collection.$query().$branch("cite").$text("One treat").$all().length)
-    assertEquals("Should find only first english rule",1,collection.$query().$branch("cite").$text("One treat -not").$all().length)
-    assertEquals("Should find only first english rule",1,collection.$query().$branch("cite").$text("\"One should treat\"").$all().length)
-    assertEquals("Should find two 'da' and 'pl'",2,collection.$query().$branch("cite").$text("næste Rób").$all().length)
-    assertEquals("Should find only 'da' and first 'en'",2,collection.$query().$branch("cite").$text("to -treated").$all().length)
-    assertEquals("Should find both english rules",2,collection.$query().$branch("cite").$text("trea").$all().length)
-    assertEquals("Should find only english rules",2,collection.$query().$branch("cite").$text("\"trea\" innym").$all().length)
-    assertEquals("Should find first english rules",1,collection.$query().$branch("cite").$text("\"trea\" -treated").$all().length)
+    assertEquals("Should find both english rules",2,collection.$query().$branch("cite").$text("One treat").$all().length);
+    assertEquals("Should find only first english rule",1,collection.$query().$branch("cite").$text("One treat -not").$all().length);
+    assertEquals("Should find only first english rule",1,collection.$query().$branch("cite").$text("\"One should treat\"").$all().length);
+    assertEquals("Should find two 'da' and 'pl'",2,collection.$query().$branch("cite").$text("næste Rób").$all().length);
+    assertEquals("Should find only 'da' and first 'en'",2,collection.$query().$branch("cite").$text("to -treated").$all().length);
+    assertEquals("Should find both english rules",2,collection.$query().$branch("cite").$text("trea").$all().length);
+    assertEquals("Should find only english rules",2,collection.$query().$branch("cite").$text("\"trea\" innym").$all().length);
+    assertEquals("Should find first english rules",1,collection.$query().$branch("cite").$text("\"trea\" -treated").$all().length);
 };
 
 CollectionTest.prototype.testWhereSearch = function () {

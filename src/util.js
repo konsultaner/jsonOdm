@@ -113,22 +113,27 @@ jsonOdm.Util.prototype.branch = function(object,path){
  * @return {object} The projected element
  * @example
  * jsonOdm.util.projectElement({
- *  key1:'value1',
- *  key2:'value2'
+ *     key1:'value1',
+ *     key2:'value2'
  * },{
- *  key1:1,
- *  key12:function(element){return element.key1 + element.key2}
+ *     key1:1,
+ *     key12:function(element){return element.key1 + element.key2}
+ *     key2:collection.$query.$branch("key2").$substr(0,3)
  * })
- * // will return {key1:'value1',key12:'value1value2'}
+ * // will return {key1:'value1',key12:'value1value2',key2:'val'}
  */
 jsonOdm.Util.prototype.projectElement = function(projection,element,parentElement){
-    var projectionResult = {};
+    var projectionResult = {},i;
     for(var key in projection){
         if(!projection.hasOwnProperty(key)) continue;
         if(projection[key] == 1){
             projectionResult[key] = element[key]; // might be undefined or raises an error
         }else if(typeof projection[key] === 'function'){
             projectionResult[key] = projection[key](parentElement || element);
+        }else if(projection[key] instanceof jsonOdm.Query){
+            for(i = 0; i < projection[key].$$commandQueue.length; i++ ){
+                projectionResult[key] = projection[key].$$commandQueue[i](i===0 ? element : projectionResult[key]);
+            }
         }else if(typeof projection[key] === 'object'){
             projectionResult[key] = this.projectElement(projection[key],element[key],parentElement || element);
         }

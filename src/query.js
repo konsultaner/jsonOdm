@@ -154,7 +154,7 @@ jsonOdm.Query.prototype.$testCollection = function (comparables,collectionTest) 
         return function (collection) {
             if(!((lastCommand instanceof jsonOdm.Collection || typeof lastCommand == "function" || typeof lastCommand == "undefined") && typeof collectionTest == "function")) return false;
             var collectionValue = typeof lastCommand == "undefined"?collection:(lastCommand instanceof jsonOdm.Collection?lastCommand:lastCommand(collection));
-            return collectionTest(collectionValue,comparables);
+            return !!collectionTest(collectionValue,comparables);
         }
     })();
     this.$$commandQueue.push($testCollection);
@@ -177,7 +177,7 @@ jsonOdm.Query.prototype.$binaryOperator = function (queries,operator) {
                     commandResults.push(queries[i].$$commandQueue[j](collection));
                 }
             }
-            return operator(commandResults);
+            return !!operator(commandResults);
         }
     })(queries,operator);
     var subQuery = new jsonOdm.Query(this.$$collection);
@@ -202,6 +202,37 @@ jsonOdm.Query.prototype.$branch = function (node) {
     var subQuery = new jsonOdm.Query(this.$$collection);
     subQuery.$$commandQueue.push($branch);
     return subQuery;
+};
+
+/** Modify fields before validation
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$modifyField = function (modifier) {
+    var $subStr = (function(modifier,lastCommand){
+        /**
+         * @param {*} The collection to go down
+         * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
+         */
+        return function(collection){
+            collection = lastCommand!==null?lastCommand(collection):collection;
+            return typeof modifier == "function" ? modifier(collection) : collection;
+        };
+    })(modifier,this.$$commandQueue.length?this.$$commandQueue[this.$$commandQueue.length-1]:null);
+    this.$$commandQueue.push($subStr);
+    return this;
+};
+
+/** A wrapper for the native String.substr method
+ * @param {Number} start Index of the first character
+ * @param {Number} length Length of the resulting string
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$substr = function (start,length) {
+    return this.$modifyField((function (start, length) {
+        return function (value) {
+            return typeof value == "string"?value.substr(start,length):value;
+        }
+    })(start, length));
 };
 
 /**
