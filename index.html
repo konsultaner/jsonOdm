@@ -20,7 +20,7 @@
 
     <section class="main-content">
       <h1>
-<a id="json-odm-v011" class="anchor" href="#json-odm-v011" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON ODM v0.1.1</h1>
+<a id="json-odm-v013" class="anchor" href="#json-odm-v013" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON ODM v0.1.3</h1>
 
 <h2>
 <a id="by-konsultaner-richard-burkhardt" class="anchor" href="#by-konsultaner-richard-burkhardt" aria-hidden="true"><span class="octicon octicon-link"></span></a>by <a href="http://www.konsultaner.de">Konsultaner</a>, Richard Burkhardt</h2>
@@ -53,29 +53,24 @@ into joinable collections seemed very helpful.  </p>
 <li>Evaluation (<del>$mod</del>,<del>$regex</del>,<del>$text</del>,<del>$where</del>) 100%</li>
 <li>Geospatial (<del>$geoWithin</del>,<del>$geoIntersects</del>,$near,$nearSphere) 50% (maybe have a hard and a soft check -&gt; performance)</li>
 <li>Array ($all,$elementMatch,$size) 0% // i may not implement the first two</li>
-<li>Projection Operators ($,$elemMatch,$meta,$slice) 0%</li>
+<li>Aggregation
+
+<ul>
+<li>Pipeline (<del>$project</del>,$match,$redact,<del>$limit</del>,<del>$skip</del>,$unwind,$group,$sort,$geoNear,$out) 30% ($limit and $skip is implemented as $result(skip,limit))</li>
+<li>Operators (Boolean,Set,Comparison,Arithmetic,<del>String</del>,Array,Date,Conditional,Variable,Grouping) 10%</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Support Promise/A+ sources for the odm.addSource</li>
-<li>Full <del>CR</del>U<del>D</del> support</li>
+<li>Full CRUD support</li>
 <li>Aggregation</li>
 </ul>
 
 <h2>
-<a id="required-npm-packages" class="anchor" href="#required-npm-packages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Required NPM-Packages</h2>
+<a id="install-from-npm-package" class="anchor" href="#install-from-npm-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install from NPM-Package</h2>
 
-<p>To build it from source use command <code>gulp</code> and after adding:</p>
-
-<div class="highlight highlight-bash"><pre>npm install --save-dev gulp
-npm install --save-dev gulp-concat
-npm install --save-dev gulp-filesize
-npm install --save-dev gulp-jsdoc
-npm install --save-dev gulp-uglify
-npm install --save-dev jsdoc3-bootstrap</pre></div>
-
-<p>To execute the benchmark use command <code>gulp bench</code> after adding:</p>
-
-<div class="highlight highlight-bash"><pre>npm install --save-dev gulp-bench</pre></div>
+<div class="highlight highlight-bash"><pre>npm install json-odm</pre></div>
 
 <h2>
 <a id="browser-support" class="anchor" href="#browser-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser Support</h2>
