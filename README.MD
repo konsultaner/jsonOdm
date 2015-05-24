@@ -1,4 +1,4 @@
-JSON ODM v0.1.2
+JSON ODM v0.1.3
 ========
 by [Konsultaner](http://www.konsultaner.de), Richard Burkhardt
 -------------
