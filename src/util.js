@@ -118,6 +118,7 @@ jsonOdm.Util.prototype.branch = function(object,path){
  * },{
  *     key1:1,
  *     key12:function(element){return element.key1 + element.key2}
+ *     // only field modifying queries are allowed
  *     key2:collection.$query.$branch("key2").$substr(0,3)
  * })
  * // will return {key1:'value1',key12:'value1value2',key2:'val'}
@@ -131,9 +132,7 @@ jsonOdm.Util.prototype.projectElement = function(projection,element,parentElemen
         }else if(typeof projection[key] === 'function'){
             projectionResult[key] = projection[key](parentElement || element);
         }else if(projection[key] instanceof jsonOdm.Query){
-            for(i = 0; i < projection[key].$$commandQueue.length; i++ ){
-                projectionResult[key] = projection[key].$$commandQueue[i](i===0 ? element : projectionResult[key]);
-            }
+            projectionResult[key] = projection[key].$$commandQueue[projection[key].$$commandQueue.length-1](element);
         }else if(typeof projection[key] === 'object'){
             projectionResult[key] = this.projectElement(projection[key],element[key],parentElement || element);
         }

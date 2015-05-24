@@ -1,4 +1,4 @@
-JSON ODM v0.1.1
+JSON ODM v0.1.2
 ========
 by [Konsultaner](http://www.konsultaner.de), Richard Burkhardt
 -------------
@@ -27,27 +27,18 @@ Road map
     - Evaluation (~~$mod~~,~~$regex~~,~~$text~~,~~$where~~) 100%
     - Geospatial (~~$geoWithin~~,~~$geoIntersects~~,$near,$nearSphere) 50% (maybe have a hard and a soft check -> performance)
     - Array ($all,$elementMatch,$size) 0% // i may not implement the first two
-    - Projection Operators ($,$elemMatch,$meta,$slice) 0%
+    - Aggregation
+        - Pipeline (~~$project~~,$match,$redact,~~$limit~~,~~$skip~~,$unwind,$group,$sort,$geoNear,$out) 30% ($limit and $skip is implemented as $result(skip,limit))
+        - Operators (Boolean,Set,Comparison,Arithmetic,~~String~~,Array,Date,Conditional,Variable,Grouping) 10%
 - Support Promise/A+ sources for the odm.addSource
-- Full ~~CR~~U~~D~~ support
+- Full CRUD support
 - Aggregation
 
-Required NPM-Packages
+Install from NPM-Package
 ---------------------
 
-To build it from source use command ```gulp``` and after adding:
 ```bash
-npm install --save-dev gulp
-npm install --save-dev gulp-concat
-npm install --save-dev gulp-filesize
-npm install --save-dev gulp-jsdoc
-npm install --save-dev gulp-uglify
-npm install --save-dev jsdoc3-bootstrap
-```
-
-To execute the benchmark use command ```gulp bench``` after adding:
-```bash
-npm install --save-dev gulp-bench
+npm install json-odm
 ```
 
 Browser Support

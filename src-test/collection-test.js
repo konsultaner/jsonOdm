@@ -290,6 +290,28 @@ CollectionTest.prototype.testStringModification = function () {
     assertEquals("Should double substring the result",firstCite.id,collection.$query().$branch("cite").$substr(3,12).$substr(0,2).$eq(firstCite.cite.substr(3,12).substr(0,2)).$first().id);
 };
 
+CollectionTest.prototype.testProjection = function () {
+    var collection = new jsonOdm.Collection("goldenRuleCollection"),
+        query = collection.$query();
+    var projected = query.$project({
+        concat: function (element) {
+            return element.id + element.lang
+        },
+        firstFour : query.$branch("cite").$substr(0,4),
+        firstTen : query.$branch("cite").$substr(0,10),
+        lang:1,
+        language:query.$branch("lang")
+    }).$all();
+    assertEquals("Should have concat id and language",collection[0].id+collection[0].lang,projected[0].concat);
+    assertEquals("Should have the first four cite letters",collection[0].cite.substr(0,4),projected[0].firstFour);
+    assertEquals("Should have the first four cite letters",collection[5].cite.substr(0,4),projected[5].firstFour);
+    assertEquals("Should have the first ten cite letters",collection[5].cite.substr(0,10),projected[5].firstTen);
+    assertEquals("Should have the lang","en",projected[5].lang);
+    assertEquals("Should have the lang equal to language",projected[5].language,projected[5].lang);
+    assertUndefined("Should not have a cite field",projected[5].cite);
+    assertUndefined("Should not have a id field",projected[5].id);
+};
+
 CollectionTest.prototype.testTextSearch = function() {
     var collection = new jsonOdm.Collection("goldenRuleCollection");
     assertEquals("Should find both english rules",2,collection.$query().$branch("cite").$text("One treat").$all().length);

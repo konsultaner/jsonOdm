@@ -2,7 +2,6 @@
 
 /**
  * The main class holding all sub classes and the data source
- * @version 0.0.1
  * @author Richard Burkhardt - Konsultaner
  *
  * @constructor

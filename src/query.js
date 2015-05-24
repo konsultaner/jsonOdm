@@ -2,7 +2,7 @@
 
 /**
  * The query object that holds the collection to be queried
- * @param {jsonOdm.Collection} collection
+ * @param {jsonOdm.Collection} [collection]
  * @constructor
  * @example //This example shows how to query a collection
  * var myCollection = new jsonOdm('myCollection');
@@ -23,7 +23,7 @@ jsonOdm.Query = function (collection) {
     this.$$commandQueue = [];
     this.$$aggregationBeforeCollectQueue = [];
     this.$$aggregationResultQueue = [];
-    this.$$collection = collection;
+    this.$$collection = collection || [];
 };
 
 /**
@@ -54,13 +54,18 @@ jsonOdm.Query.prototype.$delete = function () {
 };
 
 /**
- * Returns a collection containing all matching elements within a certain range
+ * Returns a collection containing all matching elements within the given range
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * collection.$query()
+ *    .$branch("id").$eq(2,9)
+ *    .$result(1,3);
  * @param {int} [start] return a subset starting at n; default = 0
  * @param {int} [length] return a subset with the length n; default = collection length
  * @return {*}
  */
 jsonOdm.Query.prototype.$result = function (start,length) {
-    if(this.$$commandQueue.length < 1) return this.$$collection;
+    if(this.$$commandQueue.length < 1 && this.$$aggregationBeforeCollectQueue < 1) return this.$$collection;
     start  = typeof start  == "undefined" ? 0 : start;
     length = typeof length == "undefined" ? this.$$collection.length : length;
 
@@ -77,13 +82,17 @@ jsonOdm.Query.prototype.$result = function (start,length) {
         if(validCollection){
             if(start > 0) {start--;continue;}
             if(length <= 0){return filterCollection}
+
             resultingElement = this.$$collection[i];
             for(j = 0; j < this.$$aggregationBeforeCollectQueue.length; j++){
-                resultingElement = this.$$aggregationBeforeCollectQueue[j](resultingElement);
+                resultingElement = this.$$aggregationBeforeCollectQueue[j](i,resultingElement);
             }
             filterCollection.push(resultingElement);
             length--;
         }
+    }
+    for(i = 0; i < this.$$aggregationResultQueue.length; i++){
+        filterCollection = this.$$aggregationResultQueue[i](filterCollection);
     }
     return filterCollection;
 };
@@ -112,32 +121,55 @@ jsonOdm.Query.prototype.$first = function () {
 //////////////////////////////////// COLLECTION AGGREGATION
 
 /**
- *
+ * Helper method for aggregation methods
  * @param {function[]|function} afterValidation Push into the query queue after all commands have been executed. Returning false will result in a skip of this value
  * @param {function[]|function} [beforeCollect] Push into the before collect queue to change or replace the collection element
- * @param {function[]|function} [aggregation] If the result of the whole aggregation changes, i.e. for searching
+ * @param {function[]|function} [aggregation] If the result of the whole aggregation changes, i.e. for searching, or ordering
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$aggregateCollection = function (afterValidation,beforeCollect,aggregation) {
-
+    var i;
+    if(typeof afterValidation == "function") afterValidation = [afterValidation];
+    if(typeof beforeCollect == "function") beforeCollect = [beforeCollect];
+    if(typeof aggregation == "function") aggregation = [aggregation];
+    if(jsonOdm.util.isArray(afterValidation)){
+        this.$$commandQueue = this.$$commandQueue.concat(afterValidation);
+    }
+    if(jsonOdm.util.isArray(beforeCollect)){
+        this.$$aggregationBeforeCollectQueue = this.$$aggregationBeforeCollectQueue.concat(beforeCollect);
+    }
+    if(jsonOdm.util.isArray(aggregation)){
+        this.$$aggregationResultQueue = this.$$aggregationResultQueue.concat(aggregation);
+    }
+    return this;
 };
 
 /**
+ * Projects all elements of the collection into a given schema
+ * @param {*} projection The projection definition with nested definitions
+ * @return jsonOdm.Query
  * @example
- * var collection = new jsonOdm.Collection("myCollection");
+ * var collection = new jsonOdm.Collection("myBooks");
  * var $query = collection.$query()
- *    .$branch("id").$gt(12) // querying
+ *    .$branch("id").$gt(12) // query before project
  *    .$project({
- *        "name" : 1,
- *        "value" : 1,
- *        "newValue" : $query.$branch("name").$subString(0,4) // should return a function
- *    }).$group("name").$orderBy("id","ASC")
+ *        title: 1,
+ *        isbn: {
+ *            prefix: $query.$branch("isbn").$subString(0,3),
+ *            group: $query.$branch("isbn").$subString(3,2),
+ *            publisher: $query.$branch("isbn").$subString(5,4),
+ *            title: $query.$branch("isbn").$subString(9,3),
+ *            checkDigit: $query.$branch("isbn").$subString(12,1)
+ *         },
+ *         lastName: function(element){return element.author.last}, // functions can be used as well
+ *         copiesSold: $query.$branch("copies")
+ *    })
  *
  */
 jsonOdm.Query.prototype.$project = function (projection) {
     return this.$aggregateCollection(null, function (index,element) {
         return jsonOdm.util.projectElement(projection,element)
-    })
+    });
 };
 
 //////////////////////////////////// COLLECTION QUERYING AND FILTERING
@@ -208,7 +240,7 @@ jsonOdm.Query.prototype.$branch = function (node) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$modifyField = function (modifier) {
-    var $subStr = (function(modifier,lastCommand){
+    var $modifyer = (function(modifier,lastCommand){
         /**
          * @param {*} The collection to go down
          * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
@@ -218,22 +250,35 @@ jsonOdm.Query.prototype.$modifyField = function (modifier) {
             return typeof modifier == "function" ? modifier(collection) : collection;
         };
     })(modifier,this.$$commandQueue.length?this.$$commandQueue[this.$$commandQueue.length-1]:null);
-    this.$$commandQueue.push($subStr);
+    this.$$commandQueue.push($modifyer);
     return this;
 };
 
-/** A wrapper for the native String.substr method
- * @param {Number} start Index of the first character
- * @param {Number} length Length of the resulting string
+/** A generation for all native String.prototype methods to make them available via $modifyField <br/>
+ * Supported Methods are: "charAt", "charCodeAt", "concat", "fromCharCode", "indexOf", "lastIndexOf", "localeCompare", "match", "replace", "search", "slice", "split", "substr", "substring", "toLocaleLowerCase", "toLocaleUpperCase", "toLowerCase", "toUpperCase", "trim", "valueOf"
+ * @param {*} [args] The string methods parameter
  * @return {jsonOdm.Query}
+ * @method StringPrototype
+ * @memberof jsonOdm.Query.prototype
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * var $query = collection.$query();
+ *    $query.$branch("explosionBy").$trim().$substr(0,3).$toUpperCase().$eq("TNT").$all();
  */
-jsonOdm.Query.prototype.$substr = function (start,length) {
-    return this.$modifyField((function (start, length) {
-        return function (value) {
-            return typeof value == "string"?value.substr(start,length):value;
+jsonOdm.Query.stringFiledModifyer = ["charAt","charCodeAt","concat","fromCharCode","indexOf","lastIndexOf","localeCompare","match","replace","search","slice","split","substr","substring","toLocaleLowerCase","toLocaleUpperCase","toLowerCase","toUpperCase","trim","valueOf"];
+for(var i = 0; i < jsonOdm.Query.stringFiledModifyer.length; i++){
+    jsonOdm.Query.prototype["$"+jsonOdm.Query.stringFiledModifyer[i]] = (
+        function (modifyer) {
+            return function () {
+                return this.$modifyField((function (args,modifyer) {
+                    return function (value) {
+                        return typeof value == "string" && String.prototype.hasOwnProperty(modifyer)?String.prototype[modifyer].apply(value,args):value;
+                    }
+                })(arguments,modifyer))
+            }
         }
-    })(start, length));
-};
+    )(jsonOdm.Query.stringFiledModifyer[i]);
+}
 
 /**
  * Compares the current sub collection value with the comparable

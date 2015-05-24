@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>jsonOdm v0.1.1</title>
+    <title>jsonOdm v0.1.3</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -22,7 +22,7 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">
-            jsonOdm v0.1.1
+            jsonOdm v0.1.3
           </a>
           <div class="navbar-right">
             <div class="external-links">
@@ -1041,6 +1041,41 @@ jsonOdm.Util.prototype.branch = function(object,path){
         return this
     }
     return goDown.apply(object,path);
+};
+
+/**
+ * Projects an element to a projectionDefinition
+ * @param {object} projection The projection definition object
+ * @param {object} element The element that is projected from
+ * @param {object} [parentElement] for internal recursion purpose
+ * @return {object} The projected element
+ * @example
+ * jsonOdm.util.projectElement({
+ *     key1:'value1',
+ *     key2:'value2'
+ * },{
+ *     key1:1,
+ *     key12:function(element){return element.key1 + element.key2}
+ *     // only field modifying queries are allowed
+ *     key2:collection.$query.$branch("key2").$substr(0,3)
+ * })
+ * // will return {key1:'value1',key12:'value1value2',key2:'val'}
+ */
+jsonOdm.Util.prototype.projectElement = function(projection,element,parentElement){
+    var projectionResult = {},i;
+    for(var key in projection){
+        if(!projection.hasOwnProperty(key)) continue;
+        if(projection[key] == 1){
+            projectionResult[key] = element[key]; // might be undefined or raises an error
+        }else if(typeof projection[key] === 'function'){
+            projectionResult[key] = projection[key](parentElement || element);
+        }else if(projection[key] instanceof jsonOdm.Query){
+            projectionResult[key] = projection[key].$$commandQueue[projection[key].$$commandQueue.length-1](element);
+        }else if(typeof projection[key] === 'object'){
+            projectionResult[key] = this.projectElement(projection[key],element[key],parentElement || element);
+        }
+    }
+    return projectionResult;
 };
 
 jsonOdm.util = new jsonOdm.Util();</code></pre>
