@@ -1,4 +1,5 @@
 describe("Geo Tools", function () {
+    // GEO HELPER
     describe("Point in Polygon", function () {
         var point = [10,10];
         var polygon1 = [[0,0],[0,20],[20,20],[20,0],[0,0]];
@@ -99,6 +100,7 @@ describe("Geo Tools", function () {
             expect(jsonOdm.Geo.detectAsGeometry([[[[1,1]]]]) instanceof jsonOdm.Geo.MultiPolygon).toBeTruthy()
         });
     });
+    // GEO WITHIN
     describe("Point in Geometry", function () {
         it("Should be in Point", function () {
            expect(jsonOdm.Geo.Point.within(new jsonOdm.Geo.Point([1,1]),new jsonOdm.Geo.Point([1,1]))).toBeTruthy();
@@ -537,5 +539,182 @@ describe("Geo Tools", function () {
                 new jsonOdm.Geo.MultiPoint([[1,1],[2,2],[4,4]])
             )).toBeFalsy();
         });
+    });
+    // GEO INTERSECT
+    describe("Point intersects Geometry", function () {
+        it("Should be an alias", function () {
+            expect(jsonOdm.Geo.Point.intersects).toBe(jsonOdm.Geo.Point.within);
+        });
+    });
+    describe("MultiPoint intersects Geometry", function () {
+        it("Should intersect Point", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[2,2],[4,-2],[1,2]]),new jsonOdm.Geo.Point([1,2]))).toBeTruthy();
+        });
+        it("Should not intersect Point", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[2,2],[2,1]]),new jsonOdm.Geo.Point([1,2]))).toBeFalsy();
+        });
+        it("Should intersect bounds", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,2],[3,1]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[3,4],[2,2]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,0],[2,2]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeTruthy();
+        });
+        it("Should not intersect bounds", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[-1,0],[3,2]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeFalsy();
+        });
+        it("Should intersect MultiPoint", function () {
+           expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]))).toBeTruthy();
+           expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[8,1],[1,2]]),new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]))).toBeTruthy();
+           expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[1,5]]),new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]))).toBeTruthy();
+        });
+        it("Should not intersect MultiPoint", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[4,4],[3,3]]),new jsonOdm.Geo.MultiPoint([[2,1],[1,2]]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.MultiPoint([1,1]))).toBeFalsy();
+        });
+        it("Should intersect LineString", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[1,3]]),new jsonOdm.Geo.LineString([[1,1],[1,2]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[3,1],[1,2]]),new jsonOdm.Geo.LineString([[1,1],[1,2]]))).toBeTruthy();
+        });
+        it("Should not intersect LineString", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[2,2]]),new jsonOdm.Geo.LineString([[2,1],[1,2]]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.LineString([1,1]))).toBeFalsy();
+        });
+        it("Should intersect MultiLineSting (first,last,both)", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[2,2]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.MultiLineString([[[2,2],[1,3]],[[1,2],[1,1]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[2,1],[1,2]]),new jsonOdm.Geo.MultiLineString([[[2,2],[1,3]],[[1,2],[1,1]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.MultiLineString([[[1,2],[1,3]],[[2,2],[1,1]]]))).toBeTruthy();
+        });
+        it("Should not intersect MultiLineSting", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[2,2]]),new jsonOdm.Geo.MultiLineString([[[1,2],[1,3]],[[3,1],[1,5]]]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]),new jsonOdm.Geo.MultiLineString([[1,1],[1,2]]))).toBeFalsy();
+        });
+        it("Should intersects Polygon (vertex, path)", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[2,1],[1,2]]),new jsonOdm.Geo.Polygon([[[1,2],[3,1],[1,1],[1,5],[1,2]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[8,8]]),new jsonOdm.Geo.Polygon([[[1,2],[3,1],[1,1],[1,5],[1,2]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[2,1],[1,1]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[0,2],[0,0]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[0,1],[2,1]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[0,2],[0,0]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[8,8],[1,1]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]]))).toBeTruthy();
+        });
+        it("Should not intersects Polygon", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[2,1],[1,1]]),new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]))).toBeFalsy();
+        });
+        it("Should intersects MultiPolygon (vertex, path, inside)", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[-1,2]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[-1,1],[1,2]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[1,2]]), new jsonOdm.Geo.MultiPolygon([[[[10,20],[30,10],[10,10],[10,50],[10,20]]],[[[1,2],[3,1],[1,1],[1,5],[1,2]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[0,1],[6,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[0,2],[0,0]]],[[[0,0],[-2,0],[0,-2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[6,1],[1,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[0,2],[0,0]]],[[[0,0],[-2,0],[0,-2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[0,1],[1,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[-2,0],[0,-2],[0,0]]],[[[0,0],[2,0],[0,2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[2,1],[6,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[6,1],[1,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[2,1],[1,8]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]],[[[0,0],[2,0],[2,2],[0,2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[5,1],[1,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]],[[[0,0],[2,0],[2,2],[0,2],[0,0]]]]))).toBeTruthy();
+        });
+        it("Should not intersects MultiPolygon ", function () {
+            expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[0,0],[1,-1]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeFalsy();
+        });
+        it("Should intersect GeometryCollection[0]", function () {
+           expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[1,1],[5,2]]), new jsonOdm.Geo.GeometryCollection([
+               new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,1]]]),
+               new jsonOdm.Geo.LineString([[2,1],[1,2]]),
+               new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
+           ]))).toBeTruthy();
+        });
+        it("Should intersect GeometryCollection[1]", function () {
+           expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[3,1],[0,-2]]), new jsonOdm.Geo.GeometryCollection([
+               new jsonOdm.Geo.LineString([[2,1],[1,2]]),
+               new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]]),
+               new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
+           ]))).toBeTruthy();
+        });
+        it("Should not intersect GeometryCollection", function () {
+           expect(jsonOdm.Geo.MultiPoint.intersects(new jsonOdm.Geo.MultiPoint([[-1,1],[0,-2]]), new jsonOdm.Geo.GeometryCollection([
+               new jsonOdm.Geo.LineString([[2,1],[1,2]]),
+               new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
+           ]))).toBeFalsy();
+        });
+    });
+    describe("LineString intersects Geometry", function () {
+        it("Should intersects Point,MultiPoint", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[1,2],[2,1]]),new jsonOdm.Geo.Point([1,2]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[1,2],[2,1]]),new jsonOdm.Geo.MultiPoint([[1,2],[2,1]]))).toBeTruthy();
+        });
+        it("Should intersects bounds", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[1,2],[1,1]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[0,0],[-2,2]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeTruthy();
+        });
+        it("Should not intersects bounds", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[-1,0],[2,-2]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeFalsy();
+        });
+        it("Should intersects LineString", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[3,1],[1,3]]),new jsonOdm.Geo.LineString([[1,1],[3,3]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[3,1],[1,3]]),new jsonOdm.Geo.LineString([[1,3],[3,1]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[-2,-2],[-2,-4],[0,0],[3,1],[1,3]]),new jsonOdm.Geo.LineString([[1,3],[3,1]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[1,1],[1,2]]),new jsonOdm.Geo.LineString([[1,2],[2,2],[1,1]]))).toBeTruthy();
+        });
+        it("Should not intersects LineString", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[2,2],[-2,2],[-2,6]]),new jsonOdm.Geo.LineString([[1,1],[1,-3],[6,-3],[6,6]]))).toBeFalsy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[1,1],[1,2]]),new jsonOdm.Geo.LineString([1,1]))).toBeFalsy();
+        });
+        it("Should intersects MultiLineString (first,second)", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[0,2],[2,2]]),new jsonOdm.Geo.MultiLineString([[[1,-1],[1,4]],[[3,1],[5,5]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[0,2],[2,2]]),new jsonOdm.Geo.MultiLineString([[[3,1],[5,5]],[[1,-1],[1,3]]]))).toBeTruthy();
+        });
+        it("Should not intersects MultiLineString", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[1,1],[1,2]]),new jsonOdm.Geo.MultiLineString([[[3,1],[5,5]],[[-3,1],[-1,5]]]))).toBeFalsy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[1,1],[1,2]]),new jsonOdm.Geo.MultiLineString([[1,2],[1,3]]))).toBeFalsy();
+        });
+        it("Should intersects Polygon on (vertex,inside,path)", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[3,1],[1,2]]),new jsonOdm.Geo.Polygon([[[1,2],[3,1],[1,1],[1,5],[1,2]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[2,1],[1,1]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[4,1],[1,1]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]]))).toBeTruthy();
+        });
+        it("Should not intersects Polygon", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[2,1],[1,1]]),new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]))).toBeFalsy();
+        });
+        it("Should intersect MultiPolygon on (vertex,inside,path)", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[1,1],[3,1],[1,2]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[1,1],[3,1],[1,2]]), new jsonOdm.Geo.MultiPolygon([[[[10,20],[30,10],[10,10],[10,50],[10,20]]],[[[1,2],[3,1],[1,1],[1,5],[1,2]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[2,1],[1,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[2,1],[1,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]],[[[0,0],[2,0],[2,2],[0,2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[2,-1],[1,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[4,1],[1,1]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]],[[[0,0],[2,0],[2,2],[0,2],[0,0]]]]))).toBeTruthy();
+        });
+        it("Should not intersect MultiPolygon", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[0,0],[1,-1]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeFalsy();
+        });
+        it("Should intersect GeometryCollection[0]", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[-1,1],[1,2]]), new jsonOdm.Geo.GeometryCollection([
+                new jsonOdm.Geo.MultiLineString([[[1,2],[1,1]],[[3,1],[1,1]]]),
+                new jsonOdm.Geo.LineString([[2,1],[1,2]]),
+                new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
+            ]))).toBeTruthy();
+        });
+        it("Should intersect GeometryCollection[1]", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[10,10],[13,2],[1,1],[-2,2]]), new jsonOdm.Geo.GeometryCollection([
+                new jsonOdm.Geo.LineString([[2,1],[1,2]]),
+                new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]]),
+                new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
+            ]))).toBeTruthy();
+        });
+        it("Should not intersect GeometryCollection", function () {
+            expect(jsonOdm.Geo.LineString.intersects(new jsonOdm.Geo.LineString([[1,1],[0,-2]]), new jsonOdm.Geo.GeometryCollection([
+                new jsonOdm.Geo.LineString([[2,1],[1,2]]),
+                new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
+            ]))).toBeFalsy();
+        });
+    });
+    describe("MultiLineString intersects Geometry", function () {
+
+    });
+    describe("Polygon intersects Geometry", function () {
+
+    });
+    describe("MultiPolygon intersects Geometry", function () {
+
+    });
+    describe("GeometryCollection intersects Geometry", function () {
+
     });
 });
