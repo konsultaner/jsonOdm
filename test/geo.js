@@ -389,5 +389,153 @@ describe("Geo Tools", function () {
                new jsonOdm.Geo.MultiLineString([[[1,2],[1,2]],[[3,1],[1,5]]])
            ]))).toBeFalsy();
         });
-    })
+    });
+    describe("Polygon in Geometry", function () {
+        it("Cannot be in Point,MultiPoint,LineString or MultiLineString", function () {
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[1,2],[2,1]]]),new jsonOdm.Geo.Point([1,2]))).toBeFalsy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[1,2],[2,1]]]),new jsonOdm.Geo.MultiPoint([[1,2],[2,1]]))).toBeFalsy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[2,8],[3,1]],[[1,2],[1,1],[1,2],[3,1]]]),new jsonOdm.Geo.LineString([[1,1],[1,2],[3,1],[2,8]]))).toBeFalsy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[1,1],[1,2]],[[3,1],[1,5]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]]))).toBeFalsy();
+        });
+        it("Should be in bounds", function () {
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[1,2],[1,1],[0,2],[1,1],[2,2],[0,1]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeTruthy();
+        });
+        it("Should not be in bounds", function () {
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[0,3],[1,1],[2,2],[0,1]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeFalsy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[0,3],[1,1],[2,2],[0,1]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeFalsy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[0,3],[1,1],[2,2],[0,1]]]),new jsonOdm.Geo.BoundaryBox([0,0,-2,-2]))).toBeFalsy();
+        });
+        it("Should be in Polygon (vertex,inside)", function () {
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]]),new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[2,1],[1,1],[0.5,2],[1,0.5],[1,2]]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]]))).toBeTruthy();
+        });
+        it("Should not be in Polygon (vertex,inside)", function () {
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[2,1],[1,1],[0.5,2],[1,0.5],[1,3]]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]]))).toBeFalsy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[2,1],[1,1],[-2,-1],[-1,-1]]]),new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]))).toBeFalsy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[-2,-1],[-1,-1],[2,1],[1,1]]]),new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]))).toBeFalsy();
+        });
+        it("Should be in MultiPolygon (vertex,inside)", function () {
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]]), new jsonOdm.Geo.MultiPolygon([[[[10,20],[30,10],[10,10],[10,50],[10,20]]],[[[-1,-1],[3,0],[5,5],[1,5],[-1,2]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[2,1],[1,1],[0.5,2],[1,0.5],[1,2]]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[2,1],[1,1],[0.5,2],[1,0.5],[1,2]]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]],[[[0,0],[2,0],[2,2],[0,2],[0,0]]]]))).toBeTruthy();
+        });
+        it("Should not be in MultiPolygon", function () {
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[-2,-1],[-1,-1],[2,1],[1,1]]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeFalsy();
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[2,1],[1,1],[-2,-1],[-1,-1]]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeFalsy();
+        });
+        it("Should be in GeometryCollection[0]", function () {
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[1,1],[1,2],[1,5],[4,2],[2,1],[3,1],[1,5]]]), new jsonOdm.Geo.GeometryCollection([
+                new jsonOdm.Geo.BoundaryBox([0,0,8,8]),
+                new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+                new jsonOdm.Geo.Polygon([[[1,2],[1,2]],[[3,1],[1,5]]])
+            ]))).toBeTruthy();
+        });
+        it("Should be in GeometryCollection[1]", function () {
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[1,1],[1,2],[1,5],[4,2],[2,1],[3,1],[1,5]]]), new jsonOdm.Geo.GeometryCollection([
+                new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+                new jsonOdm.Geo.BoundaryBox([0,0,8,8]),
+                new jsonOdm.Geo.Polygon([[[1,2],[1,2]],[[3,1],[1,5]]])
+            ]))).toBeTruthy();
+        });
+        it("Should not be in GeometryCollection", function () {
+            expect(jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[1,1],[1,2],[1,5],[4,2],[2,1],[3,1],[1,5]]]), new jsonOdm.Geo.GeometryCollection([
+                new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+                new jsonOdm.Geo.Polygon([[[1,2],[1,2]],[[3,1],[1,5]]])
+            ]))).toBeFalsy();
+        });
+    });
+    describe("MultiPolygon in Geometry", function () {
+        it("Cannot be in Point,MultiPoint,LineString or MultiLineString", function () {
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,2],[2,1]]]]),new jsonOdm.Geo.Point([1,2]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,2],[2,1]]]]),new jsonOdm.Geo.MultiPoint([[1,2],[2,1]]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,8],[3,1]]],[[[1,2],[1,1],[1,2],[3,1]]]]),new jsonOdm.Geo.LineString([[1,1],[1,2],[3,1],[2,8]]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2]]],[[[3,1],[1,5]]]]),new jsonOdm.Geo.MultiLineString([[[1,1],[1,2]],[[3,1],[1,5]]]))).toBeFalsy();
+        });
+        it("Should be in bounds", function () {
+           expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,2],[1,1],[0,2],[1,1],[2,2],[0,1]]],[[[1,1],[1,2],[2,2],[1,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeTruthy();
+           expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[2,2],[1,1]]],[[[1,2],[1,1],[0,2],[1,1],[2,2],[0,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeTruthy();
+        });
+        it("Should not be in bounds", function () {
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[0,3],[1,1],[2,2],[0,1]]],[[[1,2],[1,1],[0,2],[1,1],[2,2],[0,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,2],[1,1],[0,2],[1,1],[2,2],[0,1]]],[[[0,3],[1,1],[2,2],[0,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[0,3],[1,1],[2,2],[0,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,2,2]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[0,3],[1,1],[2,2],[0,1]]]]),new jsonOdm.Geo.BoundaryBox([0,0,-2,-2]))).toBeFalsy();
+        });
+        it("Should be in Polygon (vertex, inside)", function () {
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]]]),new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]],[[[1,2],[2,2],[1,3]]]]),new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[0.5,2],[1,0.5],[1,2]]]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]]))).toBeTruthy();
+        });
+        it("Should not be in Polygon", function () {
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]],[[[2,1],[1,1],[-2,-1],[-1,-1]]]]),new jsonOdm.Geo.Polygon([[[1,1],[1,2],[3,1],[1,5]]]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[0.5,2],[1,0.5],[1,3]]],[[[1,1],[0,1],[0,0],[0.3,0.6]]]]),new jsonOdm.Geo.Polygon([[[0,0],[2,0],[2,2],[0,2],[0,0]]]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[-2,-1],[-1,-1]]],[[[-1,-1],[0,-1],[0,0],[-0.3,-0.6]]]]),new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[-2,-1],[-1,-1],[2,1],[1,1]]]]),new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]))).toBeFalsy();
+        });
+        it("Should be in MultiPolygon (vertex, inside)", function () {
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]],[[[1,2],[2,2],[1,3]]]]), new jsonOdm.Geo.MultiPolygon([[[[-1,-1],[3,0],[5,5],[1,5],[-1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]],[[[1,2],[2,2],[1,3]]]]), new jsonOdm.Geo.MultiPolygon([[[[10,20],[30,10],[10,10],[10,50],[10,20]]],[[[-1,-1],[3,0],[5,5],[1,5],[-1,2]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[0.5,2],[1,0.5],[1,2]]]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[2,0],[2,2],[0,2],[0,0]]],[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]]))).toBeTruthy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[0.5,2],[1,0.5],[1,2]]]]), new jsonOdm.Geo.MultiPolygon([[[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]],[[[0,0],[2,0],[2,2],[0,2],[0,0]]]]))).toBeTruthy();
+        });
+        it("Should not be in MultiPolygon", function () {
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[3,1],[1,5]]],[[[1,-2],[2,2],[1,3]]]]), new jsonOdm.Geo.MultiPolygon([[[[-1,-1],[3,0],[5,5],[1,5],[-1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[-2,-1],[-1,-1],[2,1],[1,1]]]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeFalsy();
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[2,1],[1,1],[-2,-1],[-1,-1]]]]), new jsonOdm.Geo.MultiPolygon([[[[1,2],[3,1],[1,1],[1,5],[1,2]]],[[[10,20],[30,10],[10,10],[10,50],[10,20]]]]))).toBeFalsy();
+        });
+        it("Should be in GeometryCollection[0]", function () {
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,1],[1,2],[1,5],[4,2],[2,1],[3,1],[1,5]]],[[[1,2],[2,2],[1,3]]]]), new jsonOdm.Geo.GeometryCollection([
+                new jsonOdm.Geo.BoundaryBox([0,0,8,8]),
+                new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+                new jsonOdm.Geo.MultiPolygon([[[1,2],[1,2]],[[3,1],[1,5]]])
+            ]))).toBeTruthy();
+        });
+        it("Should be in GeometryCollection[1]", function () {
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[1,2],[2,2],[1,3]]],[[[1,1],[1,2],[1,5],[4,2],[2,1],[3,1],[1,5]]]]), new jsonOdm.Geo.GeometryCollection([
+                new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+                new jsonOdm.Geo.BoundaryBox([0,0,8,8]),
+                new jsonOdm.Geo.MultiPolygon([[[1,2],[1,2]],[[3,1],[1,5]]])
+            ]))).toBeTruthy();
+        });
+        it("Should not be in GeometryCollection", function () {
+            expect(jsonOdm.Geo.MultiPolygon.within(new jsonOdm.Geo.MultiPolygon([[[[-1,-2],[-2,-2],[-2,-1]]],[[[1,1],[1,2],[1,5],[4,2],[2,1],[3,1],[1,5]]]]), new jsonOdm.Geo.GeometryCollection([
+                new jsonOdm.Geo.Polygon([[[0,0],[-2,0],[-2,-2],[0,-2],[0,0]]]),
+                new jsonOdm.Geo.MultiPolygon([[[1,2],[1,2]],[[3,1],[1,5]]])
+            ]))).toBeFalsy();
+        });
+    });
+    describe("GeometryCollection in Geometry", function () {
+        // there are a lot of geometry specific tests, so only simple tests are needed
+        it("Should be in MultiPoint", function () {
+            expect(jsonOdm.Geo.GeometryCollection.within(
+                new jsonOdm.Geo.GeometryCollection([
+                    new jsonOdm.Geo.Point([1,1]),
+                    new jsonOdm.Geo.Point([2,2]),
+                    new jsonOdm.Geo.MultiPoint([[2,2],[3,3]])
+                ]),
+                new jsonOdm.Geo.MultiPoint([[1,1],[2,2],[3,3]])
+            )).toBeTruthy();
+        });
+        it("Should be in MultiPoint", function () {
+            expect(jsonOdm.Geo.GeometryCollection.within(
+                new jsonOdm.Geo.GeometryCollection([
+                    new jsonOdm.Geo.Point([1,1]),
+                    new jsonOdm.Geo.Point([2,2]),
+                    new jsonOdm.Geo.MultiPoint([[2,2],[3,3]])
+                ]),
+                new jsonOdm.Geo.MultiPoint([[1,1],[2,2],[3,3],[4,4]])
+            )).toBeTruthy();
+        });
+        it("Should not be in MultiPoint", function () {
+            expect(jsonOdm.Geo.GeometryCollection.within(
+                new jsonOdm.Geo.GeometryCollection([
+                    new jsonOdm.Geo.Point([1,1]),
+                    new jsonOdm.Geo.Point([2,2]),
+                    new jsonOdm.Geo.MultiPoint([[2,2],[3,3]])
+                ]),
+                new jsonOdm.Geo.MultiPoint([[1,1],[2,2],[4,4]])
+            )).toBeFalsy();
+        });
+    });
 });
