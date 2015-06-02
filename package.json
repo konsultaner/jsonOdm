@@ -1,6 +1,6 @@
 {
   "name": "json-odm",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Object document mapper for JSON data that provides mongodb methods for querying and transformation as well as additional joining that is not provided by mongodb. >> IF YOU LIKE IT, PLEASE GIVE IT A STAR ON GITHUB <<",
   "main": " ./bin/json.odm.min.js",
   "bin": {
