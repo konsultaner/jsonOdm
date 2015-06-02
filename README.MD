@@ -1,4 +1,10 @@
-JSON ODM v0.1.3
+[![npm](https://img.shields.io/npm/dm/json-odm.svg)](https://www.npmjs.com/package/json-odm)
+[![npm](https://img.shields.io/npm/v/json-odm.svg)](https://www.npmjs.com/package/json-odm)
+[![npm](https://img.shields.io/npm/l/json-odm.svg)](https://www.npmjs.com/package/json-odm)
+[![GitHub stars](https://img.shields.io/github/stars/konsultaner/jsonOdm.svg)](https://github.com/konsultaner/jsonOdm/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/konsultaner/jsonOdm.svg)](https://github.com/konsultaner/jsonOdm/issues)
+
+JSON ODM
 ========
 by [Konsultaner](http://www.konsultaner.de), Richard Burkhardt
 -------------
