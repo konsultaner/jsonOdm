@@ -51,6 +51,9 @@ Build and run tests, both minified and unminified
 -------------------------------------------------
 
 ```bash
+npm install json-odm
+cd npm_modules/json-odm/
+npm install
 gulp
 ```
 
