@@ -5,11 +5,24 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     filesize = require('gulp-filesize'),
     bench = require('gulp-bench'),
+    karma = require('gulp-karma'),
     uglify = require('gulp-uglify');
 
+
+var testNonMinifiedFiles = [
+    'src/odm.js',
+    'src/util.js',
+    'src/*.js',
+    'test/**/*.js'
+];
+var testMinifiedFiles = [
+    'bin/*.js',
+    'test/**/*.js'
+];
+
 gulp
-    .task('default', ['build','doc'] ,function () {})
-    .task('build', function() {
+    .task('default', ['test-minified','doc'] ,function () {})
+    .task('build',['test-non-minified'], function() {
         return gulp.src(['./src/odm.js', './src/util.js', './src/geo.js', './src/collection.js', './src/query.js'])
             .pipe(filesize())
             .pipe(concat('json.odm.min.js'))
@@ -17,6 +30,28 @@ gulp
             .pipe(filesize())
             .pipe(gulp.dest('./bin/')
         );
+    })
+    .task('test-non-minified', function () {
+        return gulp.src(testNonMinifiedFiles)
+            .pipe(karma({
+                configFile: 'karma.conf.js',
+                action: 'run'
+            }))
+            .on('error', function(err) {
+                // Make sure failed tests cause gulp to exit non-zero
+                throw err;
+            });
+    })
+    .task('test-minified', ['build'], function () {
+        return gulp.src(testMinifiedFiles)
+            .pipe(karma({
+                configFile: 'karma.conf.js',
+                action: 'run'
+            }))
+            .on('error', function(err) {
+                // Make sure failed tests cause gulp to exit non-zero
+                throw err;
+            });
     })
     .task('doc', function () {
         return gulp.src(['./src/*.js'])

@@ -47,6 +47,13 @@ Install from NPM-Package
 npm install json-odm
 ```
 
+Build and run tests, both minified and unminified
+-------------------------------------------------
+
+```bash
+gulp
+```
+
 Browser Support
 ---------------
 Unit test ran successfully under Chrome,iOS7+,IE9+,Firefox,Android 4.4.2+  
