@@ -26,6 +26,12 @@ describe("Collection", function () {
             {id:5,lang:'pl',cite:"Rób innym to, co byś chciał, żeby tobie robili."},
             {id:6,lang:'en',cite:"One should not treat others in ways that one would not like to be treated."}
         ],
+        "arithmeticCollection":[
+            {id:1,cars:12,trucks:23,bikes:8},
+            {id:2,cars:3,trucks:18,bikes:18},
+            {id:3,cars:23,trucks:22,bikes:23},
+            {id:4,cars:1,trucks:12,bikes:82}
+        ],
         "aLot":[],
         "geo":[
             // google example https://storage.googleapis.com/maps-devrel/google.json
@@ -346,6 +352,37 @@ describe("Collection", function () {
                 expect(subCollection.length).toBe(2);
                 expect(subCollection[0].id).toBe(401);
                 expect(subCollection[1].id).toBe(1002);
+            });
+        });
+        describe("Arithmetic operators", function () {
+            var collection, q;
+            beforeEach(function () {
+                collection = new jsonOdm.Collection("arithmeticCollection");
+                q = collection.$query();
+            });
+            it("Should add all fields", function () {
+                var sum = collection[0].cars+collection[0].trucks+collection[0].bikes;
+                expect(q.$add(q.$branch("cars"),q.$branch("trucks"),q.$branch("bikes")).$eq(sum).$first().id).toBe(collection[0].id);
+            });
+            it("Should subtract all fields", function () {
+                var subtraction = collection[1].cars-collection[1].trucks-collection[1].bikes;
+                expect(q.$subtract(q.$branch("cars"),q.$branch("trucks"),q.$branch("bikes")).$eq(subtraction).$first().id).toBe(collection[1].id);
+            });
+            it("Should multiply all fields", function () {
+                var multiply = collection[2].cars*collection[2].trucks*collection[2].bikes;
+                expect(q.$multiply(q.$branch("cars"),q.$branch("trucks"),q.$branch("bikes")).$eq(multiply).$first().id).toBe(collection[2].id);
+            });
+            it("Should divide all fields", function () {
+                var division = collection[3].cars/collection[3].trucks/collection[3].bikes;
+                expect(q.$divide(q.$branch("cars"),q.$branch("trucks"),q.$branch("bikes")).$eq(division).$first().id).toBe(collection[3].id);
+            });
+            it("Should calculate fields1 mod field2", function () {
+                var moduloResult = collection[1].trucks%collection[1].bikes;
+                expect(q.$modulo(q.$branch("trucks"),q.$branch("bikes")).$eq(moduloResult).$first().id).toBe(collection[1].id);
+            });
+            it("Should calculate fields1 mod 5", function () {
+                var moduloResult = collection[0].trucks % 5;
+                expect(q.$modulo(q.$branch("trucks"),5).$eq(moduloResult).$first().id).toBe(collection[0].id);
             });
         });
     });

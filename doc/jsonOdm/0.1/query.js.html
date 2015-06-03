@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>jsonOdm v0.1.3</title>
+    <title>jsonOdm v0.1.5</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -22,7 +22,7 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">
-            jsonOdm v0.1.3
+            jsonOdm v0.1.5
           </a>
           <div class="navbar-right">
             <div class="external-links">
@@ -1137,17 +1137,22 @@ jsonOdm.Query.prototype.$testCollection = function (comparables,collectionTest) 
  * @param {function} operator the test function to evaluate the values
  * @return {jsonOdm.Query}
  */
-jsonOdm.Query.prototype.$binaryOperator = function (queries,operator) {
+jsonOdm.Query.prototype.$queryOperator = function (queries,operator) {
     var $testCollection = (function (queries,oprator) {
         return function (collection) {
             if(typeof oprator != "function") return false;
             var commandResults = [];
             for(var i = 0; i &lt; queries.length; i++){
-                for(var j = 0; j &lt; queries[i].$$commandQueue.length; j++){
-                    commandResults.push(queries[i].$$commandQueue[j](collection));
+                if(queries[i] instanceof jsonOdm.Query){
+                    for(var j = 0; j &lt; queries[i].$$commandQueue.length; j++){
+                        commandResults.push(queries[i].$$commandQueue[j](collection));
+                    }
+                }else{
+                    // also accept raw values
+                    commandResults.push(queries[i]);
                 }
             }
-            return !!operator(commandResults);
+            return operator(commandResults);
         }
     })(queries,operator);
     var subQuery = new jsonOdm.Query(this.$$collection);
@@ -1217,6 +1222,136 @@ for(var i = 0; i &lt; jsonOdm.Query.stringFiledModifyer.length; i++){
         }
     )(jsonOdm.Query.stringFiledModifyer[i]);
 }
+
+/**
+ * Performs an arithmetic addition on two or more field values
+ * @param {jsonOdm.Query|Number} branch1
+ * @param {...jsonOdm.Query|...Number} branch2
+ * @return jsonOdm.Query
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * var $query = collection.$query();
+ *    $query.$add(
+ *        $query.$branch("firstValue"),
+ *        $query.$subtract(
+ *            $query.$branch("lastValue"),
+ *            $query.$branch(["otherValues","firstValue"])
+ *        )
+ *    ).$eq(12).$all();
+ */
+jsonOdm.Query.prototype.$add = function (branch1, branch2) {
+    return this.$queryOperator(arguments, function (queryResults) {
+        var result = queryResults.length > 0 ? queryResults[0] : 0;
+        for(var i = 1; i &lt; queryResults.length; i++){
+            result += queryResults[i];
+        }
+        return result;
+    });
+};
+
+/**
+ * Performs an arithmetic subtraction on two or more field values
+ * @param {jsonOdm.Query|Number} branch1
+ * @param {...jsonOdm.Query|...Number} branch2
+ * @return jsonOdm.Query
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * var $query = collection.$query();
+ *    $query.$subtract(
+ *        $query.$branch("firstValue"),
+ *        $query.$add(
+ *            $query.$branch("lastValue"),
+ *            $query.$branch(["otherValues","firstValue"])
+ *        )
+ *    ).$eq(12).$all();
+ */
+jsonOdm.Query.prototype.$subtract = function (branch1, branch2) {
+    return this.$queryOperator(arguments, function (queryResults) {
+        var result = queryResults.length > 0 ? queryResults[0] : 0;
+        for(var i = 1; i &lt; queryResults.length; i++){
+            result -= queryResults[i];
+        }
+        return result;
+    });
+};
+
+/**
+ * Performs an arithmetic multiplication on two or more field values
+ * @param {jsonOdm.Query|Number} branch1
+ * @param {...jsonOdm.Query|...Number} branch2
+ * @return jsonOdm.Query
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * var $query = collection.$query();
+ *    $query.$multiply(
+ *        $query.$branch("firstValue"),
+ *        $query.$add(
+ *            $query.$branch("lastValue"),
+ *            $query.$branch(["otherValues","firstValue"])
+ *        )
+ *    ).$eq(12).$all();
+ */
+jsonOdm.Query.prototype.$multiply = function (branch1, branch2) {
+    return this.$queryOperator(arguments, function (queryResults) {
+        var result = queryResults.length > 0 ? queryResults[0] : 0;
+        for(var i = 1; i &lt; queryResults.length; i++){
+            result *= queryResults[i];
+        }
+        return result;
+    });
+};
+
+/**
+ * Performs an arithmetic divition on two or more field values
+ * @param {jsonOdm.Query|Number} branch1
+ * @param {...jsonOdm.Query|...Number} branch2
+ * @return jsonOdm.Query
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * var $query = collection.$query();
+ *    $query.$divide(
+ *        $query.$branch("firstValue"),
+ *        $query.$add(
+ *            $query.$branch("lastValue"),
+ *            $query.$branch(["otherValues","firstValue"])
+ *        )
+ *    ).$eq(12).$all();
+ */
+jsonOdm.Query.prototype.$divide = function (branch1, branch2) {
+    return this.$queryOperator(arguments, function (queryResults) {
+        var result = queryResults.length > 0 ? queryResults[0] : 0;
+        for(var i = 1; i &lt; queryResults.length; i++){
+            result /= queryResults[i];
+        }
+        return result;
+    });
+};
+
+/**
+ * Performs an arithmetic modulo on two or more field values
+ * @param {jsonOdm.Query|Number} branch1
+ * @param {...jsonOdm.Query|...Number} module
+ * @return jsonOdm.Query
+ * @example
+ * var collection = new jsonOdm.Collection("myCollection");
+ * var $query = collection.$query();
+ *    $query.$modulo(
+ *        $query.$branch("firstValue"),
+ *        $query.$add(
+ *            $query.$branch("lastValue"),
+ *            $query.$branch(["otherValues","firstValue"])
+ *        )
+ *    ).$eq(12).$all();
+ */
+jsonOdm.Query.prototype.$modulo = function (branch1, module) {
+    return this.$queryOperator(arguments, function (queryResults) {
+        var result = queryResults.length > 0 ? queryResults[0] : 0;
+        for(var i = 1; i &lt; queryResults.length; i++){
+            result = result % queryResults[i];
+        }
+        return result;
+    });
+};
 
 /**
  * Compares the current sub collection value with the comparable
@@ -1561,7 +1696,7 @@ jsonOdm.Query.prototype.$geoIntersects = function (geometry) {
  */
 jsonOdm.Query.prototype.$and = function (queries) {
     // TODO optimize with generators to only query paths that are needed
-    return this.$binaryOperator(arguments, function (queryResults) {
+    return this.$queryOperator(arguments, function (queryResults) {
         for(var i = 0; i &lt; queryResults.length; i++){
             if(!queryResults[i]) return false;
         }
@@ -1576,7 +1711,7 @@ jsonOdm.Query.prototype.$and = function (queries) {
  */
 jsonOdm.Query.prototype.$nand = function (queries) {
     // TODO optimize with generators to only query paths that are needed
-    return this.$binaryOperator(arguments, function (queryResults) {
+    return this.$queryOperator(arguments, function (queryResults) {
         for(var i = 0; i &lt; queryResults.length; i++){
             if(!queryResults[i]) return true;
         }
@@ -1593,7 +1728,7 @@ jsonOdm.Query.prototype.$nand = function (queries) {
  * @param {...jsonOdm.Query} queries A finite number of operators
  * @return {jsonOdm.Query}
  */
-jsonOdm.Query.prototype.$not = jsonOdm.Query.prototype.$nand
+jsonOdm.Query.prototype.$not = jsonOdm.Query.prototype.$nand;
 
 /**
  * Compares sub query results using the boolean or
@@ -1602,7 +1737,7 @@ jsonOdm.Query.prototype.$not = jsonOdm.Query.prototype.$nand
  */
 jsonOdm.Query.prototype.$or = function (queries) {
     // TODO optimize with generators to only query paths that are needed
-    return this.$binaryOperator(arguments, function (queryResults) {
+    return this.$queryOperator(arguments, function (queryResults) {
         for(var i = 0; i &lt; queryResults.length; i++){
             if(queryResults[i]) return true;
         }
@@ -1617,7 +1752,7 @@ jsonOdm.Query.prototype.$or = function (queries) {
  */
 jsonOdm.Query.prototype.$nor = function (queries) {
     // TODO optimize with generators to only query paths that are needed
-    return this.$binaryOperator(arguments, function (queryResults) {
+    return this.$queryOperator(arguments, function (queryResults) {
         for(var i = 0; i &lt; queryResults.length; i++){
             if(queryResults[i]) return false;
         }

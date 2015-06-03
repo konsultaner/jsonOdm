@@ -35,7 +35,7 @@ Road map
     - Array ($all,$elementMatch,$size) 0% // i may not implement the first two
     - Aggregation
         - Pipeline (~~$project~~,$match,$redact,~~$limit~~,~~$skip~~,$unwind,$group,$sort,$geoNear,$out) 30% ($limit and $skip is implemented as $result(skip,limit))
-        - Operators (Boolean,Set,Comparison,Arithmetic,~~String~~,Array,Date,Conditional,Variable,Grouping) 10%
+        - Operators (Boolean,Set,Comparison,~~Arithmetic~~,~~String~~,Array,Date,Conditional,Variable,Grouping) 20% ($mod is renamed $modulo, because Evaluation has a $mod)
 - Support Promise/A+ sources for the odm.addSource
 - Full CRUD support
 - Aggregation

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>jsonOdm v0.1.3</title>
+    <title>jsonOdm v0.1.5</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -22,7 +22,7 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">
-            jsonOdm v0.1.3
+            jsonOdm v0.1.5
           </a>
           <div class="navbar-right">
             <div class="external-links">
@@ -1209,6 +1209,28 @@ $q.$branch('child','id').$eq(1,2).$delete();</code></pre>
         <tr>
             <td class="name">
               
+              <a href="jsonOdm.Query.html#$add">$add</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Performs an arithmetic addition on two or more field values
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
               <a href="jsonOdm.Query.html#$aggregateCollection">$aggregateCollection</a>
 
               
@@ -1275,28 +1297,6 @@ $q.$branch('child','id').$eq(1,2).$delete();</code></pre>
         <tr>
             <td class="name">
               
-              <a href="jsonOdm.Query.html#$binaryOperator">$binaryOperator</a>
-
-              
-              
-              
-            </td>
-            <td class="description">
-                
-                    Test a collection or collection field against one or more values
-                
-
-                
-
-
-            </td>
-        </tr>
-
-        
-
-        <tr>
-            <td class="name">
-              
               <a href="jsonOdm.Query.html#$branch">$branch</a>
 
               
@@ -1328,6 +1328,28 @@ $q.$branch('child','id').$eq(1,2).$delete();</code></pre>
             <td class="description">
                 
                     Returns a collection containing all matching elements
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Query.html#$divide">$divide</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Performs an arithmetic divition on two or more field values
                 
 
                 
@@ -1647,6 +1669,50 @@ like this $lte('1') field values less then or equal to 1 are valid
         <tr>
             <td class="name">
               
+              <a href="jsonOdm.Query.html#$modulo">$modulo</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Performs an arithmetic modulo on two or more field values
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Query.html#$multiply">$multiply</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Performs an arithmetic multiplication on two or more field values
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
               <a href="jsonOdm.Query.html#$nand">$nand</a>
 
               
@@ -1803,6 +1869,28 @@ like this $nin(['1','2','4']) so 1 or 2 or 4 are not valid fields
         <tr>
             <td class="name">
               
+              <a href="jsonOdm.Query.html#$queryOperator">$queryOperator</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Test a collection or collection field against one or more values
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
               <a href="jsonOdm.Query.html#$regex">$regex</a>
 
               
@@ -1834,6 +1922,28 @@ like this $nin(['1','2','4']) so 1 or 2 or 4 are not valid fields
             <td class="description">
                 
                     Returns a collection containing all matching elements within the given range
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Query.html#$subtract">$subtract</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Performs an arithmetic subtraction on two or more field values
                 
 
                 
@@ -2121,6 +2231,206 @@ boolean
 </div>
 
         
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$add">
+
+      
+        $add<span class="signature">(branch1, branch2)</span><span class="type-signature"></span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Performs an arithmetic addition on two or more field values
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">branch1
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+|
+
+Number
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">branch2
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+|
+
+Number
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+
+<span class="param-desc">
+    jsonOdm.Query
+</span>
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+var $query = collection.$query();
+   $query.$add(
+       $query.$branch("firstValue"),
+       $query.$subtract(
+           $query.$branch("lastValue"),
+           $query.$branch(["otherValues","firstValue"])
+       )
+   ).$eq(12).$all();</code></pre>
 
     
 
@@ -2638,189 +2948,6 @@ collection.$query()
     <h3 class="
         subsection-title name
         
-      " id="$binaryOperator">
-
-      
-        $binaryOperator<span class="signature">(queries, operator)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
-      
-
-      
-
-      
-
-    </h3>
-
-    
-
-    
-
-
-
-    
-
-
-
-  </dt>
-<dd>
-
-
-    
-    <div class="description">
-        <p>
-        Test a collection or collection field against one or more values
-        </p>
-    </div>
-    
-
-    
-
-    
-
-    
-        <h4>Parameters</h4>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-        <tr>
-                
-                <th>Name</th>
-                
-
-                <th>Type</th>
-
-                
-
-                <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-        <tr>
-            
-                <td class="name">queries
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-jsonOdm.Query[]
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">A finite number of operators</td>
-        </tr>
-
-        
-
-        <tr>
-            
-                <td class="name">operator
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-function
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last">the test function to evaluate the values</td>
-        </tr>
-
-        
-        </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h4>Returns</h4>
-    
-            <div class="returns">
-
-
-    
-<a href="jsonOdm.Query.html">jsonOdm.Query</a>
-
-
-
-
-
-</div>
-
-        
-
-    
-
-
-  </dd>
-</dl>
-
-
-        
-            
-
-
-<dl class="bs-docs-example bs-members">
-  <dt>
-
-
-    <h3 class="
-        subsection-title name
-        
       " id="$branch">
 
       
@@ -3080,6 +3207,206 @@ String
 collection.$query()
    .$branch("id").$gt(500)
    .$delete();</code></pre>
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$divide">
+
+      
+        $divide<span class="signature">(branch1, branch2)</span><span class="type-signature"></span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Performs an arithmetic divition on two or more field values
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">branch1
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+|
+
+Number
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">branch2
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+|
+
+Number
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+
+<span class="param-desc">
+    jsonOdm.Query
+</span>
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+var $query = collection.$query();
+   $query.$divide(
+       $query.$branch("firstValue"),
+       $query.$add(
+           $query.$branch("lastValue"),
+           $query.$branch(["otherValues","firstValue"])
+       )
+   ).$eq(12).$all();</code></pre>
 
     
 
@@ -5063,6 +5390,406 @@ collection.$query()
     <h3 class="
         subsection-title name
         
+      " id="$modulo">
+
+      
+        $modulo<span class="signature">(branch1, module)</span><span class="type-signature"></span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Performs an arithmetic modulo on two or more field values
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">branch1
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+|
+
+Number
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">module
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+|
+
+Number
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+
+<span class="param-desc">
+    jsonOdm.Query
+</span>
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+var $query = collection.$query();
+   $query.$modulo(
+       $query.$branch("firstValue"),
+       $query.$add(
+           $query.$branch("lastValue"),
+           $query.$branch(["otherValues","firstValue"])
+       )
+   ).$eq(12).$all();</code></pre>
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$multiply">
+
+      
+        $multiply<span class="signature">(branch1, branch2)</span><span class="type-signature"></span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Performs an arithmetic multiplication on two or more field values
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">branch1
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+|
+
+Number
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">branch2
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+|
+
+Number
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+
+<span class="param-desc">
+    jsonOdm.Query
+</span>
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+var $query = collection.$query();
+   $query.$multiply(
+       $query.$branch("firstValue"),
+       $query.$add(
+           $query.$branch("lastValue"),
+           $query.$branch(["otherValues","firstValue"])
+       )
+   ).$eq(12).$all();</code></pre>
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
       " id="$nand">
 
       
@@ -6200,6 +6927,189 @@ var $query = collection.$query()
     <h3 class="
         subsection-title name
         
+      " id="$queryOperator">
+
+      
+        $queryOperator<span class="signature">(queries, operator)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Test a collection or collection field against one or more values
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">queries
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+jsonOdm.Query[]
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A finite number of operators</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">operator
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+function
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">the test function to evaluate the values</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
       " id="$regex">
 
       
@@ -6579,6 +7489,206 @@ int
 collection.$query()
    .$branch("id").$eq(2,9)
    .$result(1,3);</code></pre>
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$subtract">
+
+      
+        $subtract<span class="signature">(branch1, branch2)</span><span class="type-signature"></span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Performs an arithmetic subtraction on two or more field values
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">branch1
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+|
+
+Number
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">branch2
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+|
+
+Number
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+
+<span class="param-desc">
+    jsonOdm.Query
+</span>
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("myCollection");
+var $query = collection.$query();
+   $query.$subtract(
+       $query.$branch("firstValue"),
+       $query.$add(
+           $query.$branch("lastValue"),
+           $query.$branch(["otherValues","firstValue"])
+       )
+   ).$eq(12).$all();</code></pre>
 
     
 
