@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/konsultaner/jsonOdm.svg?branch=master)](https://travis-ci.org/konsultaner/jsonOdm)
 [![npm](https://img.shields.io/npm/dm/json-odm.svg)](https://www.npmjs.com/package/json-odm)
 [![npm](https://img.shields.io/npm/v/json-odm.svg)](https://www.npmjs.com/package/json-odm)
 [![npm](https://img.shields.io/npm/l/json-odm.svg)](https://www.npmjs.com/package/json-odm)
