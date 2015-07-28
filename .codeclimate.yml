@@ -4,3 +4,7 @@ engines:
 ratings:
   paths:
     - src/**
+exclude_paths:
+- "README.MD"
+- bin/**
+- doc/**
