@@ -945,7 +945,7 @@ jsonOdm.Query.prototype.$text = function (text) {
 /**
  * Performs a query selection by a self defined function of function body string. The function context (this) will be the current collection or a value selected by $branch.
  * @example
- * // using a string to find Harry
+ * // !!!! NOT SUPPORTED ANYMORE !!!! using a string to find Harry
  * collection.$query().$where("return this.name == 'Harry';").$first();
  * // using a function to find Harry
  * collection.$query().$where(function(){return this.name == 'Harry';}).$first();
@@ -955,9 +955,6 @@ jsonOdm.Query.prototype.$text = function (text) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$where = function (evaluation) {
-    if(typeof evaluation === "string"){
-        evaluation = new Function(evaluation);
-    }
     return this.$testCollection(evaluation, function (collectionValue,evaluation) {
         if(typeof evaluation !== "function") {
             return false;

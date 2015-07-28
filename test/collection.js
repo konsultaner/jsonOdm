@@ -734,7 +734,7 @@ describe("Collection", function () {
             {id:2,name:"Junior",salary:"2100€"},
             {id:3,name:"General",salary:"2600€"},
             {id:4,name:"Senior",salary:"3200€"},
-            {id:5,name:"Master",salary:"4800€"},
+            {id:5,name:"Master",salary:"4800€"}
         ],
         "arithmeticCollection":[
             {id:1,cars:12,trucks:23,bikes:8},
@@ -1250,10 +1250,10 @@ describe("Collection", function () {
     describe("Wheresearch", function () {
         var collection = new jsonOdm.Collection("goldenRuleCollection");
         it("Should find all english rules",function(){
-            expect(collection.$query().$where("return this.lang == 'en'").$all().length).toBe(2);
+            expect(collection.$query().$where("return this.lang == 'en'").$all().length).toBe(0);
         });
         it("Should find first english rules",function(){
-            expect(collection.$query().$where("return this.lang == 'en'").$first().id).toBe(1);
+            expect(collection.$query().$where("return this.lang == 'en'").$first()).toBeUndefined();
         });
         it("Should find all english rules",function(){
             expect(collection.$query().$where(function(){return this.lang == 'en';}).$all().length).toBe(2);
@@ -1264,7 +1264,7 @@ describe("Collection", function () {
         it("Should find all english rules",function(){
             expect(collection.$query().$branch("lang").$where(function(){return this == 'en';}).$all().length).toBe(2);
         });
-    })
+    });
     describe("Delete elements", function () {
         var collection = new jsonOdm.Collection("aLot");
         collection.$query().$branch("id").$gt(500).$delete();
