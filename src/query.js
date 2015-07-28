@@ -81,7 +81,7 @@ jsonOdm.Query.prototype.$result = function (start,length) {
         var validCollection = true;
         for(j = 0; j < this.$$commandQueue.length; j++){
             var commandResult = this.$$commandQueue[j](this.$$collection[i]);
-            if(!(validCollection = validCollection && commandResult !== null && commandResult !== false && typeof commandResult != "undefined")){
+            if(!(validCollection = validCollection && commandResult !== null && commandResult !== false && typeof commandResult !== "undefined")){
                 break;
             }
         }
@@ -192,7 +192,7 @@ jsonOdm.Query.prototype.$group = function (by) {
         arguments.length > 1 &&
         !(jsonOdm.util.isArray(arguments[arguments.length - 1])) &&
         !(jsonOdm.util.is(arguments[arguments.length - 1],"string")) &&
-        typeof arguments[arguments.length - 1] == "object"
+        typeof arguments[arguments.length - 1] === "object"
     ){
         accumulationProjection = arguments[arguments.length - 1];
         orderBy = Array.prototype.slice.call( arguments ,0 , arguments.length - 1);
@@ -211,7 +211,7 @@ jsonOdm.Query.prototype.$group = function (by) {
                     var currentOrderBy = jsonOdm.util.isArray(orderBy[i])?orderBy[i]:[orderBy[i]];
                     value = jsonOdm.util.branch(collectionElement,currentOrderBy);
                     if(i < orderBy.length - 1) {
-                        if(typeof currentValueVariation[""+value] == "undefined"){
+                        if(typeof currentValueVariation[""+value] === "undefined"){
                             newValueVariation = true;
                             currentValueVariation[""+value] = {};
                         }
@@ -219,7 +219,7 @@ jsonOdm.Query.prototype.$group = function (by) {
                     }
                     var accumulationObjectBuffer = accumulationObject;
                     for(var j = 0; j < currentOrderBy.length - 1; j++){
-                        if(typeof accumulationObjectBuffer[currentOrderBy[j]] == "undefined"){
+                        if(typeof accumulationObjectBuffer[currentOrderBy[j]] === "undefined"){
                             accumulationObjectBuffer[currentOrderBy[j]] = {};
                         }
                         accumulationObjectBuffer = accumulationObjectBuffer[currentOrderBy[j]];
@@ -237,15 +237,15 @@ jsonOdm.Query.prototype.$group = function (by) {
                 currentValueVariation[""+value].subResultSet.push(collectionElement);
 
                 return true;
-            }
+            };
         })(orderBy,aggregationResult),
         null,
         (function (aggregationResult,accumulationProjection) {
             function falseQueryAccumulation(projection){
                 for(var i in projection){
-                    if(!projection.hasOwnProperty(i)) continue;
-                    if(projection[i] instanceof jsonOdm.Query)projection[i].$$accumulation = false;
-                    if(typeof projection[i] == "object") falseQueryAccumulation(projection[i]);
+                    if(!projection.hasOwnProperty(i)) {continue;}
+                    if(projection[i] instanceof jsonOdm.Query){projection[i].$$accumulation = false;}
+                    if(typeof projection[i] === "object"){falseQueryAccumulation(projection[i]);}
                 }
             }
             return function () {
@@ -268,7 +268,7 @@ jsonOdm.Query.prototype.$group = function (by) {
                     }
                 }
                 return resultCollection;
-            }
+            };
         })(aggregationResult,accumulationProjection));
 };
 
@@ -411,10 +411,10 @@ for(var i = 0; i < jsonOdm.Query.stringFiledModifyer.length; i++){
             return function () {
                 return this.$modifyField((function (args,modifyer) {
                     return function (value) {
-                        return typeof value == "string" && String.prototype.hasOwnProperty(modifyer)?String.prototype[modifyer].apply(value,args):value;
-                    }
-                })(arguments,modifyer))
-            }
+                        return typeof value === "string" && String.prototype.hasOwnProperty(modifyer)?String.prototype[modifyer].apply(value,args):value;
+                    };
+                })(arguments,modifyer));
+            };
         }
     )(jsonOdm.Query.stringFiledModifyer[i]);
 }
@@ -427,7 +427,7 @@ for(var i = 0; i < jsonOdm.Query.stringFiledModifyer.length; i++){
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$accumulator = function (nodes,accumulator) {
-    nodes = typeof nodes == "string"?[nodes]:nodes;
+    nodes = typeof nodes === "string"?[nodes]:nodes;
     var subQuery = new jsonOdm.Query(this.$$collection);
     var $accumulator = (function(nodes,accumulator,query,parentQuery){
         /**
@@ -458,7 +458,7 @@ jsonOdm.Query.prototype.$accumulator = function (nodes,accumulator) {
  */
 jsonOdm.Query.prototype.$sum = function (branch) {
     return this.$accumulator(branch, function (value,accumulation) {
-        if(accumulation === false) accumulation = 0;
+        if(accumulation === false) {accumulation = 0;}
         return value+accumulation;
     });
 };
@@ -500,7 +500,7 @@ jsonOdm.Query.prototype.$avg = function (branch) {
  */
 jsonOdm.Query.prototype.$max = function (branch) {
     return this.$accumulator(branch, function (value,accumulation) {
-        if(accumulation === false) accumulation = value;
+        if(accumulation === false) {accumulation = value;}
         return Math.max(value,accumulation);
     });
 };
@@ -518,7 +518,7 @@ jsonOdm.Query.prototype.$max = function (branch) {
  */
 jsonOdm.Query.prototype.$min = function (branch) {
     return this.$accumulator(branch, function (value,accumulation) {
-        if(accumulation === false) accumulation = value;
+        if(accumulation === false) {accumulation = value;}
         return Math.min(value,accumulation);
     });
 };
@@ -535,7 +535,7 @@ jsonOdm.Query.prototype.$min = function (branch) {
  */
 jsonOdm.Query.prototype.$count = function () {
     return this.$accumulator(null, function (value,accumulation) {
-        if(accumulation === false) accumulation = 0;
+        if(accumulation === false) {accumulation = 0;}
         return ++accumulation;
     });
 };
@@ -705,7 +705,7 @@ jsonOdm.Query.prototype.$modulo = function (branch1, module) {
 jsonOdm.Query.prototype.$eq = function (comparable) {
     return this.$testCollection(arguments,function (collectionValue, possibleValues) {
         for(var i = 0; i < possibleValues.length; i++) {
-            if(possibleValues[i] == collectionValue) {
+            if(possibleValues[i] === collectionValue) {
                 return true;
             }
         }
@@ -722,7 +722,7 @@ jsonOdm.Query.prototype.$eq = function (comparable) {
 jsonOdm.Query.prototype.$in = function (comparable) {
     return this.$testCollection(comparable,function (collectionValue, possibleValues) {
         for(var i = 0; i < possibleValues.length; i++) {
-            if(possibleValues[i] == collectionValue) {
+            if(possibleValues[i] === collectionValue) {
                 return true;
             }
         }
@@ -739,7 +739,7 @@ jsonOdm.Query.prototype.$in = function (comparable) {
 jsonOdm.Query.prototype.$ne = function (comparable) {
     return this.$testCollection(arguments, function (collectionValue, possibleValues) {
         for(var i = 0; i < possibleValues.length; i++) {
-            if(possibleValues[i] == collectionValue) {
+            if(possibleValues[i] === collectionValue) {
                 return false;
             }
         }
@@ -756,7 +756,7 @@ jsonOdm.Query.prototype.$ne = function (comparable) {
 jsonOdm.Query.prototype.$nin = function (comparable) {
     return this.$testCollection(comparable, function (collectionValue, possibleValues) {
         for(var i = 0; i < possibleValues.length; i++) {
-            if(possibleValues[i] == collectionValue) {
+            if(possibleValues[i] === collectionValue) {
                 return false;
             }
         }
