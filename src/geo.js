@@ -17,22 +17,24 @@ jsonOdm.Geo = function () {};
  */
 jsonOdm.Geo.detectAsGeometry = function (geometry) {
     if(!geometry.type){
-        if(jsonOdm.util.isArray(geometry) && geometry.length == 2 && !jsonOdm.util.isArray(geometry[0])){
+        if(jsonOdm.util.isArray(geometry) && geometry.length === 2 && !jsonOdm.util.isArray(geometry[0])){
             geometry = new jsonOdm.Geo.Point(geometry);
-        }else if(jsonOdm.util.isArray(geometry) && geometry.length == 4 && !jsonOdm.util.isArray(geometry[0])){
+        }else if(jsonOdm.util.isArray(geometry) && geometry.length === 4 && !jsonOdm.util.isArray(geometry[0])){
             geometry = new jsonOdm.Geo.BoundaryBox(geometry);
-        }else if(jsonOdm.util.isArray(geometry) && geometry.length >= 1 && jsonOdm.util.isArray(geometry[0]) && geometry[0].length == 2 && !jsonOdm.util.isArray(geometry[0][0])){
+        }else if(jsonOdm.util.isArray(geometry) && geometry.length >= 1 && jsonOdm.util.isArray(geometry[0]) && geometry[0].length === 2 && !jsonOdm.util.isArray(geometry[0][0])){
             geometry = new jsonOdm.Geo.LineString(geometry);
         }else if( jsonOdm.util.isArray(geometry) && geometry.length >= 1 &&
             jsonOdm.util.isArray(geometry[0]) && geometry[0].length >= 1 &&
-            jsonOdm.util.isArray(geometry[0][0]) && geometry[0][0].length == 2 && !jsonOdm.util.isArray(geometry[0][0][0])){
+            jsonOdm.util.isArray(geometry[0][0]) && geometry[0][0].length === 2 && !jsonOdm.util.isArray(geometry[0][0][0])){
             geometry = new jsonOdm.Geo.Polygon(geometry);
         }else if( jsonOdm.util.isArray(geometry) && geometry.length >= 1 &&
             jsonOdm.util.isArray(geometry[0]) && geometry[0].length >= 1 &&
             jsonOdm.util.isArray(geometry[0][0]) && geometry[0][0].length >= 1 &&
-            jsonOdm.util.isArray(geometry[0][0][0]) && geometry[0][0][0].length == 2 && !jsonOdm.util.isArray(geometry[0][0][0][0])){
+            jsonOdm.util.isArray(geometry[0][0][0]) && geometry[0][0][0].length === 2 && !jsonOdm.util.isArray(geometry[0][0][0][0])){
             geometry = new jsonOdm.Geo.MultiPolygon(geometry);
-        }else return false;
+        }else{
+            return false;
+        }
     }
     return geometry;
 };
@@ -46,7 +48,9 @@ jsonOdm.Geo.detectAsGeometry = function (geometry) {
 jsonOdm.Geo.FeatureCollection = function (features,boundaryBox) {
     this.type = "FeatureCollection";
     this.features = features || [];
-    if(boundaryBox) this.bbox = boundaryBox;
+    if(boundaryBox){
+        this.bbox = boundaryBox;
+    }
 };
 
 /**
@@ -59,9 +63,9 @@ jsonOdm.Geo.FeatureCollection = function (features,boundaryBox) {
  */
 jsonOdm.Geo.Feature = function (geometry,properties,boundaryBox,id) {
     this.geometry = geometry || {};
-    if(properties) this.properties = properties;
-    if(boundaryBox) this.bbox = boundaryBox;
-    if(id) this.id = id;
+    if(properties){this.properties = properties;}
+    if(boundaryBox){this.bbox = boundaryBox;}
+    if(id){this.id = id;}
 };
 
 /**
@@ -96,9 +100,9 @@ jsonOdm.Geo.BoundaryBox = function (boundaryBox) {
  * @return {boolean}
  */
 jsonOdm.Geo.BoundaryBox.within = function (bounds,geometry) {
-    if(!jsonOdm.util.isArray(bounds) || bounds.length != 4) return false;
+    if(!jsonOdm.util.isArray(bounds) || bounds.length !== 4){return false;}
     // a boundary box is equal to a polygonal box
-    return jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[bounds[0],bounds[1]],[bounds[2],bounds[1]],[bounds[2],bounds[3]],[bounds[0],bounds[3]],[bounds[0],bounds[1]]]]),geometry)
+    return jsonOdm.Geo.Polygon.within(new jsonOdm.Geo.Polygon([[[bounds[0],bounds[1]],[bounds[2],bounds[1]],[bounds[2],bounds[3]],[bounds[0],bounds[3]],[bounds[0],bounds[1]]]]),geometry);
 };
 
 /**

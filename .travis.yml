@@ -2,5 +2,8 @@ language: node_js
 node_js:
   - "node"
   - "iojs"
+addons:
+  code_climate:
+    repo_token: 0d92b7367dd924d8fb4592952f58f375f5ac387610689da3aa3ff5ef20726e41
 after_script:
   - codeclimate-test-reporter < doc/coverage/lcov.info
