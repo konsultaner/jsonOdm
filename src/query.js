@@ -1,5 +1,9 @@
 "use strict";
 
+if((!window || !window.jsonOdm) && (!global || !global.jsonOdm)){
+    (typeof window !== "undefined" ? window : global).jsonOdm = jsonOdm;
+}
+
 /** @namespace jsonOdm.Query */
 
 /**
@@ -42,7 +46,7 @@ jsonOdm.Query.prototype.$delete = function () {
     if (this.$$commandQueue.length < 1) {
         return this;
     }
-    for (var i = 0; i < this.$$collection.length;) {
+    for (var i = 0; i < this.$$collection.length; ) {
         var validCollection = true;
         for (var j = 0; j < this.$$commandQueue.length; j++) {
             if (!(validCollection = validCollection && this.$$commandQueue[j](this.$$collection[i]))) {
@@ -165,7 +169,7 @@ jsonOdm.Query.prototype.$aggregateCollection = function (afterValidation, before
 
 /**
  * Groups all elements of a collection by a given grouping schema
- * @param {...jsonOdm.Query} by
+ * @param {...jsonOdm.Query}
  * @return {jsonOdm.Query}
  * @example
  * var collection = new jsonOdm.Collection("employees");
@@ -190,17 +194,17 @@ jsonOdm.Query.prototype.$aggregateCollection = function (afterValidation, before
  * //   {"salaryRate":4800,"salaryGroup":{"name":"Boss"}     ,"missingDays":12,"holidayDays":33 ,"averageMissingDays":12,"averageHolidayDays":33,"count":1}
  * // ]
  */
-jsonOdm.Query.prototype.$group = function (by) {
-    var orderBy = arguments;
-    var accumulationProjection = false;
-    var aggregationResult = [];
+jsonOdm.Query.prototype.$group = function () {
+    var orderByFields = arguments;
+    var accumulationProjectionDefinition = false;
+    var aggregationResultBuffer = [];
     // last argument might be a projection
     if (
         arguments.length > 1 && !(jsonOdm.util.isArray(arguments[arguments.length - 1])) && !(jsonOdm.util.is(arguments[arguments.length - 1], "string")) &&
         typeof arguments[arguments.length - 1] === "object"
     ) {
-        accumulationProjection = arguments[arguments.length - 1];
-        orderBy = Array.prototype.slice.call(arguments, 0, arguments.length - 1);
+        accumulationProjectionDefinition = arguments[arguments.length - 1];
+        orderByFields = Array.prototype.slice.call(arguments, 0, arguments.length - 1);
     }
     return this.$aggregateCollection(
         (function (orderBy, aggregationResult) {
@@ -241,7 +245,7 @@ jsonOdm.Query.prototype.$group = function (by) {
 
                 return true;
             };
-        })(orderBy, aggregationResult),
+        })(orderByFields, aggregationResultBuffer),
         null,
         (function (aggregationResult, accumulationProjection) {
             function falseQueryAccumulation(projection) {
@@ -279,7 +283,7 @@ jsonOdm.Query.prototype.$group = function (by) {
                 }
                 return resultCollection;
             };
-        })(aggregationResult, accumulationProjection));
+        })(aggregationResultBuffer, accumulationProjectionDefinition));
 };
 
 /**
@@ -340,9 +344,9 @@ jsonOdm.Query.prototype.$testCollection = function (comparables, collectionTest)
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$queryOperator = function (queries, operator) {
-    var $testCollection = (function (queries, oprator) {
+    var $testCollection = (function (queries, currentOprator) {
         return function (collection) {
-            if (typeof oprator !== "function") {
+            if (typeof currentOprator !== "function") {
                 return false;
             }
             var commandResults = [];
@@ -356,7 +360,7 @@ jsonOdm.Query.prototype.$queryOperator = function (queries, operator) {
                     commandResults.push(queries[i]);
                 }
             }
-            return operator(commandResults);
+            return currentOprator(commandResults);
         };
     })(queries, operator);
     var subQuery = new jsonOdm.Query(this.$$collection);
@@ -369,6 +373,9 @@ jsonOdm.Query.prototype.$queryOperator = function (queries, operator) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$branch = function (node) {
+    if( typeof node === "undefined" ) {
+        return this;
+    }
     var $branch = (function (nodes) {
         /**
          * @param {*} The collection to go down
@@ -389,14 +396,14 @@ jsonOdm.Query.prototype.$branch = function (node) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$modifyField = function (modifier) {
-    var $modifier = (function (modifier, lastCommand) {
+    var $modifier = (function (currentModifier, lastCommand) {
         /**
          * @param {*} The collection to go down
          * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
          */
         return function (collection) {
             collection = lastCommand !== null ? lastCommand(collection) : collection;
-            return typeof modifier === "function" ? modifier(collection) : collection;
+            return typeof currentModifier === "function" ? currentModifier(collection) : collection;
         };
     })(modifier, this.$$commandQueue.length ? this.$$commandQueue[this.$$commandQueue.length - 1] : null);
     this.$$commandQueue.push($modifier);
@@ -415,16 +422,17 @@ jsonOdm.Query.prototype.$modifyField = function (modifier) {
  *    $query.$branch("explosionBy").$trim().$substr(0,3).$toUpperCase().$eq("TNT").$all();
  */
 jsonOdm.Query.stringFiledModifyer = ["charAt", "charCodeAt", "concat", "fromCharCode", "indexOf", "lastIndexOf", "localeCompare", "match", "replace", "search", "slice", "split", "substr", "substring", "toLocaleLowerCase", "toLocaleUpperCase", "toLowerCase", "toUpperCase", "trim", "valueOf"];
-for (var i = 0; i < jsonOdm.Query.stringFiledModifyer.length; i++) {
-    jsonOdm.Query.prototype["$" + jsonOdm.Query.stringFiledModifyer[i]] = (function (modifyer) {
-            return function () {
-                return this.$modifyField((function (args, modifyer) {
-                    return function (value) {
-                        return typeof value === "string" && String.prototype.hasOwnProperty(modifyer) ? String.prototype[modifyer].apply(value, args) : value;
-                    };
-                })(arguments, modifyer));
+function createQueryStringModifier(modifyer) {
+    return function () {
+        return this.$modifyField((function (args, modifyer) {
+            return function (value) {
+                return typeof value === "string" && String.prototype.hasOwnProperty(modifyer) ? String.prototype[modifyer].apply(value, args) : value;
             };
-        })(jsonOdm.Query.stringFiledModifyer[i]);
+        })(arguments, modifyer));
+    };
+}
+for (var i = 0; i < jsonOdm.Query.stringFiledModifyer.length; i++) {
+    jsonOdm.Query.prototype["$" + jsonOdm.Query.stringFiledModifyer[i]] = createQueryStringModifier(jsonOdm.Query.stringFiledModifyer[i]);
 }
 
 // ACCUMULATION FUNCTIONS
@@ -610,8 +618,7 @@ jsonOdm.Query.prototype.$add = function (branch1, branch2) {
 
 /**
  * Performs an arithmetic subtraction on two or more field values
- * @param {jsonOdm.Query|Number} branch1
- * @param {...jsonOdm.Query|...Number} branch2
+ * @param {...jsonOdm.Query|...Number} branch
  * @return jsonOdm.Query
  * @example
  * var collection = new jsonOdm.Collection("myCollection");
@@ -624,7 +631,10 @@ jsonOdm.Query.prototype.$add = function (branch1, branch2) {
  *        )
  *    ).$eq(12).$all();
  */
-jsonOdm.Query.prototype.$subtract = function (branch1, branch2) {
+jsonOdm.Query.prototype.$subtract = function (branch) {
+    if( typeof branch === "undefined" ) {
+        return this;
+    }
     return this.$queryOperator(arguments, function (queryResults) {
         var result = queryResults.length > 0 ? queryResults[0] : 0;
         for (var i = 1; i < queryResults.length; i++) {
@@ -636,8 +646,7 @@ jsonOdm.Query.prototype.$subtract = function (branch1, branch2) {
 
 /**
  * Performs an arithmetic multiplication on two or more field values
- * @param {jsonOdm.Query|Number} branch1
- * @param {...jsonOdm.Query|...Number} branch2
+ * @param {...jsonOdm.Query|...Number} branch
  * @return jsonOdm.Query
  * @example
  * var collection = new jsonOdm.Collection("myCollection");
@@ -650,7 +659,10 @@ jsonOdm.Query.prototype.$subtract = function (branch1, branch2) {
  *        )
  *    ).$eq(12).$all();
  */
-jsonOdm.Query.prototype.$multiply = function (branch1, branch2) {
+jsonOdm.Query.prototype.$multiply = function (branch) {
+    if( typeof branch === "undefined" ) {
+        return this;
+    }
     return this.$queryOperator(arguments, function (queryResults) {
         var result = queryResults.length > 0 ? queryResults[0] : 0;
         for (var i = 1; i < queryResults.length; i++) {
@@ -662,8 +674,7 @@ jsonOdm.Query.prototype.$multiply = function (branch1, branch2) {
 
 /**
  * Performs an arithmetic divition on two or more field values
- * @param {jsonOdm.Query|Number} branch1
- * @param {...jsonOdm.Query|...Number} branch2
+ * @param {...jsonOdm.Query|...Number} branch
  * @return jsonOdm.Query
  * @example
  * var collection = new jsonOdm.Collection("myCollection");
@@ -676,7 +687,10 @@ jsonOdm.Query.prototype.$multiply = function (branch1, branch2) {
  *        )
  *    ).$eq(12).$all();
  */
-jsonOdm.Query.prototype.$divide = function (branch1, branch2) {
+jsonOdm.Query.prototype.$divide = function (branch) {
+    if( typeof branch === "undefined" ) {
+        return this;
+    }
     return this.$queryOperator(arguments, function (queryResults) {
         var result = queryResults.length > 0 ? queryResults[0] : 0;
         for (var i = 1; i < queryResults.length; i++) {
@@ -688,7 +702,7 @@ jsonOdm.Query.prototype.$divide = function (branch1, branch2) {
 
 /**
  * Performs an arithmetic modulo on two or more field values
- * @param {jsonOdm.Query|Number} branch1
+ * @param {jsonOdm.Query|Number} branch
  * @param {...jsonOdm.Query|...Number} module
  * @return jsonOdm.Query
  * @example
@@ -702,7 +716,10 @@ jsonOdm.Query.prototype.$divide = function (branch1, branch2) {
  *        )
  *    ).$eq(12).$all();
  */
-jsonOdm.Query.prototype.$modulo = function (branch1, module) {
+jsonOdm.Query.prototype.$modulo = function (branch, module) {
+    if( typeof branch === "undefined" ) {
+        return this;
+    }
     return this.$queryOperator(arguments, function (queryResults) {
         var result = queryResults.length > 0 ? queryResults[0] : 0;
         for (var i = 1; i < queryResults.length; i++) {
@@ -719,6 +736,9 @@ jsonOdm.Query.prototype.$modulo = function (branch1, module) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$eq = function (comparable) {
+    if( typeof comparable === "undefined" ) {
+        return this;
+    }
     return this.$testCollection(arguments, function (collectionValue, possibleValues) {
         for (var i = 0; i < possibleValues.length; i++) {
             if (possibleValues[i] === collectionValue) {
@@ -736,6 +756,9 @@ jsonOdm.Query.prototype.$eq = function (comparable) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$in = function (comparable) {
+    if( typeof comparable === "undefined" ) {
+        comparable = [];
+    }
     return this.$testCollection(comparable, function (collectionValue, possibleValues) {
         for (var i = 0; i < possibleValues.length; i++) {
             if (possibleValues[i] === collectionValue) {
@@ -753,6 +776,9 @@ jsonOdm.Query.prototype.$in = function (comparable) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$ne = function (comparable) {
+    if( typeof comparable === "undefined" ) {
+        return this
+    }
     return this.$testCollection(arguments, function (collectionValue, possibleValues) {
         for (var i = 0; i < possibleValues.length; i++) {
             if (possibleValues[i] === collectionValue) {
@@ -770,6 +796,9 @@ jsonOdm.Query.prototype.$ne = function (comparable) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$nin = function (comparable) {
+    if( typeof comparable === "undefined" ) {
+        comparable = [];
+    }
     return this.$testCollection(comparable, function (collectionValue, possibleValues) {
         for (var i = 0; i < possibleValues.length; i++) {
             if (possibleValues[i] === collectionValue) {
@@ -844,7 +873,7 @@ jsonOdm.Query.prototype.$isNull = function () {
  */
 jsonOdm.Query.prototype.$exists = function () {
     return this.$testCollection(null, function (collectionValue) {
-        return typeof collectionValue != "undefined";
+        return typeof collectionValue !== "undefined";
     });
 };
 
@@ -861,6 +890,12 @@ jsonOdm.Query.prototype.$exists = function () {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$type = function (type) {
+    if(typeof type === "undefined" ) {
+        return this.$testCollection([type], function () {
+            return false;
+        });
+    }
+
     return this.$testCollection(arguments, function (collectionValue, possibleTypes) {
         return jsonOdm.util.is(collectionValue, possibleTypes);
     });
@@ -877,6 +912,9 @@ jsonOdm.Query.prototype.$type = function (type) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$mod = function (divisor, remainder) {
+    if( typeof divisor === "undefined" || typeof remainder === "undefined" ){
+        return this;
+    }
     return this.$testCollection(arguments, function (collectionValue, args) {
         return collectionValue % args[0] === args[1];
     });
