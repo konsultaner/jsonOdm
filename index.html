@@ -19,7 +19,8 @@
     </section>
 
     <section class="main-content">
-      <p><a href="https://www.npmjs.com/package/json-odm"><img src="https://img.shields.io/npm/dm/json-odm.svg" alt="npm"></a>
+      <p><a href="https://travis-ci.org/konsultaner/jsonOdm"><img src="https://travis-ci.org/konsultaner/jsonOdm.svg?branch=master" alt="Build Status"></a>
+<a href="https://www.npmjs.com/package/json-odm"><img src="https://img.shields.io/npm/dm/json-odm.svg" alt="npm"></a>
 <a href="https://www.npmjs.com/package/json-odm"><img src="https://img.shields.io/npm/v/json-odm.svg" alt="npm"></a>
 <a href="https://www.npmjs.com/package/json-odm"><img src="https://img.shields.io/npm/l/json-odm.svg" alt="npm"></a>
 <a href="https://github.com/konsultaner/jsonOdm/stargazers"><img src="https://img.shields.io/github/stars/konsultaner/jsonOdm.svg" alt="GitHub stars"></a>
@@ -44,7 +45,7 @@ into joinable collections seemed very helpful.  </p>
 <h2>
 <a id="docs" class="anchor" href="#docs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docs</h2>
 
-<p>You can find the <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.1/index.html">documentation here</a> or compiled to the folder <a href="https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.1/index.html">/doc/jsonOdm/0.1/*</a>. </p>
+<p>You can find the <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.2/index.html">documentation here</a> or compiled to the folder <a href="https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.2/index.html">/doc/jsonOdm/0.2/*</a>.</p>
 
 <h2>
 <a id="road-map" class="anchor" href="#road-map" aria-hidden="true"><span class="octicon octicon-link"></span></a>Road map</h2>
@@ -62,8 +63,13 @@ into joinable collections seemed very helpful.  </p>
 <li>Aggregation
 
 <ul>
-<li>Pipeline (<del>$project</del>,$match,$redact,<del>$limit</del>,<del>$skip</del>,$unwind,$group,$sort,$geoNear,$out) 30% ($limit and $skip is implemented as $result(skip,limit))</li>
-<li>Operators (Boolean,Set,Comparison,Arithmetic,<del>String</del>,Array,Date,Conditional,Variable,Grouping) 10%</li>
+<li>Pipeline (<del>$project</del>,$match,$redact,<del>$limit</del>,<del>$skip</del>,$unwind,$sort,$geoNear,$out) 30% ($limit and $skip is implemented as $result(skip,limit))
+
+<ul>
+<li>Grouping (<del>$group</del>,<del>$count</del>,<del>$sum</del>,<del>$avg</del>,$first,$last,<del>$min</del>,<del>$max</del>,<del>$push</del>,$addToSet) 70% ($count is used to count the results)</li>
+</ul>
+</li>
+<li>Operators (Boolean,Set,Comparison,<del>Arithmetic</del>,<del>String</del>,Array,Date,Conditional,Variable,Grouping) 20% ($mod is renamed $modulo, because Evaluation has a $mod)</li>
 </ul>
 </li>
 </ul>
@@ -77,6 +83,14 @@ into joinable collections seemed very helpful.  </p>
 <a id="install-from-npm-package" class="anchor" href="#install-from-npm-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install from NPM-Package</h2>
 
 <div class="highlight highlight-bash"><pre>npm install json-odm</pre></div>
+
+<h2>
+<a id="build-and-run-tests-both-minified-and-unminified" class="anchor" href="#build-and-run-tests-both-minified-and-unminified" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build and run tests, both minified and unminified</h2>
+
+<div class="highlight highlight-bash"><pre>npm install json-odm
+<span class="pl-c1">cd</span> npm_modules/json-odm/
+npm install
+gulp</pre></div>
 
 <h2>
 <a id="browser-support" class="anchor" href="#browser-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser Support</h2>
