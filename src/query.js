@@ -1,6 +1,9 @@
 "use strict";
 
-/** global jsonOdm **/
+// for code climate recognition
+if (typeof jsonOdm === "undefined") {
+    var jsonOdm = new JsonOdm();
+}
 
 /** @namespace jsonOdm.Query */
 

@@ -1,5 +1,10 @@
 "use strict";
 
+// for code climate recognition
+if (typeof jsonOdm === "undefined") {
+    var jsonOdm = new JsonOdm();
+}
+
 /**
  * The Collection class holding the date from the selected data source
  * @param {String} [collectionName] The name of the selected collection. Leave empty if you want an empty collection but with all methods

@@ -1,5 +1,10 @@
 "use strict";
 
+// for code climate recognition
+if (typeof jsonOdm === "undefined") {
+    var jsonOdm = new JsonOdm();
+}
+
 /**
  * The Utility Class that provides some useful methods used throughout the ODM
  * @constructor

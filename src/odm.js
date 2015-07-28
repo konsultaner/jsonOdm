@@ -65,7 +65,7 @@ function JsonOdm() {
      * @param {*} sourceId
      */
     this.selectSource = function (sourceId) {
-        if (typeof self.sources[sourceId] != "undefined") {
+        if (typeof self.sources[sourceId] !== "undefined") {
             self.selectedSource = self.sources[sourceId];
         }
     };

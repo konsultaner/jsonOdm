@@ -1,5 +1,10 @@
 "use strict";
 
+// for code climate recognition
+if (typeof jsonOdm === "undefined") {
+    var jsonOdm = new JsonOdm();
+}
+
 /**
  * The object to provide geographical data and methods. <br>
  * <strong style='color:#ff0000'>Warning:</strong> The coordinate reference system is <a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84</a>
