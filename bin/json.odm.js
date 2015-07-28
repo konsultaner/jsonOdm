@@ -65,7 +65,7 @@ function JsonOdm() {
      * @param {*} sourceId
      */
     this.selectSource = function (sourceId) {
-        if (typeof self.sources[sourceId] != "undefined") {
+        if (typeof self.sources[sourceId] !== "undefined") {
             self.selectedSource = self.sources[sourceId];
         }
     };
@@ -79,7 +79,13 @@ if (!root.jsonOdm) {
 if (typeof module !== "undefined" && module.exports) {
     module.exports = jsonOdm;
 }
+
 "use strict";
+
+// for code climate recognition
+if (typeof jsonOdm === "undefined") {
+    var jsonOdm = new JsonOdm();
+}
 
 /**
  * The Utility Class that provides some useful methods used throughout the ODM
@@ -227,6 +233,11 @@ jsonOdm.Util.prototype.projectElement = function (projection, element, parentEle
 
 jsonOdm.util = new jsonOdm.Util();
 "use strict";
+
+// for code climate recognition
+if (typeof jsonOdm === "undefined") {
+    var jsonOdm = new JsonOdm();
+}
 
 /**
  * The object to provide geographical data and methods. <br>
@@ -1544,6 +1555,11 @@ jsonOdm.Geo.lineStringWithinLineString = function (lineString, inLineString) {
 };
 "use strict";
 
+// for code climate recognition
+if (typeof jsonOdm === "undefined") {
+    var jsonOdm = new JsonOdm();
+}
+
 /**
  * The Collection class holding the date from the selected data source
  * @param {String} [collectionName] The name of the selected collection. Leave empty if you want an empty collection but with all methods
@@ -1668,7 +1684,10 @@ jsonOdm.Collection.decorate = function (collection) {
 };
 "use strict";
 
-/** global jsonOdm **/
+// for code climate recognition
+if (typeof jsonOdm === "undefined") {
+    var jsonOdm = new JsonOdm();
+}
 
 /** @namespace jsonOdm.Query */
 

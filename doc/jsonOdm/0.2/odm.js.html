@@ -1003,7 +1003,7 @@ function JsonOdm() {
      * @param {*} sourceId
      */
     this.selectSource = function (sourceId) {
-        if (typeof self.sources[sourceId] != "undefined") {
+        if (typeof self.sources[sourceId] !== "undefined") {
             self.selectedSource = self.sources[sourceId];
         }
     };
@@ -1016,7 +1016,8 @@ if (!root.jsonOdm) {
 }
 if (typeof module !== "undefined" &amp;&amp; module.exports) {
     module.exports = jsonOdm;
-}</code></pre>
+}
+</code></pre>
         </article>
     </section>
 

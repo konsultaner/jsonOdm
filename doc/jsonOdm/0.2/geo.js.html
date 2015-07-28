@@ -938,6 +938,11 @@
         <article>
             <pre class="prettyprint source"><code>"use strict";
 
+// for code climate recognition
+if (typeof jsonOdm === "undefined") {
+    var jsonOdm = new JsonOdm();
+}
+
 /**
  * The object to provide geographical data and methods. &lt;br>
  * &lt;strong style='color:#ff0000'>Warning:&lt;/strong> The coordinate reference system is &lt;a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84&lt;/a>
