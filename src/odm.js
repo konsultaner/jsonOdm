@@ -40,7 +40,7 @@
  * ).$all();
  *
  */
-function JsonOdm () {
+function JsonOdm() {
     var self = this;
     this.sources = {};
     this.selectedSource = {};
@@ -52,8 +52,12 @@ function JsonOdm () {
      */
     this.addSource = function (sourceId, source, selectSource) {
         if (typeof source == "object") {
-            if (typeof self.sources[sourceId] == "undefined") self.sources[sourceId] = source;
-            if(selectSource) self.selectedSource = source;
+            if (typeof self.sources[sourceId] === "undefined") {
+                self.sources[sourceId] = source;
+            }
+            if (selectSource) {
+                self.selectedSource = source;
+            }
         }
     };
     /**
@@ -61,13 +65,17 @@ function JsonOdm () {
      * @param {*} sourceId
      */
     this.selectSource = function (sourceId) {
-        if(typeof self.sources[sourceId] != "undefined") self.selectedSource = self.sources[sourceId];
+        if (typeof self.sources[sourceId] != "undefined") {
+            self.selectedSource = self.sources[sourceId];
+        }
     };
 }
 
 var root = typeof window !== "undefined" ? window : global;
-var odm = new JsonOdm();
-if(!root.jsonOdm) root.jsonOdm = odm;
+var jsonOdm = new JsonOdm();
+if (!root.jsonOdm) {
+    root.jsonOdm = jsonOdm;
+}
 if (typeof module !== "undefined" && module.exports) {
-    module.exports = odm;
+    module.exports = jsonOdm;
 }

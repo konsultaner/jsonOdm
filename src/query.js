@@ -1,8 +1,6 @@
 "use strict";
 
-if((!window || !window.jsonOdm) && (!global || !global.jsonOdm)){
-    (typeof window !== "undefined" ? window : global).jsonOdm = jsonOdm;
-}
+/** global jsonOdm **/
 
 /** @namespace jsonOdm.Query */
 

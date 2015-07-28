@@ -938,9 +938,7 @@
         <article>
             <pre class="prettyprint source"><code>"use strict";
 
-if((!window || !window.jsonOdm) &amp;&amp; (!global || !global.jsonOdm)){
-    (typeof window !== "undefined" ? window : global).jsonOdm = jsonOdm;
-}
+/** global jsonOdm **/
 
 /** @namespace jsonOdm.Query */
 
@@ -2124,7 +2122,8 @@ jsonOdm.Query.prototype.$nor = function (queries) {
         }
         return true;
     });
-};</code></pre>
+};
+</code></pre>
         </article>
     </section>
 
