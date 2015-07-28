@@ -27,7 +27,715 @@ describe("Collection", function () {
             {id:6,lang:'en',cite:"One should not treat others in ways that one would not like to be treated."}
         ],
         // generated with http://www.generatedata.com/
-        "employees":[{"name":"Judah Suarez","salaryGroup":2,"holidayDaysTaken":22,"daysOff":1,"extraHoursWorked":12},{"name":"Rebekah Downs","salaryGroup":3,"holidayDaysTaken":5,"daysOff":0,"extraHoursWorked":10},{"name":"Basia Dale","salaryGroup":1,"holidayDaysTaken":4,"daysOff":4,"extraHoursWorked":37},{"name":"Reed Britt","salaryGroup":1,"holidayDaysTaken":7,"daysOff":0,"extraHoursWorked":19},{"name":"Sara Hendricks","salaryGroup":4,"holidayDaysTaken":17,"daysOff":1,"extraHoursWorked":35},{"name":"Mallory Clemons","salaryGroup":5,"holidayDaysTaken":18,"daysOff":2,"extraHoursWorked":7},{"name":"John Bean","salaryGroup":4,"holidayDaysTaken":20,"daysOff":0,"extraHoursWorked":13},{"name":"Galvin Sheppard","salaryGroup":4,"holidayDaysTaken":7,"daysOff":2,"extraHoursWorked":10},{"name":"Blythe Gaines","salaryGroup":5,"holidayDaysTaken":11,"daysOff":1,"extraHoursWorked":0},{"name":"Chadwick Peterson","salaryGroup":1,"holidayDaysTaken":20,"daysOff":3,"extraHoursWorked":21},{"name":"Ima Richardson","salaryGroup":3,"holidayDaysTaken":4,"daysOff":1,"extraHoursWorked":38},{"name":"Kennedy Barnes","salaryGroup":4,"holidayDaysTaken":10,"daysOff":2,"extraHoursWorked":32},{"name":"Silas Murray","salaryGroup":5,"holidayDaysTaken":8,"daysOff":0,"extraHoursWorked":1},{"name":"Quentin Jackson","salaryGroup":5,"holidayDaysTaken":8,"daysOff":2,"extraHoursWorked":31},{"name":"Oren Moody","salaryGroup":3,"holidayDaysTaken":9,"daysOff":0,"extraHoursWorked":28},{"name":"Keelie Cardenas","salaryGroup":2,"holidayDaysTaken":18,"daysOff":3,"extraHoursWorked":23},{"name":"Reagan George","salaryGroup":2,"holidayDaysTaken":24,"daysOff":1,"extraHoursWorked":13},{"name":"Zelda Roberts","salaryGroup":5,"holidayDaysTaken":10,"daysOff":4,"extraHoursWorked":34},{"name":"Russell Lindsay","salaryGroup":4,"holidayDaysTaken":10,"daysOff":2,"extraHoursWorked":28},{"name":"Lila Conner","salaryGroup":4,"holidayDaysTaken":18,"daysOff":1,"extraHoursWorked":0},{"name":"Gary Floyd","salaryGroup":1,"holidayDaysTaken":9,"daysOff":3,"extraHoursWorked":20},{"name":"Hannah Wilder","salaryGroup":5,"holidayDaysTaken":18,"daysOff":0,"extraHoursWorked":35},{"name":"Ignacia Garrett","salaryGroup":4,"holidayDaysTaken":8,"daysOff":0,"extraHoursWorked":2},{"name":"Cathleen Marquez","salaryGroup":3,"holidayDaysTaken":19,"daysOff":0,"extraHoursWorked":36},{"name":"Price Castillo","salaryGroup":1,"holidayDaysTaken":4,"daysOff":4,"extraHoursWorked":32},{"name":"Idona Hayes","salaryGroup":4,"holidayDaysTaken":20,"daysOff":2,"extraHoursWorked":14},{"name":"Isaiah Wiley","salaryGroup":4,"holidayDaysTaken":17,"daysOff":1,"extraHoursWorked":40},{"name":"Aubrey Yates","salaryGroup":4,"holidayDaysTaken":21,"daysOff":4,"extraHoursWorked":33},{"name":"Buckminster Sullivan","salaryGroup":2,"holidayDaysTaken":20,"daysOff":0,"extraHoursWorked":19},{"name":"Carissa Mcpherson","salaryGroup":3,"holidayDaysTaken":11,"daysOff":4,"extraHoursWorked":26},{"name":"Hollee Case","salaryGroup":3,"holidayDaysTaken":10,"daysOff":0,"extraHoursWorked":44},{"name":"Sara Haynes","salaryGroup":5,"holidayDaysTaken":23,"daysOff":4,"extraHoursWorked":13},{"name":"Orla Anderson","salaryGroup":5,"holidayDaysTaken":19,"daysOff":1,"extraHoursWorked":31},{"name":"Hannah Cantu","salaryGroup":1,"holidayDaysTaken":18,"daysOff":0,"extraHoursWorked":11},{"name":"Rina Olsen","salaryGroup":3,"holidayDaysTaken":8,"daysOff":2,"extraHoursWorked":6},{"name":"Austin Farley","salaryGroup":4,"holidayDaysTaken":9,"daysOff":3,"extraHoursWorked":38},{"name":"Yeo Finch","salaryGroup":3,"holidayDaysTaken":19,"daysOff":1,"extraHoursWorked":42},{"name":"Paloma Jennings","salaryGroup":5,"holidayDaysTaken":15,"daysOff":4,"extraHoursWorked":26},{"name":"Helen Fischer","salaryGroup":1,"holidayDaysTaken":1,"daysOff":0,"extraHoursWorked":29},{"name":"Jin Snow","salaryGroup":2,"holidayDaysTaken":7,"daysOff":0,"extraHoursWorked":6},{"name":"Suki Castro","salaryGroup":4,"holidayDaysTaken":9,"daysOff":4,"extraHoursWorked":30},{"name":"Victoria Rich","salaryGroup":3,"holidayDaysTaken":23,"daysOff":4,"extraHoursWorked":42},{"name":"Ira Delaney","salaryGroup":4,"holidayDaysTaken":15,"daysOff":0,"extraHoursWorked":21},{"name":"Leigh Dickerson","salaryGroup":4,"holidayDaysTaken":19,"daysOff":4,"extraHoursWorked":22},{"name":"Mariko Hebert","salaryGroup":3,"holidayDaysTaken":17,"daysOff":4,"extraHoursWorked":4},{"name":"Steel Keller","salaryGroup":2,"holidayDaysTaken":24,"daysOff":2,"extraHoursWorked":37},{"name":"Hedy Burnett","salaryGroup":5,"holidayDaysTaken":10,"daysOff":2,"extraHoursWorked":43},{"name":"Raya Terry","salaryGroup":1,"holidayDaysTaken":2,"daysOff":4,"extraHoursWorked":30},{"name":"Quinn Allison","salaryGroup":2,"holidayDaysTaken":20,"daysOff":3,"extraHoursWorked":0},{"name":"Brent Reese","salaryGroup":5,"holidayDaysTaken":4,"daysOff":3,"extraHoursWorked":7},{"name":"Shaine White","salaryGroup":2,"holidayDaysTaken":2,"daysOff":4,"extraHoursWorked":36},{"name":"Wing Fletcher","salaryGroup":4,"holidayDaysTaken":19,"daysOff":4,"extraHoursWorked":10},{"name":"Camilla Lowery","salaryGroup":3,"holidayDaysTaken":13,"daysOff":0,"extraHoursWorked":6},{"name":"Macey Peck","salaryGroup":2,"holidayDaysTaken":23,"daysOff":1,"extraHoursWorked":11},{"name":"Reese Gibson","salaryGroup":2,"holidayDaysTaken":17,"daysOff":1,"extraHoursWorked":15},{"name":"Orlando Fuller","salaryGroup":4,"holidayDaysTaken":6,"daysOff":2,"extraHoursWorked":34},{"name":"Shea Joyce","salaryGroup":4,"holidayDaysTaken":19,"daysOff":1,"extraHoursWorked":24},{"name":"Justin Bean","salaryGroup":2,"holidayDaysTaken":22,"daysOff":3,"extraHoursWorked":3},{"name":"Gary Romero","salaryGroup":4,"holidayDaysTaken":9,"daysOff":1,"extraHoursWorked":10},{"name":"Imelda Santiago","salaryGroup":3,"holidayDaysTaken":18,"daysOff":3,"extraHoursWorked":41},{"name":"Melissa Myers","salaryGroup":3,"holidayDaysTaken":23,"daysOff":1,"extraHoursWorked":9},{"name":"Britanni Elliott","salaryGroup":5,"holidayDaysTaken":23,"daysOff":3,"extraHoursWorked":2},{"name":"Katell Bullock","salaryGroup":2,"holidayDaysTaken":5,"daysOff":1,"extraHoursWorked":44},{"name":"Kennedy Stout","salaryGroup":5,"holidayDaysTaken":13,"daysOff":3,"extraHoursWorked":30},{"name":"Colton Kaufman","salaryGroup":2,"holidayDaysTaken":15,"daysOff":0,"extraHoursWorked":8},{"name":"Amaya Sharpe","salaryGroup":4,"holidayDaysTaken":10,"daysOff":3,"extraHoursWorked":23},{"name":"Echo Martin","salaryGroup":5,"holidayDaysTaken":4,"daysOff":4,"extraHoursWorked":11},{"name":"Clementine Vaughn","salaryGroup":4,"holidayDaysTaken":2,"daysOff":2,"extraHoursWorked":23},{"name":"Jana Kinney","salaryGroup":4,"holidayDaysTaken":8,"daysOff":2,"extraHoursWorked":14},{"name":"Jorden Savage","salaryGroup":2,"holidayDaysTaken":11,"daysOff":0,"extraHoursWorked":33},{"name":"Rebekah Barnes","salaryGroup":3,"holidayDaysTaken":6,"daysOff":4,"extraHoursWorked":8},{"name":"Kenyon Dawson","salaryGroup":5,"holidayDaysTaken":15,"daysOff":3,"extraHoursWorked":9},{"name":"Raja Harvey","salaryGroup":1,"holidayDaysTaken":20,"daysOff":1,"extraHoursWorked":5},{"name":"Kirsten May","salaryGroup":1,"holidayDaysTaken":13,"daysOff":3,"extraHoursWorked":11},{"name":"Raven Oliver","salaryGroup":5,"holidayDaysTaken":24,"daysOff":1,"extraHoursWorked":7},{"name":"Cassady Macdonald","salaryGroup":1,"holidayDaysTaken":15,"daysOff":3,"extraHoursWorked":26},{"name":"Ira Guthrie","salaryGroup":3,"holidayDaysTaken":17,"daysOff":4,"extraHoursWorked":39},{"name":"Alika Reese","salaryGroup":5,"holidayDaysTaken":9,"daysOff":1,"extraHoursWorked":6},{"name":"Amber Le","salaryGroup":4,"holidayDaysTaken":22,"daysOff":4,"extraHoursWorked":15},{"name":"Buffy Rocha","salaryGroup":1,"holidayDaysTaken":10,"daysOff":0,"extraHoursWorked":32},{"name":"Laith Bailey","salaryGroup":1,"holidayDaysTaken":13,"daysOff":1,"extraHoursWorked":40},{"name":"Carson Byers","salaryGroup":2,"holidayDaysTaken":10,"daysOff":4,"extraHoursWorked":31},{"name":"Veda Odonnell","salaryGroup":3,"holidayDaysTaken":4,"daysOff":4,"extraHoursWorked":5},{"name":"Quincy Rhodes","salaryGroup":1,"holidayDaysTaken":8,"daysOff":2,"extraHoursWorked":7},{"name":"Fallon Bridges","salaryGroup":4,"holidayDaysTaken":7,"daysOff":2,"extraHoursWorked":27},{"name":"Silas Carey","salaryGroup":4,"holidayDaysTaken":14,"daysOff":2,"extraHoursWorked":39},{"name":"Chastity Harper","salaryGroup":2,"holidayDaysTaken":20,"daysOff":4,"extraHoursWorked":15},{"name":"Libby Higgins","salaryGroup":3,"holidayDaysTaken":21,"daysOff":4,"extraHoursWorked":32},{"name":"Yuri Lyons","salaryGroup":4,"holidayDaysTaken":1,"daysOff":2,"extraHoursWorked":35},{"name":"Dexter Hinton","salaryGroup":3,"holidayDaysTaken":16,"daysOff":3,"extraHoursWorked":8},{"name":"Karen Watson","salaryGroup":5,"holidayDaysTaken":14,"daysOff":2,"extraHoursWorked":44},{"name":"Ulla Yates","salaryGroup":3,"holidayDaysTaken":18,"daysOff":1,"extraHoursWorked":39},{"name":"Henry Santos","salaryGroup":4,"holidayDaysTaken":14,"daysOff":1,"extraHoursWorked":1},{"name":"Scarlett Hunt","salaryGroup":1,"holidayDaysTaken":21,"daysOff":4,"extraHoursWorked":25},{"name":"Scarlet Hampton","salaryGroup":4,"holidayDaysTaken":8,"daysOff":1,"extraHoursWorked":12},{"name":"Lavinia Marshall","salaryGroup":4,"holidayDaysTaken":4,"daysOff":3,"extraHoursWorked":28},{"name":"Steel Brown","salaryGroup":4,"holidayDaysTaken":3,"daysOff":3,"extraHoursWorked":6},{"name":"Ainsley Howe","salaryGroup":1,"holidayDaysTaken":13,"daysOff":0,"extraHoursWorked":15},{"name":"Irene Sykes","salaryGroup":1,"holidayDaysTaken":10,"daysOff":1,"extraHoursWorked":44},{"name":"Macaulay Rutledge","salaryGroup":1,"holidayDaysTaken":11,"daysOff":1,"extraHoursWorked":41}],
+        "employees":[
+            {
+                "name": "Alec Velez",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 13,
+                "daysOff": 9,
+                "extraHoursWorked": 17
+            },
+            {
+                "name": "Evan Leach",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 6,
+                "daysOff": 6,
+                "extraHoursWorked": 78
+            },
+            {
+                "name": "Amela Sanchez",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 0,
+                "daysOff": 2,
+                "extraHoursWorked": 77
+            },
+            {
+                "name": "Jin Hoover",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 23,
+                "daysOff": 3,
+                "extraHoursWorked": 16
+            },
+            {
+                "name": "Palmer Velasquez",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 23,
+                "daysOff": 10,
+                "extraHoursWorked": 6
+            },
+            {
+                "name": "Tanya Grant",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 14,
+                "daysOff": 10,
+                "extraHoursWorked": 62
+            },
+            {
+                "name": "Reuben Carrillo",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 4,
+                "daysOff": 8,
+                "extraHoursWorked": 44
+            },
+            {
+                "name": "Cleo Peterson",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 17,
+                "daysOff": 5,
+                "extraHoursWorked": 30
+            },
+            {
+                "name": "Michael Blanchard",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 5,
+                "daysOff": 3,
+                "extraHoursWorked": 20
+            },
+            {
+                "name": "Martena Conley",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 20,
+                "daysOff": 6,
+                "extraHoursWorked": 0
+            },
+            {
+                "name": "Quentin Alston",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 23,
+                "daysOff": 2,
+                "extraHoursWorked": 78
+            },
+            {
+                "name": "Quinlan Livingston",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 19,
+                "daysOff": 8,
+                "extraHoursWorked": 27
+            },
+            {
+                "name": "Ayanna Norris",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 9,
+                "daysOff": 9,
+                "extraHoursWorked": 67
+            },
+            {
+                "name": "Amela Wolfe",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 4,
+                "daysOff": 1,
+                "extraHoursWorked": 68
+            },
+            {
+                "name": "Cherokee Beach",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 0,
+                "daysOff": 9,
+                "extraHoursWorked": 18
+            },
+            {
+                "name": "Clayton Wiley",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 3,
+                "daysOff": 10,
+                "extraHoursWorked": 57
+            },
+            {
+                "name": "Anika Gonzales",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 3,
+                "daysOff": 10,
+                "extraHoursWorked": 63
+            },
+            {
+                "name": "Irma Goodwin",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 23,
+                "daysOff": 3,
+                "extraHoursWorked": 4
+            },
+            {
+                "name": "Jin Eaton",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 15,
+                "daysOff": 4,
+                "extraHoursWorked": 36
+            },
+            {
+                "name": "Ursa Mcgowan",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 11,
+                "daysOff": 8,
+                "extraHoursWorked": 43
+            },
+            {
+                "name": "Sacha Hernandez",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 15,
+                "daysOff": 10,
+                "extraHoursWorked": 24
+            },
+            {
+                "name": "Emerson Roberson",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 2,
+                "daysOff": 3,
+                "extraHoursWorked": 60
+            },
+            {
+                "name": "Giselle Scott",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 24,
+                "daysOff": 6,
+                "extraHoursWorked": 73
+            },
+            {
+                "name": "Rina Gallagher",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 8,
+                "daysOff": 7,
+                "extraHoursWorked": 45
+            },
+            {
+                "name": "Mason Peters",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 1,
+                "daysOff": 5,
+                "extraHoursWorked": 53
+            },
+            {
+                "name": "Haviva Smith",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 0,
+                "daysOff": 7,
+                "extraHoursWorked": 13
+            },
+            {
+                "name": "Lois Lyons",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 11,
+                "daysOff": 9,
+                "extraHoursWorked": 61
+            },
+            {
+                "name": "Latifah Powell",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 10,
+                "daysOff": 4,
+                "extraHoursWorked": 52
+            },
+            {
+                "name": "Gloria Gilmore",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 3,
+                "daysOff": 6,
+                "extraHoursWorked": 34
+            },
+            {
+                "name": "Rajah Gross",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 22,
+                "daysOff": 5,
+                "extraHoursWorked": 23
+            },
+            {
+                "name": "Sybill Brooks",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 21,
+                "daysOff": 4,
+                "extraHoursWorked": 78
+            },
+            {
+                "name": "Stephanie Sandoval",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 1,
+                "daysOff": 6,
+                "extraHoursWorked": 30
+            },
+            {
+                "name": "Maris Juarez",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 5,
+                "daysOff": 1,
+                "extraHoursWorked": 2
+            },
+            {
+                "name": "Demetrius Acosta",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 11,
+                "daysOff": 3,
+                "extraHoursWorked": 44
+            },
+            {
+                "name": "Chadwick Heath",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 6,
+                "daysOff": 7,
+                "extraHoursWorked": 25
+            },
+            {
+                "name": "Moana Murphy",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 0,
+                "daysOff": 5,
+                "extraHoursWorked": 68
+            },
+            {
+                "name": "Britanni Campos",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 0,
+                "daysOff": 9,
+                "extraHoursWorked": 43
+            },
+            {
+                "name": "Mari Watkins",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 10,
+                "daysOff": 8,
+                "extraHoursWorked": 43
+            },
+            {
+                "name": "Mikayla Goff",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 6,
+                "daysOff": 8,
+                "extraHoursWorked": 2
+            },
+            {
+                "name": "Samantha Duke",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 15,
+                "daysOff": 7,
+                "extraHoursWorked": 56
+            },
+            {
+                "name": "Zeph Baird",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 0,
+                "daysOff": 2,
+                "extraHoursWorked": 57
+            },
+            {
+                "name": "Kyra Hale",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 2,
+                "daysOff": 2,
+                "extraHoursWorked": 26
+            },
+            {
+                "name": "Kelsie Montoya",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 17,
+                "daysOff": 0,
+                "extraHoursWorked": 71
+            },
+            {
+                "name": "Rooney Buck",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 0,
+                "daysOff": 1,
+                "extraHoursWorked": 49
+            },
+            {
+                "name": "Chaney Bernard",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 22,
+                "daysOff": 7,
+                "extraHoursWorked": 5
+            },
+            {
+                "name": "Samantha White",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 23,
+                "daysOff": 6,
+                "extraHoursWorked": 49
+            },
+            {
+                "name": "Talon Downs",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 24,
+                "daysOff": 4,
+                "extraHoursWorked": 54
+            },
+            {
+                "name": "Kimberley Trujillo",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 19,
+                "daysOff": 5,
+                "extraHoursWorked": 11
+            },
+            {
+                "name": "Ross Hyde",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 0,
+                "daysOff": 4,
+                "extraHoursWorked": 46
+            },
+            {
+                "name": "Indigo Shelton",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 19,
+                "daysOff": 10,
+                "extraHoursWorked": 25
+            },
+            {
+                "name": "Alisa Sears",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 8,
+                "daysOff": 3,
+                "extraHoursWorked": 79
+            },
+            {
+                "name": "Leigh Koch",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 5,
+                "daysOff": 5,
+                "extraHoursWorked": 24
+            },
+            {
+                "name": "Stone Mathis",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 21,
+                "daysOff": 9,
+                "extraHoursWorked": 15
+            },
+            {
+                "name": "Jemima English",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 1,
+                "daysOff": 2,
+                "extraHoursWorked": 59
+            },
+            {
+                "name": "Aline Cochran",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 10,
+                "daysOff": 6,
+                "extraHoursWorked": 16
+            },
+            {
+                "name": "Stella Boone",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 19,
+                "daysOff": 4,
+                "extraHoursWorked": 5
+            },
+            {
+                "name": "Tamara House",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 22,
+                "daysOff": 6,
+                "extraHoursWorked": 59
+            },
+            {
+                "name": "Blaine Foreman",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 23,
+                "daysOff": 5,
+                "extraHoursWorked": 63
+            },
+            {
+                "name": "Michael Travis",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 11,
+                "daysOff": 6,
+                "extraHoursWorked": 17
+            },
+            {
+                "name": "Travis Morrow",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 24,
+                "daysOff": 9,
+                "extraHoursWorked": 44
+            },
+            {
+                "name": "Angelica Fulton",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 7,
+                "daysOff": 2,
+                "extraHoursWorked": 44
+            },
+            {
+                "name": "Libby Clements",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 8,
+                "daysOff": 9,
+                "extraHoursWorked": 30
+            },
+            {
+                "name": "Nerea Dean",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 12,
+                "daysOff": 1,
+                "extraHoursWorked": 67
+            },
+            {
+                "name": "Alexa Eaton",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 10,
+                "daysOff": 6,
+                "extraHoursWorked": 35
+            },
+            {
+                "name": "Edward Vincent",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 6,
+                "daysOff": 3,
+                "extraHoursWorked": 29
+            },
+            {
+                "name": "Noel Santana",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 8,
+                "daysOff": 5,
+                "extraHoursWorked": 73
+            },
+            {
+                "name": "Shelby Stanton",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 13,
+                "daysOff": 3,
+                "extraHoursWorked": 31
+            },
+            {
+                "name": "Reuben Dillon",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 14,
+                "daysOff": 6,
+                "extraHoursWorked": 20
+            },
+            {
+                "name": "Quyn Alford",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 5,
+                "daysOff": 10,
+                "extraHoursWorked": 65
+            },
+            {
+                "name": "Aaron Matthews",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 6,
+                "daysOff": 10,
+                "extraHoursWorked": 79
+            },
+            {
+                "name": "Inga Austin",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 10,
+                "daysOff": 0,
+                "extraHoursWorked": 49
+            },
+            {
+                "name": "Lydia Madden",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 12,
+                "daysOff": 2,
+                "extraHoursWorked": 7
+            },
+            {
+                "name": "Herrod Riddle",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 9,
+                "daysOff": 10,
+                "extraHoursWorked": 64
+            },
+            {
+                "name": "Odysseus Petty",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 24,
+                "daysOff": 5,
+                "extraHoursWorked": 39
+            },
+            {
+                "name": "Fitzgerald Lee",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 22,
+                "daysOff": 5,
+                "extraHoursWorked": 38
+            },
+            {
+                "name": "Barbara Tucker",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 22,
+                "daysOff": 5,
+                "extraHoursWorked": 59
+            },
+            {
+                "name": "Rhoda Jensen",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 2,
+                "daysOff": 5,
+                "extraHoursWorked": 44
+            },
+            {
+                "name": "Jackson Chase",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 12,
+                "daysOff": 5,
+                "extraHoursWorked": 42
+            },
+            {
+                "name": "Roth Jackson",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 16,
+                "daysOff": 1,
+                "extraHoursWorked": 27
+            },
+            {
+                "name": "Reuben Macdonald",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 14,
+                "daysOff": 2,
+                "extraHoursWorked": 52
+            },
+            {
+                "name": "Knox Shaw",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 3,
+                "daysOff": 3,
+                "extraHoursWorked": 53
+            },
+            {
+                "name": "Silas Mcdowell",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 7,
+                "daysOff": 1,
+                "extraHoursWorked": 71
+            },
+            {
+                "name": "Eve Durham",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 21,
+                "daysOff": 0,
+                "extraHoursWorked": 8
+            },
+            {
+                "name": "May Peck",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 1,
+                "daysOff": 0,
+                "extraHoursWorked": 42
+            },
+            {
+                "name": "Brent Gay",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 10,
+                "daysOff": 7,
+                "extraHoursWorked": 77
+            },
+            {
+                "name": "Naida Burris",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 12,
+                "daysOff": 0,
+                "extraHoursWorked": 61
+            },
+            {
+                "name": "Paloma Langley",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 9,
+                "daysOff": 1,
+                "extraHoursWorked": 44
+            },
+            {
+                "name": "Lewis Vega",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 21,
+                "daysOff": 3,
+                "extraHoursWorked": 65
+            },
+            {
+                "name": "Macaulay Stout",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 14,
+                "daysOff": 7,
+                "extraHoursWorked": 63
+            },
+            {
+                "name": "Yvette Cruz",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 11,
+                "daysOff": 3,
+                "extraHoursWorked": 36
+            },
+            {
+                "name": "Shelley Best",
+                "salaryGroupId": 2,
+                "holidayDaysTaken": 4,
+                "daysOff": 6,
+                "extraHoursWorked": 24
+            },
+            {
+                "name": "Louis Pennington",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 8,
+                "daysOff": 6,
+                "extraHoursWorked": 47
+            },
+            {
+                "name": "Kibo Chen",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 13,
+                "daysOff": 4,
+                "extraHoursWorked": 60
+            },
+            {
+                "name": "Stacey Burnett",
+                "salaryGroupId": 5,
+                "holidayDaysTaken": 21,
+                "daysOff": 4,
+                "extraHoursWorked": 71
+            },
+            {
+                "name": "Virginia Kidd",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 13,
+                "daysOff": 1,
+                "extraHoursWorked": 9
+            },
+            {
+                "name": "Gisela Moore",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 24,
+                "daysOff": 1,
+                "extraHoursWorked": 16
+            },
+            {
+                "name": "Serina Reyes",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 3,
+                "daysOff": 7,
+                "extraHoursWorked": 20
+            },
+            {
+                "name": "Brody Keller",
+                "salaryGroupId": 1,
+                "holidayDaysTaken": 1,
+                "daysOff": 0,
+                "extraHoursWorked": 80
+            },
+            {
+                "name": "Ralph Mcdonald",
+                "salaryGroupId": 3,
+                "holidayDaysTaken": 20,
+                "daysOff": 2,
+                "extraHoursWorked": 0
+            },
+            {
+                "name": "Sharon Hayden",
+                "salaryGroupId": 4,
+                "holidayDaysTaken": 24,
+                "daysOff": 1,
+                "extraHoursWorked": 21
+            }
+        ],
+        "salaryGroup":[
+            {id:1,name:"Trainee",salary:"1400€"},
+            {id:2,name:"Junior",salary:"2100€"},
+            {id:3,name:"General",salary:"2600€"},
+            {id:4,name:"Senior",salary:"3200€"},
+            {id:5,name:"Master",salary:"4800€"},
+        ],
         "arithmeticCollection":[
             {id:1,cars:12,trucks:23,bikes:8},
             {id:2,cars:3,trucks:18,bikes:18},
@@ -360,18 +1068,31 @@ describe("Collection", function () {
             var collection, q;
             beforeEach(function () {
                 collection = new jsonOdm.Collection("employees");
+                collection.$hasOne("id","salaryGroupId","salaryGroup");
                 q = collection.$query();
             });
             it("Should group the collection by fields", function () {
                 var grouped = q.$group(
-                    "salaryGroup",
+                    "salaryGroupId",
+                    ["salaryGroup","name"],
                     "daysOff",
                     {
                         "allExtraHours":q.$sum("extraHoursWorked"),
-                        "allDaysOff":q.$sum("daysOff")
+                        "allDaysOff":q.$sum("daysOff"),
+                        "elements": q.$push(),
+                        "count":q.$count()
                     }
                 ).$all();
-                console.log(grouped);
+                for(var i = 0; i < grouped.length; i++){
+                    expect(grouped[i].count).toBe(grouped[i].elements.length);
+                    expect(grouped[i].count * grouped[i].daysOff).toBe(grouped[i].allDaysOff);
+                    var allExtraHoursWorked = 0;
+                    for(var j = 0; j < grouped[i].elements.length; j++){
+                        allExtraHoursWorked += grouped[i].elements[j].extraHoursWorked;
+                        expect(grouped[i].salaryGroup.name).toBe(grouped[i].elements[j].salaryGroup.name);
+                    }
+                    expect(allExtraHoursWorked).toBe(grouped[i].allExtraHours);
+                }
             });
             it("Should sum up a field", function () {
                 // sum up manually
@@ -379,9 +1100,8 @@ describe("Collection", function () {
                 for(var i = 0; i < testSource.employees.length; i++){
                     expectedSum += testSource.employees[i].daysOff;
                 }
-                var subQ = q.$sum("daysOff");
-                subQ.$all();
-                expect(expectedSum).toBe(subQ.$$accumulation);
+                q.$sum("daysOff").$all();
+                expect(expectedSum).toBe(q.$$accumulation);
             });
             it("Should get the average of a field", function () {
                 // sum up manually
@@ -399,9 +1119,8 @@ describe("Collection", function () {
                 for(var i = 0; i < testSource.employees.length; i++){
                     max = Math.max(max,testSource.employees[i].daysOff);
                 }
-                var subQ = q.$max("daysOff");
-                subQ.$all();
-                expect(max).toBe(subQ.$$accumulation);
+                q.$max("daysOff").$all();
+                expect(max).toBe(q.$$accumulation);
             });
             it("Should get the maximum of a field", function () {
                 // sum up manually
@@ -409,9 +1128,16 @@ describe("Collection", function () {
                 for(var i = 0; i < testSource.employees.length; i++){
                     min = Math.min(min,testSource.employees[i].daysOff);
                 }
-                var subQ = q.$min("daysOff");
-                subQ.$all();
-                expect(min).toBe(subQ.$$accumulation);
+                q.$min("daysOff").$all();
+                expect(min).toBe(q.$$accumulation);
+            });
+            it("Should count all elements", function () {
+                q.$count().$all();
+                expect(collection.length).toBe(q.$$accumulation);
+            });
+            it("Should count all elements", function () {
+                q.$push().$all();
+                expect(collection.length).toBe(q.$$accumulation.length);
             });
         });
         describe("Arithmetic operators", function () {

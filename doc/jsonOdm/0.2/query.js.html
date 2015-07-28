@@ -1,4 +1,942 @@
-"use strict";
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>jsonOdm v0.2.0</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery-2.1.1.min.js"> </script>
+    <script src="scripts/page.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400italic,300,700,600,400' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            jsonOdm v0.2.0
+          </a>
+          <div class="navbar-right">
+            <div class="external-links">
+              <i class="fa fa-github"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="primary-content container-fluid">
+      <div class="row-fluid">
+          <div class="sidenav col-md-3">
+            
+
+
+<div class="module-list">
+  <h3>Modules</h3>
+  <ul class="module-listing">
+  
+    <li data-module-name="jsonOdm" class="collapsed collapsable module-item">
+      <span class="collapsed-status">
+        <i class="expand fa fa-plus-square-o"></i>
+        <i class="collapse fa fa-minus-square-o"></i>
+      </span>
+
+      jsonOdm
+      <ul class="thing-list">
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.BoundaryBox.html">BoundaryBox</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.BoundaryBox.html#within">within</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Collection.html">Collection</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Collection.html#decorate">decorate</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.Feature.html">Feature</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.FeatureCollection.html">FeatureCollection</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.html">Geo</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#detectAsGeometry">detectAsGeometry</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#edgeIntersectsBounds">edgeIntersectsBounds</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#edgeIntersectsEdge">edgeIntersectsEdge</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#edgeIntersectsLineString">edgeIntersectsLineString</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#edgeIntersectsPolygon">edgeIntersectsPolygon</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#edgeWithinPolygon">edgeWithinPolygon</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#lineStringWithinLineString">lineStringWithinLineString</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#pointWithinBounds">pointWithinBounds</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#pointWithinLineString">pointWithinLineString</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.html#pointWithinPolygon">pointWithinPolygon</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.GeometryCollection.html">GeometryCollection</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.GeometryCollection.html#intersects">intersects</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.GeometryCollection.html#within">within</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="JsonOdm.html">JsonOdm</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.LineString.html">LineString</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.LineString.html#intersects">intersects</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.LineString.html#within">within</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.MultiLineString.html">MultiLineString</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.MultiLineString.html#intersects">intersects</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.MultiLineString.html#within">within</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.MultiPoint.html">MultiPoint</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.MultiPoint.html#intersects">intersects</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.MultiPoint.html#within">within</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.MultiPolygon.html">MultiPolygon</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.MultiPolygon.html#intersects">intersects</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.MultiPolygon.html#within">within</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.Point.html">Point</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.Point.html#intersects">intersects</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.Point.html#within">within</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Geo.Polygon.html">Polygon</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.Polygon.html#intersects">intersects</a>
+  </li>
+
+
+            
+              
+
+  <li class="thing">
+
+    
+
+    
+
+    
+
+    
+      <i class="fa fa-cog"></i>
+    
+
+    <a href="jsonOdm.Geo.Polygon.html#within">within</a>
+  </li>
+
+
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Query.html">Query</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+
+          
+
+  <li class="thing">
+
+    
+      <i class="fa fa-cube"></i>
+    
+
+    
+
+    
+
+    
+
+    <a href="jsonOdm.Util.html">Util</a>
+  </li>
+
+
+
+          <ul class="thing-list">
+            
+          </ul>
+
+        
+      </ul>
+    </li>
+  
+  </ul>
+</div>
+
+          </div>
+
+          <div class="col-md-9">
+              
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>"use strict";
 
 /** @namespace jsonOdm.Query */
 
@@ -39,11 +977,11 @@ jsonOdm.Query = function (collection) {
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$delete = function () {
-    if(this.$$commandQueue.length < 1) return this;
-    for(var i = 0; i < this.$$collection.length;){
+    if(this.$$commandQueue.length &lt; 1) return this;
+    for(var i = 0; i &lt; this.$$collection.length;){
         var validCollection = true;
-        for(var j = 0; j < this.$$commandQueue.length; j++){
-            if(!(validCollection = validCollection && this.$$commandQueue[j](this.$$collection[i]))){
+        for(var j = 0; j &lt; this.$$commandQueue.length; j++){
+            if(!(validCollection = validCollection &amp;&amp; this.$$commandQueue[j](this.$$collection[i]))){
                 break;
             }
         }
@@ -68,34 +1006,34 @@ jsonOdm.Query.prototype.$delete = function () {
  * @return {*}
  */
 jsonOdm.Query.prototype.$result = function (start,length) {
-    if(this.$$commandQueue.length < 1 && this.$$aggregationBeforeCollectQueue < 1) return this.$$collection;
+    if(this.$$commandQueue.length &lt; 1 &amp;&amp; this.$$aggregationBeforeCollectQueue &lt; 1) return this.$$collection;
     start  = typeof start  == "undefined" ? 0 : start;
     length = typeof length == "undefined" ? this.$$collection.length : length;
 
     var filterCollection = new jsonOdm.Collection(),
         resultingElement, i,j;
 
-    for(i = 0; i < this.$$collection.length; i++){
+    for(i = 0; i &lt; this.$$collection.length; i++){
         var validCollection = true;
-        for(j = 0; j < this.$$commandQueue.length; j++){
+        for(j = 0; j &lt; this.$$commandQueue.length; j++){
             var commandResult = this.$$commandQueue[j](this.$$collection[i]);
-            if(!(validCollection = validCollection && commandResult !== null && commandResult !== false && typeof commandResult != "undefined")){
+            if(!(validCollection = validCollection &amp;&amp; commandResult !== null &amp;&amp; commandResult !== false &amp;&amp; typeof commandResult != "undefined")){
                 break;
             }
         }
         if(validCollection){
             if(start > 0) {start--;continue;}
-            if(length <= 0){return filterCollection}
+            if(length &lt;= 0){return filterCollection}
 
             resultingElement = this.$$collection[i];
-            for(j = 0; j < this.$$aggregationBeforeCollectQueue.length; j++){
+            for(j = 0; j &lt; this.$$aggregationBeforeCollectQueue.length; j++){
                 resultingElement = this.$$aggregationBeforeCollectQueue[j](i,resultingElement);
             }
             filterCollection.push(resultingElement);
             length--;
         }
     }
-    for(i = 0; i < this.$$aggregationResultQueue.length; i++){
+    for(i = 0; i &lt; this.$$aggregationResultQueue.length; i++){
         filterCollection = this.$$aggregationResultQueue[i](filterCollection);
     }
     return filterCollection;
@@ -181,9 +1119,9 @@ jsonOdm.Query.prototype.$group = function (by) {
     var aggregationResult = [];
     // last argument might be a projection
     if(
-        arguments.length > 1 &&
-        !(jsonOdm.util.isArray(arguments[arguments.length - 1])) &&
-        !(jsonOdm.util.is(arguments[arguments.length - 1],"string")) &&
+        arguments.length > 1 &amp;&amp;
+        !(jsonOdm.util.isArray(arguments[arguments.length - 1])) &amp;&amp;
+        !(jsonOdm.util.is(arguments[arguments.length - 1],"string")) &amp;&amp;
         typeof arguments[arguments.length - 1] == "object"
     ){
         accumulationProjection = arguments[arguments.length - 1];
@@ -199,10 +1137,10 @@ jsonOdm.Query.prototype.$group = function (by) {
                     currentValueVariation = valueVariations,
                     value;
                 // create result sets matching the order by parameters
-                for(var i = 0; i < orderBy.length; i++){
+                for(var i = 0; i &lt; orderBy.length; i++){
                     var currentOrderBy = jsonOdm.util.isArray(orderBy[i])?orderBy[i]:[orderBy[i]];
                     value = jsonOdm.util.branch(collectionElement,currentOrderBy);
-                    if(i < orderBy.length - 1) {
+                    if(i &lt; orderBy.length - 1) {
                         if(typeof currentValueVariation[""+value] == "undefined"){
                             newValueVariation = true;
                             currentValueVariation[""+value] = {};
@@ -210,7 +1148,7 @@ jsonOdm.Query.prototype.$group = function (by) {
                         currentValueVariation = currentValueVariation[""+value];
                     }
                     var accumulationObjectBuffer = accumulationObject;
-                    for(var j = 0; j < currentOrderBy.length - 1; j++){
+                    for(var j = 0; j &lt; currentOrderBy.length - 1; j++){
                         if(typeof accumulationObjectBuffer[currentOrderBy[j]] == "undefined"){
                             accumulationObjectBuffer[currentOrderBy[j]] = {};
                         }
@@ -242,13 +1180,13 @@ jsonOdm.Query.prototype.$group = function (by) {
             }
             return function () {
                 var resultCollection = new jsonOdm.Collection();
-                for(var i = 0; i < aggregationResult.length; i++){
+                for(var i = 0; i &lt; aggregationResult.length; i++){
                     if(accumulationProjection === false){
                         resultCollection.push(aggregationResult[i].accumulationObject);
                     }else {
                         falseQueryAccumulation(accumulationProjection);
                         var projectionResult = {};
-                        for (var j = 0; j < aggregationResult[i].subResultSet.length; j++) {
+                        for (var j = 0; j &lt; aggregationResult[i].subResultSet.length; j++) {
                             projectionResult = jsonOdm.util.projectElement(accumulationProjection, aggregationResult[i].subResultSet[j]);
                         }
                         for (j in aggregationResult[i].accumulationObject) {
@@ -304,7 +1242,7 @@ jsonOdm.Query.prototype.$testCollection = function (comparables,collectionTest) 
     var lastCommand = this.$$commandQueue.pop();
     var $testCollection = (function () {
         return function (collection) {
-            if(!((lastCommand instanceof jsonOdm.Collection || typeof lastCommand == "function" || typeof lastCommand == "undefined") && typeof collectionTest == "function")) return false;
+            if(!((lastCommand instanceof jsonOdm.Collection || typeof lastCommand == "function" || typeof lastCommand == "undefined") &amp;&amp; typeof collectionTest == "function")) return false;
             var collectionValue = typeof lastCommand == "undefined"?collection:(lastCommand instanceof jsonOdm.Collection?lastCommand:lastCommand(collection));
             return !!collectionTest(collectionValue,comparables);
         }
@@ -324,9 +1262,9 @@ jsonOdm.Query.prototype.$queryOperator = function (queries,operator) {
         return function (collection) {
             if(typeof oprator != "function") return false;
             var commandResults = [];
-            for(var i = 0; i < queries.length; i++){
+            for(var i = 0; i &lt; queries.length; i++){
                 if(queries[i] instanceof jsonOdm.Query){
-                    for(var j = 0; j < queries[i].$$commandQueue.length; j++){
+                    for(var j = 0; j &lt; queries[i].$$commandQueue.length; j++){
                         commandResults.push(queries[i].$$commandQueue[j](collection));
                     }
                 }else{
@@ -381,7 +1319,7 @@ jsonOdm.Query.prototype.$modifyField = function (modifier) {
     return this;
 };
 
-/** A generation for all native String.prototype methods to make them available via $modifyField <br/>
+/** A generation for all native String.prototype methods to make them available via $modifyField &lt;br/>
  * Supported Methods are: "charAt", "charCodeAt", "concat", "fromCharCode", "indexOf", "lastIndexOf", "localeCompare", "match", "replace", "search", "slice", "split", "substr", "substring", "toLocaleLowerCase", "toLocaleUpperCase", "toLowerCase", "toUpperCase", "trim", "valueOf"
  * @param {*} [args] The string methods parameter
  * @return {jsonOdm.Query}
@@ -393,13 +1331,13 @@ jsonOdm.Query.prototype.$modifyField = function (modifier) {
  *    $query.$branch("explosionBy").$trim().$substr(0,3).$toUpperCase().$eq("TNT").$all();
  */
 jsonOdm.Query.stringFiledModifyer = ["charAt","charCodeAt","concat","fromCharCode","indexOf","lastIndexOf","localeCompare","match","replace","search","slice","split","substr","substring","toLocaleLowerCase","toLocaleUpperCase","toLowerCase","toUpperCase","trim","valueOf"];
-for(var i = 0; i < jsonOdm.Query.stringFiledModifyer.length; i++){
+for(var i = 0; i &lt; jsonOdm.Query.stringFiledModifyer.length; i++){
     jsonOdm.Query.prototype["$"+jsonOdm.Query.stringFiledModifyer[i]] = (
         function (modifyer) {
             return function () {
                 return this.$modifyField((function (args,modifyer) {
                     return function (value) {
-                        return typeof value == "string" && String.prototype.hasOwnProperty(modifyer)?String.prototype[modifyer].apply(value,args):value;
+                        return typeof value == "string" &amp;&amp; String.prototype.hasOwnProperty(modifyer)?String.prototype[modifyer].apply(value,args):value;
                     }
                 })(arguments,modifyer))
             }
@@ -573,7 +1511,7 @@ jsonOdm.Query.prototype.$push = function () {
 jsonOdm.Query.prototype.$add = function (branch1, branch2) {
     return this.$queryOperator(arguments, function (queryResults) {
         var result = queryResults.length > 0 ? queryResults[0] : 0;
-        for(var i = 1; i < queryResults.length; i++){
+        for(var i = 1; i &lt; queryResults.length; i++){
             result += queryResults[i];
         }
         return result;
@@ -599,7 +1537,7 @@ jsonOdm.Query.prototype.$add = function (branch1, branch2) {
 jsonOdm.Query.prototype.$subtract = function (branch1, branch2) {
     return this.$queryOperator(arguments, function (queryResults) {
         var result = queryResults.length > 0 ? queryResults[0] : 0;
-        for(var i = 1; i < queryResults.length; i++){
+        for(var i = 1; i &lt; queryResults.length; i++){
             result -= queryResults[i];
         }
         return result;
@@ -625,7 +1563,7 @@ jsonOdm.Query.prototype.$subtract = function (branch1, branch2) {
 jsonOdm.Query.prototype.$multiply = function (branch1, branch2) {
     return this.$queryOperator(arguments, function (queryResults) {
         var result = queryResults.length > 0 ? queryResults[0] : 0;
-        for(var i = 1; i < queryResults.length; i++){
+        for(var i = 1; i &lt; queryResults.length; i++){
             result *= queryResults[i];
         }
         return result;
@@ -651,7 +1589,7 @@ jsonOdm.Query.prototype.$multiply = function (branch1, branch2) {
 jsonOdm.Query.prototype.$divide = function (branch1, branch2) {
     return this.$queryOperator(arguments, function (queryResults) {
         var result = queryResults.length > 0 ? queryResults[0] : 0;
-        for(var i = 1; i < queryResults.length; i++){
+        for(var i = 1; i &lt; queryResults.length; i++){
             result /= queryResults[i];
         }
         return result;
@@ -677,7 +1615,7 @@ jsonOdm.Query.prototype.$divide = function (branch1, branch2) {
 jsonOdm.Query.prototype.$modulo = function (branch1, module) {
     return this.$queryOperator(arguments, function (queryResults) {
         var result = queryResults.length > 0 ? queryResults[0] : 0;
-        for(var i = 1; i < queryResults.length; i++){
+        for(var i = 1; i &lt; queryResults.length; i++){
             result = result % queryResults[i];
         }
         return result;
@@ -692,7 +1630,7 @@ jsonOdm.Query.prototype.$modulo = function (branch1, module) {
  */
 jsonOdm.Query.prototype.$eq = function (comparable) {
     return this.$testCollection(arguments,function (collectionValue, possibleValues) {
-        for(var i = 0; i < possibleValues.length; i++) if(possibleValues[i] == collectionValue) return true;
+        for(var i = 0; i &lt; possibleValues.length; i++) if(possibleValues[i] == collectionValue) return true;
         return false;
     });
 };
@@ -705,7 +1643,7 @@ jsonOdm.Query.prototype.$eq = function (comparable) {
  */
 jsonOdm.Query.prototype.$in = function (comparable) {
     return this.$testCollection(comparable,function (collectionValue, possibleValues) {
-        for(var i = 0; i < possibleValues.length; i++) if(possibleValues[i] == collectionValue) return true;
+        for(var i = 0; i &lt; possibleValues.length; i++) if(possibleValues[i] == collectionValue) return true;
         return false;
     });
 };
@@ -718,7 +1656,7 @@ jsonOdm.Query.prototype.$in = function (comparable) {
  */
 jsonOdm.Query.prototype.$ne = function (comparable) {
     return this.$testCollection(arguments, function (collectionValue, possibleValues) {
-        for(var i = 0; i < possibleValues.length; i++) if(possibleValues[i] == collectionValue) return false;
+        for(var i = 0; i &lt; possibleValues.length; i++) if(possibleValues[i] == collectionValue) return false;
         return true;
     });
 };
@@ -731,7 +1669,7 @@ jsonOdm.Query.prototype.$ne = function (comparable) {
  */
 jsonOdm.Query.prototype.$nin = function (comparable) {
     return this.$testCollection(comparable, function (collectionValue, possibleValues) {
-        for(var i = 0; i < possibleValues.length; i++) if(possibleValues[i] == collectionValue) return false;
+        for(var i = 0; i &lt; possibleValues.length; i++) if(possibleValues[i] == collectionValue) return false;
         return true;
     });
 };
@@ -744,7 +1682,7 @@ jsonOdm.Query.prototype.$nin = function (comparable) {
  */
 jsonOdm.Query.prototype.$gt = function (comparable) {
     return this.$testCollection(comparable, function (collectionValue, possibleValues) {
-        return possibleValues < collectionValue;
+        return possibleValues &lt; collectionValue;
     });
 };
 
@@ -756,7 +1694,7 @@ jsonOdm.Query.prototype.$gt = function (comparable) {
  */
 jsonOdm.Query.prototype.$gte = function (comparable) {
     return this.$testCollection(comparable, function (collectionValue, possibleValues) {
-        return possibleValues <= collectionValue;
+        return possibleValues &lt;= collectionValue;
     });
 };
 
@@ -864,7 +1802,7 @@ jsonOdm.Query.prototype.$regex = function (regex,options) {
 };
 
 /**
- * Performs a text search on a given collection with the same notation used by mongodb<br/>
+ * Performs a text search on a given collection with the same notation used by mongodb&lt;br/>
  * In contrast to mongodb this method does not implement stop words elimination or word stamming at the moment
  * @example
  * collection.$query()
@@ -890,15 +1828,15 @@ jsonOdm.Query.prototype.$text = function (text) {
     var ors = text.split(" ");
     return this.$testCollection([nots,ands,ors], function (collectionValue,logics) {
         // nots
-        for(var i = 0;i < logics[0].length; i++){
+        for(var i = 0;i &lt; logics[0].length; i++){
             if(collectionValue.indexOf(logics[0][i]) > -1) return false;
         }
         // ands
-        for(i = 0;i < logics[1].length; i++){
-            if(collectionValue.indexOf(logics[1][i]) < 0) return false;
+        for(i = 0;i &lt; logics[1].length; i++){
+            if(collectionValue.indexOf(logics[1][i]) &lt; 0) return false;
         }
         // ors
-        for(i = 0; i < logics[2].length; i++){
+        for(i = 0; i &lt; logics[2].length; i++){
             if(collectionValue.indexOf(logics[2][i]) > -1) return true;
         }
         // if there are no ors, matching all ands is enough
@@ -930,13 +1868,13 @@ jsonOdm.Query.prototype.$where = function (evaluation) {
 
 /*-------- GEO ----------*/
 /**
- * Checks whether the current field geometry is within the given geometry object <br/>
- * <strong style="color:#ff0000">Warning:</strong> The coordinate reference system is <a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84</a>witch uses the coordinate order [<strong>longitude</strong>,<strong>latitude</strong>]!<br/>
- * The method automatically transforms arrays into the assumed GeoJSON definitions where: <br/>
- * [10,10] transforms into a jsonOdm.Geo.Point <br/>
- * [[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString <br/>
- * [[[10,10],[10,12],...],...] transforms into a jsonOdm.Geo.Polygon <br/>
- * [[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon <br/>
+ * Checks whether the current field geometry is within the given geometry object &lt;br/>
+ * &lt;strong style="color:#ff0000">Warning:&lt;/strong> The coordinate reference system is &lt;a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84&lt;/a>witch uses the coordinate order [&lt;strong>longitude&lt;/strong>,&lt;strong>latitude&lt;/strong>]!&lt;br/>
+ * The method automatically transforms arrays into the assumed GeoJSON definitions where: &lt;br/>
+ * [10,10] transforms into a jsonOdm.Geo.Point &lt;br/>
+ * [[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString &lt;br/>
+ * [[[10,10],[10,12],...],...] transforms into a jsonOdm.Geo.Polygon &lt;br/>
+ * [[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon &lt;br/>
  * or simply use a GeoJSON object definition from jsonOdm.Geo
  * @example
  * {
@@ -970,18 +1908,18 @@ jsonOdm.Query.prototype.$where = function (evaluation) {
  */
 jsonOdm.Query.prototype.$geoWithin = function (geometry) {
     return this.$testCollection(jsonOdm.Geo.detectAsGeometry(geometry), function (collectionValue,geometry) {
-        return jsonOdm.Geo[collectionValue.type] && jsonOdm.Geo[collectionValue.type].within && jsonOdm.Geo[collectionValue.type].within(collectionValue,geometry);
+        return jsonOdm.Geo[collectionValue.type] &amp;&amp; jsonOdm.Geo[collectionValue.type].within &amp;&amp; jsonOdm.Geo[collectionValue.type].within(collectionValue,geometry);
     });
 };
 
 /**
- * Checks whether the current field geometry intersects the given geometry object <br/>
- * <strong style="color:#ff0000">Warning:</strong> The coordinate reference system is <a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84</a>witch uses the coordinate order [<strong>longitude</strong>,<strong>latitude</strong>]!<br/>
- * The method automatically transforms arrays into the assumed GeoJSON definitions where: <br/>
- * [10,10] transforms into a jsonOdm.Geo.Point <br/>
- * [[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString <br/>
- * [[[10,10],[10,12],...],...] transforms into a jsonOdm.Geo.Polygon <br/>
- * [[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon <br/>
+ * Checks whether the current field geometry intersects the given geometry object &lt;br/>
+ * &lt;strong style="color:#ff0000">Warning:&lt;/strong> The coordinate reference system is &lt;a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84&lt;/a>witch uses the coordinate order [&lt;strong>longitude&lt;/strong>,&lt;strong>latitude&lt;/strong>]!&lt;br/>
+ * The method automatically transforms arrays into the assumed GeoJSON definitions where: &lt;br/>
+ * [10,10] transforms into a jsonOdm.Geo.Point &lt;br/>
+ * [[10,10],[10,12],...] transforms into a jsonOdm.Geo.LineString &lt;br/>
+ * [[[10,10],[10,12],...],...] transforms into a jsonOdm.Geo.Polygon &lt;br/>
+ * [[[[10,10],[10,12],...],...],...] transforms into a jsonOdm.Geo.MultiPolygon &lt;br/>
  * or simply use a GeoJSON object definition from jsonOdm.Geo
  * @example
  * {
@@ -1015,7 +1953,7 @@ jsonOdm.Query.prototype.$geoWithin = function (geometry) {
  */
 jsonOdm.Query.prototype.$geoIntersects = function (geometry) {
     return this.$testCollection(jsonOdm.Geo.detectAsGeometry(geometry), function (collectionValue,geometry) {
-        return jsonOdm.Geo[collectionValue.type] && jsonOdm.Geo[collectionValue.type].intersects && jsonOdm.Geo[collectionValue.type].intersects(collectionValue,geometry);
+        return jsonOdm.Geo[collectionValue.type] &amp;&amp; jsonOdm.Geo[collectionValue.type].intersects &amp;&amp; jsonOdm.Geo[collectionValue.type].intersects(collectionValue,geometry);
     });
 };
 
@@ -1028,7 +1966,7 @@ jsonOdm.Query.prototype.$geoIntersects = function (geometry) {
 jsonOdm.Query.prototype.$and = function (queries) {
     // TODO optimize with generators to only query paths that are needed
     return this.$queryOperator(arguments, function (queryResults) {
-        for(var i = 0; i < queryResults.length; i++){
+        for(var i = 0; i &lt; queryResults.length; i++){
             if(!queryResults[i]) return false;
         }
         return true;
@@ -1043,7 +1981,7 @@ jsonOdm.Query.prototype.$and = function (queries) {
 jsonOdm.Query.prototype.$nand = function (queries) {
     // TODO optimize with generators to only query paths that are needed
     return this.$queryOperator(arguments, function (queryResults) {
-        for(var i = 0; i < queryResults.length; i++){
+        for(var i = 0; i &lt; queryResults.length; i++){
             if(!queryResults[i]) return true;
         }
         return false;
@@ -1069,7 +2007,7 @@ jsonOdm.Query.prototype.$not = jsonOdm.Query.prototype.$nand;
 jsonOdm.Query.prototype.$or = function (queries) {
     // TODO optimize with generators to only query paths that are needed
     return this.$queryOperator(arguments, function (queryResults) {
-        for(var i = 0; i < queryResults.length; i++){
+        for(var i = 0; i &lt; queryResults.length; i++){
             if(queryResults[i]) return true;
         }
         return false;
@@ -1084,9 +2022,26 @@ jsonOdm.Query.prototype.$or = function (queries) {
 jsonOdm.Query.prototype.$nor = function (queries) {
     // TODO optimize with generators to only query paths that are needed
     return this.$queryOperator(arguments, function (queryResults) {
-        for(var i = 0; i < queryResults.length; i++){
+        for(var i = 0; i &lt; queryResults.length; i++){
             if(queryResults[i]) return false;
         }
         return true;
     });
-};
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+          </div>
+      </div>
+
+        <br clear="both">
+
+      <footer>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
+</html>

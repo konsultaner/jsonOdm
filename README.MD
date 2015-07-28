@@ -22,7 +22,7 @@ If commercial support is needed please [contact me](mailto:burkhardt@konsultaner
 
 Docs
 ----
-You can find the [documentation here](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.1/index.html) or compiled to the folder [/doc/jsonOdm/0.1/*](https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.1/index.html). 
+You can find the [documentation here](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.2/index.html) or compiled to the folder [/doc/jsonOdm/0.2/*](https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.2/index.html).
 
 Road map
 ----
@@ -36,7 +36,7 @@ Road map
     - Array ($all,$elementMatch,$size) 0% // i may not implement the first two
     - Aggregation
         - Pipeline (~~$project~~,$match,$redact,~~$limit~~,~~$skip~~,$unwind,$sort,$geoNear,$out) 30% ($limit and $skip is implemented as $result(skip,limit))
-            - Grouping ($group,$count,~~$sum~~,~~$avg~~,$first,$last,~~$min~~,~~$max~~,$push,$addToSet) 40% ($count is used to count the results)
+            - Grouping (~~$group~~,~~$count~~,~~$sum~~,~~$avg~~,$first,$last,~~$min~~,~~$max~~,~~$push~~,$addToSet) 70% ($count is used to count the results)
         - Operators (Boolean,Set,Comparison,~~Arithmetic~~,~~String~~,Array,Date,Conditional,Variable,Grouping) 20% ($mod is renamed $modulo, because Evaluation has a $mod)
 - Support Promise/A+ sources for the odm.addSource
 - Full CRUD support
