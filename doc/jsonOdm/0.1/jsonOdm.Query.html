@@ -971,102 +971,7 @@
     
         
 
-
-
-    <h3 class="
-        subsection-title name
         
-      " id="Query">
-
-      
-        
-        Constructor
-      
-
-      
-
-      
-
-    </h3>
-
-    
-      <h4>new Query<span class="signature">(<span class="optional">collection</span>)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-    
-
-
-
-
-    
-    <div class="description">
-        <p>
-        The query object that holds the collection to be queried
-        </p>
-    </div>
-    
-
-    
-
-    
-
-    
-        <h4>Parameters</h4>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-        <tr>
-                
-                <th>Name</th>
-                
-
-                <th>Type</th>
-
-                
-
-                <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-        <tr>
-            
-                <td class="name">collection
-                  
-                    <i title="optional parameter" class="fa fa-question-circle"></i>
-                  
-                </td>
-            
-
-            <td class="type">
-            
-                
-<a href="jsonOdm.Collection.html">jsonOdm.Collection</a>
-
-
-
-            
-            </td>
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-        
-        </tbody>
-</table>
-
-    
-
-    
 <dl class="details">
     
 
@@ -1094,39 +999,7 @@
 </dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h4>Examples</h4>
         
-    <pre class="prettyprint"><code>//This example shows how to query a collection
-var myCollection = new jsonOdm('myCollection');
-var $q = myCollection.query();
-$q.$and(
-  $q.$or(
-      $q.$branch('child','id').$eq(1,2),
-      $q.$branch('child').$isNull()
-  ),
-  $q.$each('enabled').$eq(1,true)
-).$all();</code></pre>
-
-    <pre class="prettyprint"><code>//This example shows how to delete some entries of a collection
-var myCollection = new jsonOdm('myCollection');
-var $q = myCollection.query();
-$q.$branch('child','id').$eq(1,2).$delete();</code></pre>
-
-    
-
-
-
     
     </div>
 
@@ -1209,6 +1082,28 @@ $q.$branch('child','id').$eq(1,2).$delete();</code></pre>
         <tr>
             <td class="name">
               
+              <a href="jsonOdm.Query.html#$accumulator">$accumulator</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Go down the property tree of the collection
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
               <a href="jsonOdm.Query.html#$add">$add</a>
 
               
@@ -1284,6 +1179,28 @@ $q.$branch('child','id').$eq(1,2).$delete();</code></pre>
             <td class="description">
                 
                     Compares sub query results using the boolean and
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Query.html#$avg">$avg</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Performs the accumulation average of a field. It's integrated to be used with $group. May as well be used as stand alone.
                 
 
                 
@@ -1488,6 +1405,28 @@ or simply use a GeoJSON object definition from jsonOdm.Geo
         <tr>
             <td class="name">
               
+              <a href="jsonOdm.Query.html#$group">$group</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Groups all elements of a collection by a given grouping schema
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
               <a href="jsonOdm.Query.html#$gt">$gt</a>
 
               
@@ -1612,6 +1551,50 @@ like this $lt('1') field values less then 1 are valid
                 
                     Compares the current sub collection value with the comparable
 like this $lte('1') field values less then or equal to 1 are valid
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Query.html#$max">$max</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Performs the accumulation max of a field. It's integrated to be used with $group. May as well be used as stand alone.
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
+              <a href="jsonOdm.Query.html#$min">$min</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Performs the accumulation min of a field. It's integrated to be used with $group. May as well be used as stand alone.
                 
 
                 
@@ -1957,6 +1940,28 @@ like this $nin(['1','2','4']) so 1 or 2 or 4 are not valid fields
         <tr>
             <td class="name">
               
+              <a href="jsonOdm.Query.html#$sum">$sum</a>
+
+              
+              
+              
+            </td>
+            <td class="description">
+                
+                    Performs the accumulation sum of a field. It's integrated to be used with $group. May as well be used as stand alone.
+                
+
+                
+
+
+            </td>
+        </tr>
+
+        
+
+        <tr>
+            <td class="name">
+              
               <a href="jsonOdm.Query.html#$testCollection">$testCollection</a>
 
               
@@ -2227,6 +2232,189 @@ boolean
 <span class="param-desc">
     The query object with the sub collection or false if querying was impossible
 </span>
+
+</div>
+
+        
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$accumulator">
+
+      
+        $accumulator<span class="signature">(nodes, accumulator)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Go down the property tree of the collection
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">nodes
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+String[]
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">A variable of nodes to traverse down the json tree</td>
+        </tr>
+
+        
+
+        <tr>
+            
+                <td class="name">accumulator
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+function
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
 
 </div>
 
@@ -2929,6 +3117,174 @@ collection.$query()
 </div>
 
         
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$avg">
+
+      
+        $avg<span class="signature">(branch)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Performs the accumulation average of a field. It's integrated to be used with $group. May as well be used as stand alone.
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">branch
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+String
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Internally calls the $branch method to receive the field values</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>// SHOULD BE USED WITH $group
+var collection = new jsonOdm.Collection("employees");
+var $query = collection.$query();
+$query.$avg("daysOff").$all();
+console.log($query.$$accumulation);</code></pre>
 
     
 
@@ -4248,6 +4604,190 @@ var collection = new jsonOdm.Collection("geo"),
     <h3 class="
         subsection-title name
         
+      " id="$group">
+
+      
+        $group<span class="signature">(by)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Groups all elements of a collection by a given grouping schema
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">by
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var collection = new jsonOdm.Collection("employees");
+var $query = collection.$query();
+var groupedResult = $query.$and($query.$branch("age").$gt(21),$query.$branch("age").$lt(50)) // query before grouping
+      .$group(
+           "salaryRate", // as used with $branch
+           ["salaryGroup","name"], // as used with $branch
+           // A projection object defining the accumulation
+           {
+                missingDays:$query.$sum("daysAtHome"),
+                holidayDays:$query.$sum("daysOnHoliday"),
+                averageMissingDays:$query.$avg("daysAtHome"),
+                averageHolidayDays:$query.$avg("daysOnHoliday"),
+                count:$query.$count()
+           }
+      ).$all();
+// RESULT COULD BE
+// [
+//   {"salaryRate":3300,"salaryGroup":{"name":"Developer"},"missingDays":22,"holidayDays":144,"averageMissingDays":11,"averageHolidayDays":72,$count:2},
+//   {"salaryRate":2800,"salaryGroup":{"name":"Tester"}   ,"missingDays":10,"holidayDays":66 ,"averageMissingDays":5, "averageHolidayDays":33,$count:2},
+//   {"salaryRate":4800,"salaryGroup":{"name":"Boss"}     ,"missingDays":12,"holidayDays":33 ,"averageMissingDays":12,"averageHolidayDays":33,$count:1}
+// ]</code></pre>
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
       " id="$gt">
 
       
@@ -5140,6 +5680,342 @@ like this $lte('1') field values less then or equal to 1 are valid
 </div>
 
         
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$max">
+
+      
+        $max<span class="signature">(branch)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Performs the accumulation max of a field. It's integrated to be used with $group. May as well be used as stand alone.
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">branch
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+String
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Internally calls the $branch method to receive the field values</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>// SHOULD BE USED WITH $group
+var collection = new jsonOdm.Collection("employees");
+var $query = collection.$query();
+$query.$max("daysOff").$all();
+console.log($query.$$accumulation);</code></pre>
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$min">
+
+      
+        $min<span class="signature">(branch)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Performs the accumulation min of a field. It's integrated to be used with $group. May as well be used as stand alone.
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">branch
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+String
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Internally calls the $branch method to receive the field values</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>// SHOULD BE USED WITH $group
+var collection = new jsonOdm.Collection("employees");
+var $query = collection.$query();
+$query.$max("daysOff").$all();
+console.log($query.$$accumulation);</code></pre>
 
     
 
@@ -6754,7 +7630,7 @@ Array
       " id="$project">
 
       
-        $project<span class="signature">(projection)</span><span class="type-signature"></span>
+        $project<span class="signature">(projection)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
       
 
       
@@ -6881,10 +7757,12 @@ Array
             <div class="returns">
 
 
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
 
-<span class="param-desc">
-    jsonOdm.Query
-</span>
+
+
+
 
 </div>
 
@@ -6907,7 +7785,8 @@ var $query = collection.$query()
         },
         lastName: function(element){return element.author.last}, // functions can be used as well
         copiesSold: $query.$branch("copies")
-   })</code></pre>
+   });
+var collectionResult = $query.$all();</code></pre>
 
     
 
@@ -7689,6 +8568,174 @@ var $query = collection.$query();
            $query.$branch(["otherValues","firstValue"])
        )
    ).$eq(12).$all();</code></pre>
+
+    
+
+
+  </dd>
+</dl>
+
+
+        
+            
+
+
+<dl class="bs-docs-example bs-members">
+  <dt>
+
+
+    <h3 class="
+        subsection-title name
+        
+      " id="$sum">
+
+      
+        $sum<span class="signature">(branch)</span><span class="type-signature"> &rarr; {<a href="jsonOdm.Query.html">jsonOdm.Query</a>}</span>
+      
+
+      
+
+      
+
+    </h3>
+
+    
+
+    
+
+
+
+    
+
+
+
+  </dt>
+<dd>
+
+
+    
+    <div class="description">
+        <p>
+        Performs the accumulation sum of a field. It's integrated to be used with $group. May as well be used as stand alone.
+        </p>
+    </div>
+    
+
+    
+
+    
+
+    
+        <h4>Parameters</h4>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+        <tr>
+                
+                <th>Name</th>
+                
+
+                <th>Type</th>
+
+                
+
+                <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+        <tr>
+            
+                <td class="name">branch
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+String
+
+
+
+            
+            </td>
+
+            
+
+            <td class="description last">Internally calls the $branch method to receive the field values</td>
+        </tr>
+
+        
+        </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns</h4>
+    
+            <div class="returns">
+
+
+    
+<a href="jsonOdm.Query.html">jsonOdm.Query</a>
+
+
+
+
+
+</div>
+
+        
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>// SHOULD BE USED WITH $group
+var collection = new jsonOdm.Collection("employees");
+var $query = collection.$query();
+$query.$sum("daysOff").$all();
+console.log($query.$$accumulation);</code></pre>
 
     
 

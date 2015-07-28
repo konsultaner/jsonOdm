@@ -26,6 +26,8 @@ describe("Collection", function () {
             {id:5,lang:'pl',cite:"Rób innym to, co byś chciał, żeby tobie robili."},
             {id:6,lang:'en',cite:"One should not treat others in ways that one would not like to be treated."}
         ],
+        // generated with http://www.generatedata.com/
+        "employees":[{"name":"Judah Suarez","salaryGroup":2,"holidayDaysTaken":22,"daysOff":1,"extraHoursWorked":12},{"name":"Rebekah Downs","salaryGroup":3,"holidayDaysTaken":5,"daysOff":0,"extraHoursWorked":10},{"name":"Basia Dale","salaryGroup":1,"holidayDaysTaken":4,"daysOff":4,"extraHoursWorked":37},{"name":"Reed Britt","salaryGroup":1,"holidayDaysTaken":7,"daysOff":0,"extraHoursWorked":19},{"name":"Sara Hendricks","salaryGroup":4,"holidayDaysTaken":17,"daysOff":1,"extraHoursWorked":35},{"name":"Mallory Clemons","salaryGroup":5,"holidayDaysTaken":18,"daysOff":2,"extraHoursWorked":7},{"name":"John Bean","salaryGroup":4,"holidayDaysTaken":20,"daysOff":0,"extraHoursWorked":13},{"name":"Galvin Sheppard","salaryGroup":4,"holidayDaysTaken":7,"daysOff":2,"extraHoursWorked":10},{"name":"Blythe Gaines","salaryGroup":5,"holidayDaysTaken":11,"daysOff":1,"extraHoursWorked":0},{"name":"Chadwick Peterson","salaryGroup":1,"holidayDaysTaken":20,"daysOff":3,"extraHoursWorked":21},{"name":"Ima Richardson","salaryGroup":3,"holidayDaysTaken":4,"daysOff":1,"extraHoursWorked":38},{"name":"Kennedy Barnes","salaryGroup":4,"holidayDaysTaken":10,"daysOff":2,"extraHoursWorked":32},{"name":"Silas Murray","salaryGroup":5,"holidayDaysTaken":8,"daysOff":0,"extraHoursWorked":1},{"name":"Quentin Jackson","salaryGroup":5,"holidayDaysTaken":8,"daysOff":2,"extraHoursWorked":31},{"name":"Oren Moody","salaryGroup":3,"holidayDaysTaken":9,"daysOff":0,"extraHoursWorked":28},{"name":"Keelie Cardenas","salaryGroup":2,"holidayDaysTaken":18,"daysOff":3,"extraHoursWorked":23},{"name":"Reagan George","salaryGroup":2,"holidayDaysTaken":24,"daysOff":1,"extraHoursWorked":13},{"name":"Zelda Roberts","salaryGroup":5,"holidayDaysTaken":10,"daysOff":4,"extraHoursWorked":34},{"name":"Russell Lindsay","salaryGroup":4,"holidayDaysTaken":10,"daysOff":2,"extraHoursWorked":28},{"name":"Lila Conner","salaryGroup":4,"holidayDaysTaken":18,"daysOff":1,"extraHoursWorked":0},{"name":"Gary Floyd","salaryGroup":1,"holidayDaysTaken":9,"daysOff":3,"extraHoursWorked":20},{"name":"Hannah Wilder","salaryGroup":5,"holidayDaysTaken":18,"daysOff":0,"extraHoursWorked":35},{"name":"Ignacia Garrett","salaryGroup":4,"holidayDaysTaken":8,"daysOff":0,"extraHoursWorked":2},{"name":"Cathleen Marquez","salaryGroup":3,"holidayDaysTaken":19,"daysOff":0,"extraHoursWorked":36},{"name":"Price Castillo","salaryGroup":1,"holidayDaysTaken":4,"daysOff":4,"extraHoursWorked":32},{"name":"Idona Hayes","salaryGroup":4,"holidayDaysTaken":20,"daysOff":2,"extraHoursWorked":14},{"name":"Isaiah Wiley","salaryGroup":4,"holidayDaysTaken":17,"daysOff":1,"extraHoursWorked":40},{"name":"Aubrey Yates","salaryGroup":4,"holidayDaysTaken":21,"daysOff":4,"extraHoursWorked":33},{"name":"Buckminster Sullivan","salaryGroup":2,"holidayDaysTaken":20,"daysOff":0,"extraHoursWorked":19},{"name":"Carissa Mcpherson","salaryGroup":3,"holidayDaysTaken":11,"daysOff":4,"extraHoursWorked":26},{"name":"Hollee Case","salaryGroup":3,"holidayDaysTaken":10,"daysOff":0,"extraHoursWorked":44},{"name":"Sara Haynes","salaryGroup":5,"holidayDaysTaken":23,"daysOff":4,"extraHoursWorked":13},{"name":"Orla Anderson","salaryGroup":5,"holidayDaysTaken":19,"daysOff":1,"extraHoursWorked":31},{"name":"Hannah Cantu","salaryGroup":1,"holidayDaysTaken":18,"daysOff":0,"extraHoursWorked":11},{"name":"Rina Olsen","salaryGroup":3,"holidayDaysTaken":8,"daysOff":2,"extraHoursWorked":6},{"name":"Austin Farley","salaryGroup":4,"holidayDaysTaken":9,"daysOff":3,"extraHoursWorked":38},{"name":"Yeo Finch","salaryGroup":3,"holidayDaysTaken":19,"daysOff":1,"extraHoursWorked":42},{"name":"Paloma Jennings","salaryGroup":5,"holidayDaysTaken":15,"daysOff":4,"extraHoursWorked":26},{"name":"Helen Fischer","salaryGroup":1,"holidayDaysTaken":1,"daysOff":0,"extraHoursWorked":29},{"name":"Jin Snow","salaryGroup":2,"holidayDaysTaken":7,"daysOff":0,"extraHoursWorked":6},{"name":"Suki Castro","salaryGroup":4,"holidayDaysTaken":9,"daysOff":4,"extraHoursWorked":30},{"name":"Victoria Rich","salaryGroup":3,"holidayDaysTaken":23,"daysOff":4,"extraHoursWorked":42},{"name":"Ira Delaney","salaryGroup":4,"holidayDaysTaken":15,"daysOff":0,"extraHoursWorked":21},{"name":"Leigh Dickerson","salaryGroup":4,"holidayDaysTaken":19,"daysOff":4,"extraHoursWorked":22},{"name":"Mariko Hebert","salaryGroup":3,"holidayDaysTaken":17,"daysOff":4,"extraHoursWorked":4},{"name":"Steel Keller","salaryGroup":2,"holidayDaysTaken":24,"daysOff":2,"extraHoursWorked":37},{"name":"Hedy Burnett","salaryGroup":5,"holidayDaysTaken":10,"daysOff":2,"extraHoursWorked":43},{"name":"Raya Terry","salaryGroup":1,"holidayDaysTaken":2,"daysOff":4,"extraHoursWorked":30},{"name":"Quinn Allison","salaryGroup":2,"holidayDaysTaken":20,"daysOff":3,"extraHoursWorked":0},{"name":"Brent Reese","salaryGroup":5,"holidayDaysTaken":4,"daysOff":3,"extraHoursWorked":7},{"name":"Shaine White","salaryGroup":2,"holidayDaysTaken":2,"daysOff":4,"extraHoursWorked":36},{"name":"Wing Fletcher","salaryGroup":4,"holidayDaysTaken":19,"daysOff":4,"extraHoursWorked":10},{"name":"Camilla Lowery","salaryGroup":3,"holidayDaysTaken":13,"daysOff":0,"extraHoursWorked":6},{"name":"Macey Peck","salaryGroup":2,"holidayDaysTaken":23,"daysOff":1,"extraHoursWorked":11},{"name":"Reese Gibson","salaryGroup":2,"holidayDaysTaken":17,"daysOff":1,"extraHoursWorked":15},{"name":"Orlando Fuller","salaryGroup":4,"holidayDaysTaken":6,"daysOff":2,"extraHoursWorked":34},{"name":"Shea Joyce","salaryGroup":4,"holidayDaysTaken":19,"daysOff":1,"extraHoursWorked":24},{"name":"Justin Bean","salaryGroup":2,"holidayDaysTaken":22,"daysOff":3,"extraHoursWorked":3},{"name":"Gary Romero","salaryGroup":4,"holidayDaysTaken":9,"daysOff":1,"extraHoursWorked":10},{"name":"Imelda Santiago","salaryGroup":3,"holidayDaysTaken":18,"daysOff":3,"extraHoursWorked":41},{"name":"Melissa Myers","salaryGroup":3,"holidayDaysTaken":23,"daysOff":1,"extraHoursWorked":9},{"name":"Britanni Elliott","salaryGroup":5,"holidayDaysTaken":23,"daysOff":3,"extraHoursWorked":2},{"name":"Katell Bullock","salaryGroup":2,"holidayDaysTaken":5,"daysOff":1,"extraHoursWorked":44},{"name":"Kennedy Stout","salaryGroup":5,"holidayDaysTaken":13,"daysOff":3,"extraHoursWorked":30},{"name":"Colton Kaufman","salaryGroup":2,"holidayDaysTaken":15,"daysOff":0,"extraHoursWorked":8},{"name":"Amaya Sharpe","salaryGroup":4,"holidayDaysTaken":10,"daysOff":3,"extraHoursWorked":23},{"name":"Echo Martin","salaryGroup":5,"holidayDaysTaken":4,"daysOff":4,"extraHoursWorked":11},{"name":"Clementine Vaughn","salaryGroup":4,"holidayDaysTaken":2,"daysOff":2,"extraHoursWorked":23},{"name":"Jana Kinney","salaryGroup":4,"holidayDaysTaken":8,"daysOff":2,"extraHoursWorked":14},{"name":"Jorden Savage","salaryGroup":2,"holidayDaysTaken":11,"daysOff":0,"extraHoursWorked":33},{"name":"Rebekah Barnes","salaryGroup":3,"holidayDaysTaken":6,"daysOff":4,"extraHoursWorked":8},{"name":"Kenyon Dawson","salaryGroup":5,"holidayDaysTaken":15,"daysOff":3,"extraHoursWorked":9},{"name":"Raja Harvey","salaryGroup":1,"holidayDaysTaken":20,"daysOff":1,"extraHoursWorked":5},{"name":"Kirsten May","salaryGroup":1,"holidayDaysTaken":13,"daysOff":3,"extraHoursWorked":11},{"name":"Raven Oliver","salaryGroup":5,"holidayDaysTaken":24,"daysOff":1,"extraHoursWorked":7},{"name":"Cassady Macdonald","salaryGroup":1,"holidayDaysTaken":15,"daysOff":3,"extraHoursWorked":26},{"name":"Ira Guthrie","salaryGroup":3,"holidayDaysTaken":17,"daysOff":4,"extraHoursWorked":39},{"name":"Alika Reese","salaryGroup":5,"holidayDaysTaken":9,"daysOff":1,"extraHoursWorked":6},{"name":"Amber Le","salaryGroup":4,"holidayDaysTaken":22,"daysOff":4,"extraHoursWorked":15},{"name":"Buffy Rocha","salaryGroup":1,"holidayDaysTaken":10,"daysOff":0,"extraHoursWorked":32},{"name":"Laith Bailey","salaryGroup":1,"holidayDaysTaken":13,"daysOff":1,"extraHoursWorked":40},{"name":"Carson Byers","salaryGroup":2,"holidayDaysTaken":10,"daysOff":4,"extraHoursWorked":31},{"name":"Veda Odonnell","salaryGroup":3,"holidayDaysTaken":4,"daysOff":4,"extraHoursWorked":5},{"name":"Quincy Rhodes","salaryGroup":1,"holidayDaysTaken":8,"daysOff":2,"extraHoursWorked":7},{"name":"Fallon Bridges","salaryGroup":4,"holidayDaysTaken":7,"daysOff":2,"extraHoursWorked":27},{"name":"Silas Carey","salaryGroup":4,"holidayDaysTaken":14,"daysOff":2,"extraHoursWorked":39},{"name":"Chastity Harper","salaryGroup":2,"holidayDaysTaken":20,"daysOff":4,"extraHoursWorked":15},{"name":"Libby Higgins","salaryGroup":3,"holidayDaysTaken":21,"daysOff":4,"extraHoursWorked":32},{"name":"Yuri Lyons","salaryGroup":4,"holidayDaysTaken":1,"daysOff":2,"extraHoursWorked":35},{"name":"Dexter Hinton","salaryGroup":3,"holidayDaysTaken":16,"daysOff":3,"extraHoursWorked":8},{"name":"Karen Watson","salaryGroup":5,"holidayDaysTaken":14,"daysOff":2,"extraHoursWorked":44},{"name":"Ulla Yates","salaryGroup":3,"holidayDaysTaken":18,"daysOff":1,"extraHoursWorked":39},{"name":"Henry Santos","salaryGroup":4,"holidayDaysTaken":14,"daysOff":1,"extraHoursWorked":1},{"name":"Scarlett Hunt","salaryGroup":1,"holidayDaysTaken":21,"daysOff":4,"extraHoursWorked":25},{"name":"Scarlet Hampton","salaryGroup":4,"holidayDaysTaken":8,"daysOff":1,"extraHoursWorked":12},{"name":"Lavinia Marshall","salaryGroup":4,"holidayDaysTaken":4,"daysOff":3,"extraHoursWorked":28},{"name":"Steel Brown","salaryGroup":4,"holidayDaysTaken":3,"daysOff":3,"extraHoursWorked":6},{"name":"Ainsley Howe","salaryGroup":1,"holidayDaysTaken":13,"daysOff":0,"extraHoursWorked":15},{"name":"Irene Sykes","salaryGroup":1,"holidayDaysTaken":10,"daysOff":1,"extraHoursWorked":44},{"name":"Macaulay Rutledge","salaryGroup":1,"holidayDaysTaken":11,"daysOff":1,"extraHoursWorked":41}],
         "arithmeticCollection":[
             {id:1,cars:12,trucks:23,bikes:8},
             {id:2,cars:3,trucks:18,bikes:18},
@@ -352,6 +354,64 @@ describe("Collection", function () {
                 expect(subCollection.length).toBe(2);
                 expect(subCollection[0].id).toBe(401);
                 expect(subCollection[1].id).toBe(1002);
+            });
+        });
+        describe("Accumulation operators", function () {
+            var collection, q;
+            beforeEach(function () {
+                collection = new jsonOdm.Collection("employees");
+                q = collection.$query();
+            });
+            it("Should group the collection by fields", function () {
+                var grouped = q.$group(
+                    "salaryGroup",
+                    "daysOff",
+                    {
+                        "allExtraHours":q.$sum("extraHoursWorked"),
+                        "allDaysOff":q.$sum("daysOff")
+                    }
+                ).$all();
+                console.log(grouped);
+            });
+            it("Should sum up a field", function () {
+                // sum up manually
+                var expectedSum = 0;
+                for(var i = 0; i < testSource.employees.length; i++){
+                    expectedSum += testSource.employees[i].daysOff;
+                }
+                var subQ = q.$sum("daysOff");
+                subQ.$all();
+                expect(expectedSum).toBe(subQ.$$accumulation);
+            });
+            it("Should get the average of a field", function () {
+                // sum up manually
+                var sum = 0;
+                for(var i = 0; i < testSource.employees.length; i++){
+                    sum += testSource.employees[i].daysOff;
+                }
+                var subQ = q.$avg("daysOff");
+                subQ.$all();
+                expect(sum/testSource.employees.length).toBe(subQ.$$accumulation);
+            });
+            it("Should get the maximum of a field", function () {
+                // sum up manually
+                var max = 0;
+                for(var i = 0; i < testSource.employees.length; i++){
+                    max = Math.max(max,testSource.employees[i].daysOff);
+                }
+                var subQ = q.$max("daysOff");
+                subQ.$all();
+                expect(max).toBe(subQ.$$accumulation);
+            });
+            it("Should get the maximum of a field", function () {
+                // sum up manually
+                var min = 0;
+                for(var i = 0; i < testSource.employees.length; i++){
+                    min = Math.min(min,testSource.employees[i].daysOff);
+                }
+                var subQ = q.$min("daysOff");
+                subQ.$all();
+                expect(min).toBe(subQ.$$accumulation);
             });
         });
         describe("Arithmetic operators", function () {

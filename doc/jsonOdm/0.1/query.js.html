@@ -938,6 +938,8 @@
         <article>
             <pre class="prettyprint source"><code>"use strict";
 
+/** @namespace jsonOdm.Query */
+
 /**
  * The query object that holds the collection to be queried
  * @param {jsonOdm.Collection} [collection]
@@ -962,6 +964,7 @@ jsonOdm.Query = function (collection) {
     this.$$aggregationBeforeCollectQueue = [];
     this.$$aggregationResultQueue = [];
     this.$$collection = collection || [];
+    this.$$accumulation = false;
 };
 
 /**
@@ -1013,7 +1016,8 @@ jsonOdm.Query.prototype.$result = function (start,length) {
     for(i = 0; i &lt; this.$$collection.length; i++){
         var validCollection = true;
         for(j = 0; j &lt; this.$$commandQueue.length; j++){
-            if(!(validCollection = validCollection &amp;&amp; this.$$commandQueue[j](this.$$collection[i]))){
+            var commandResult = this.$$commandQueue[j](this.$$collection[i]);
+            if(!(validCollection = validCollection &amp;&amp; commandResult !== null &amp;&amp; commandResult !== false &amp;&amp; typeof commandResult != "undefined")){
                 break;
             }
         }
@@ -1083,9 +1087,122 @@ jsonOdm.Query.prototype.$aggregateCollection = function (afterValidation,beforeC
 };
 
 /**
+ * Groups all elements of a collection by a given grouping schema
+ * @param {...jsonOdm.Query} by
+ * @return {jsonOdm.Query}
+ * @example
+ * var collection = new jsonOdm.Collection("employees");
+ * var $query = collection.$query();
+ * var groupedResult = $query.$and($query.$branch("age").$gt(21),$query.$branch("age").$lt(50)) // query before grouping
+ *       .$group(
+ *            "salaryRate", // as used with $branch
+ *            ["salaryGroup","name"], // as used with $branch
+ *            // A projection object defining the accumulation
+ *            {
+ *                 missingDays:$query.$sum("daysAtHome"),
+ *                 holidayDays:$query.$sum("daysOnHoliday"),
+ *                 averageMissingDays:$query.$avg("daysAtHome"),
+ *                 averageHolidayDays:$query.$avg("daysOnHoliday"),
+ *                 count:$query.$count()
+ *            }
+ *       ).$all();
+ * // RESULT COULD BE
+ * // [
+ * //   {"salaryRate":3300,"salaryGroup":{"name":"Developer"},"missingDays":22,"holidayDays":144,"averageMissingDays":11,"averageHolidayDays":72,$count:2},
+ * //   {"salaryRate":2800,"salaryGroup":{"name":"Tester"}   ,"missingDays":10,"holidayDays":66 ,"averageMissingDays":5, "averageHolidayDays":33,$count:2},
+ * //   {"salaryRate":4800,"salaryGroup":{"name":"Boss"}     ,"missingDays":12,"holidayDays":33 ,"averageMissingDays":12,"averageHolidayDays":33,$count:1}
+ * // ]
+ */
+jsonOdm.Query.prototype.$group = function (by) {
+    var orderBy = arguments;
+    var accumulationProjection = false;
+    var aggregationResult = [];
+    // last argument might be a projection
+    if(
+        arguments.length > 1 &amp;&amp;
+        !(jsonOdm.util.isArray(arguments[arguments.length - 1])) &amp;&amp;
+        !(jsonOdm.util.is(arguments[arguments.length - 1],"string")) &amp;&amp;
+        typeof arguments[arguments.length - 1] == "object"
+    ){
+        accumulationProjection = arguments[arguments.length - 1];
+        orderBy = Array.prototype.slice.call( arguments ,0 , arguments.length - 1);
+    }
+    return this.$aggregateCollection(
+        (function (orderBy,aggregationResult) {
+            var valueVariations = {};
+                return function (collectionElement) {
+                // walk through the collection
+                var accumulationObject = {},
+                    newValueVariation = false,
+                    currentValueVariation = valueVariations,
+                    value;
+                // create result sets matching the order by parameters
+                for(var i = 0; i &lt; orderBy.length; i++){
+                    var currentOrderBy = jsonOdm.util.isArray(orderBy[i])?orderBy[i]:[orderBy[i]];
+                    value = jsonOdm.util.branch(collectionElement,currentOrderBy);
+                    if(i &lt; orderBy.length - 1) {
+                        if(typeof currentValueVariation[""+value] == "undefined"){
+                            newValueVariation = true;
+                            currentValueVariation[""+value] = {};
+                        }
+                        currentValueVariation = currentValueVariation[""+value];
+                    }
+                    var accumulationObjectBuffer = accumulationObject;
+                    for(var j = 0; j &lt; currentOrderBy.length - 1; j++){
+                        accumulationObjectBuffer = accumulationObjectBuffer[orderBy[i][j]];
+                    }
+                    accumulationObjectBuffer[currentOrderBy[currentOrderBy.length - 1]] = value;
+                }
+                if(!currentValueVariation[""+value]){
+                    // this valueVariation has not been found before
+                    currentValueVariation[""+value] = {
+                        accumulationObject:accumulationObject,
+                        subResultSet:[]
+                    };
+                    aggregationResult.push(currentValueVariation[""+value]);
+                }
+                currentValueVariation[""+value].subResultSet.push(collectionElement);
+
+                return true;
+            }
+        })(orderBy,aggregationResult),
+        null,
+        (function (aggregationResult,accumulationProjection) {
+            function falseQueryAccumulation(projection){
+                for(var i in projection){
+                    if(!projection.hasOwnProperty(i)) continue;
+                    if(projection[i] instanceof jsonOdm.Query)projection[i].$$accumulation = false;
+                    if(typeof projection[i] == "object") falseQueryAccumulation(projection[i]);
+                }
+            }
+            return function () {
+                var resultCollection = new jsonOdm.Collection();
+                for(var i = 0; i &lt; aggregationResult.length; i++){
+                    if(accumulationProjection === false){
+                        resultCollection.push(aggregationResult[i].accumulationObject);
+                    }else {
+                        falseQueryAccumulation(accumulationProjection);
+                        var projectionResult = {};
+                        for (var j = 0; j &lt; aggregationResult[i].subResultSet.length; j++) {
+                            projectionResult = jsonOdm.util.projectElement(accumulationProjection, aggregationResult[i].subResultSet[j]);
+                        }
+                        for (j in aggregationResult[i].accumulationObject) {
+                            if (aggregationResult[i].accumulationObject.hasOwnProperty(j)) {
+                                projectionResult[j] = aggregationResult[i].accumulationObject[j];
+                            }
+                        }
+                        resultCollection.push(projectionResult);
+                    }
+                }
+                return resultCollection;
+            }
+        })(aggregationResult,accumulationProjection))
+};
+
+/**
  * Projects all elements of the collection into a given schema
  * @param {*} projection The projection definition with nested definitions
- * @return jsonOdm.Query
+ * @return {jsonOdm.Query}
  * @example
  * var collection = new jsonOdm.Collection("myBooks");
  * var $query = collection.$query()
@@ -1101,8 +1218,8 @@ jsonOdm.Query.prototype.$aggregateCollection = function (afterValidation,beforeC
  *         },
  *         lastName: function(element){return element.author.last}, // functions can be used as well
  *         copiesSold: $query.$branch("copies")
- *    })
- *
+ *    });
+ * var collectionResult = $query.$all();
  */
 jsonOdm.Query.prototype.$project = function (projection) {
     return this.$aggregateCollection(null, function (index,element) {
@@ -1179,11 +1296,13 @@ jsonOdm.Query.prototype.$branch = function (node) {
     return subQuery;
 };
 
+// FIELD MODIFIER
+
 /** Modify fields before validation
  * @return {jsonOdm.Query}
  */
 jsonOdm.Query.prototype.$modifyField = function (modifier) {
-    var $modifyer = (function(modifier,lastCommand){
+    var $modifier = (function(modifier,lastCommand){
         /**
          * @param {*} The collection to go down
          * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
@@ -1193,7 +1312,7 @@ jsonOdm.Query.prototype.$modifyField = function (modifier) {
             return typeof modifier == "function" ? modifier(collection) : collection;
         };
     })(modifier,this.$$commandQueue.length?this.$$commandQueue[this.$$commandQueue.length-1]:null);
-    this.$$commandQueue.push($modifyer);
+    this.$$commandQueue.push($modifier);
     return this;
 };
 
@@ -1222,6 +1341,110 @@ for(var i = 0; i &lt; jsonOdm.Query.stringFiledModifyer.length; i++){
         }
     )(jsonOdm.Query.stringFiledModifyer[i]);
 }
+
+// ACCUMULATION FUNCTIONS
+
+/** Go down the property tree of the collection
+ * @param {String[]} nodes A variable of nodes to traverse down the json tree
+ * @param {function} accumulator
+ * @return {jsonOdm.Query}
+ */
+jsonOdm.Query.prototype.$accumulator = function (nodes,accumulator) {
+    var subQuery = new jsonOdm.Query(this.$$collection);
+    var $accumulator = (function(nodes,accumulator,query){
+        /**
+         * @param {*} The collection to go down
+         * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
+         */
+        return function(collection){
+            var value = jsonOdm.util.branch(collection,nodes);
+            query.$$accumulation = accumulator(value,query.$$accumulation);
+            return value;
+        };
+    })(nodes,accumulator,subQuery);
+    subQuery.$$commandQueue.push($accumulator);
+    return subQuery;
+};
+
+/**
+ * Performs the accumulation sum of a field. It's integrated to be used with $group. May as well be used as stand alone.
+ * @param {...String} branch Internally calls the $branch method to receive the field values
+ * @return {jsonOdm.Query}
+ * @example
+ * // SHOULD BE USED WITH $group
+ * var collection = new jsonOdm.Collection("employees");
+ * var $query = collection.$query();
+ * $query.$sum("daysOff").$all();
+ * console.log($query.$$accumulation);
+ */
+jsonOdm.Query.prototype.$sum = function (branch) {
+    return this.$accumulator(typeof branch == "string"?[branch]:branch, function (value,accumulation) {
+        if(accumulation === false) accumulation = 0;
+        return value+accumulation;
+    });
+};
+
+/**
+ * Performs the accumulation average of a field. It's integrated to be used with $group. May as well be used as stand alone.
+ * @param {...String} branch Internally calls the $branch method to receive the field values
+ * @return {jsonOdm.Query}
+ * @example
+ * // SHOULD BE USED WITH $group
+ * var collection = new jsonOdm.Collection("employees");
+ * var $query = collection.$query();
+ * $query.$avg("daysOff").$all();
+ * console.log($query.$$accumulation);
+ */
+jsonOdm.Query.prototype.$avg = function (branch) {
+    var count,sum;
+    return this.$accumulator(typeof branch == "string"?[branch]:branch, function (value,accumulation) {
+        if(accumulation === false){
+            count = 0;
+            sum = 0;
+        }
+        sum += value;
+        count ++;
+        return sum/count;
+    });
+};
+
+/**
+ * Performs the accumulation max of a field. It's integrated to be used with $group. May as well be used as stand alone.
+ * @param {...String} branch Internally calls the $branch method to receive the field values
+ * @return {jsonOdm.Query}
+ * @example
+ * // SHOULD BE USED WITH $group
+ * var collection = new jsonOdm.Collection("employees");
+ * var $query = collection.$query();
+ * $query.$max("daysOff").$all();
+ * console.log($query.$$accumulation);
+ */
+jsonOdm.Query.prototype.$max = function (branch) {
+    return this.$accumulator(typeof branch == "string"?[branch]:branch, function (value,accumulation) {
+        if(accumulation === false) accumulation = value;
+        return Math.max(value,accumulation);
+    });
+};
+
+/**
+ * Performs the accumulation min of a field. It's integrated to be used with $group. May as well be used as stand alone.
+ * @param {...String} branch Internally calls the $branch method to receive the field values
+ * @return {jsonOdm.Query}
+ * @example
+ * // SHOULD BE USED WITH $group
+ * var collection = new jsonOdm.Collection("employees");
+ * var $query = collection.$query();
+ * $query.$max("daysOff").$all();
+ * console.log($query.$$accumulation);
+ */
+jsonOdm.Query.prototype.$min = function (branch) {
+    return this.$accumulator(typeof branch == "string"?[branch]:branch, function (value,accumulation) {
+        if(accumulation === false) accumulation = value;
+        return Math.min(value,accumulation);
+    });
+};
+
+// ARITHMETIC FUNCTIONS
 
 /**
  * Performs an arithmetic addition on two or more field values

@@ -133,6 +133,7 @@ jsonOdm.Util.prototype.projectElement = function(projection,element,parentElemen
             projectionResult[key] = projection[key](parentElement || element);
         }else if(projection[key] instanceof jsonOdm.Query){
             projectionResult[key] = projection[key].$$commandQueue[projection[key].$$commandQueue.length-1](element);
+            if(projection[key].$$accumulation !== false) projectionResult[key] = projection[key].$$accumulation;
         }else if(typeof projection[key] === 'object'){
             projectionResult[key] = this.projectElement(projection[key],element[key],parentElement || element);
         }
