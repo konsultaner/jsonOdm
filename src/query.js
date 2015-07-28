@@ -208,7 +208,6 @@ jsonOdm.Query.prototype.$group = function (by) {
             return function (collectionElement) {
                 // walk through the collection
                 var accumulationObject = {},
-                    newValueVariation = false,
                     currentValueVariation = valueVariations,
                     value;
                 // create result sets matching the order by parameters
@@ -217,7 +216,6 @@ jsonOdm.Query.prototype.$group = function (by) {
                     value = jsonOdm.util.branch(collectionElement, currentOrderBy);
                     if (i < orderBy.length - 1) {
                         if (typeof currentValueVariation["" + value] === "undefined") {
-                            newValueVariation = true;
                             currentValueVariation["" + value] = {};
                         }
                         currentValueVariation = currentValueVariation["" + value];
@@ -836,7 +834,7 @@ jsonOdm.Query.prototype.$lte = function (comparable) {
  */
 jsonOdm.Query.prototype.$isNull = function () {
     return this.$testCollection(null, function (collectionValue) {
-        return typeof collectionValue === 'undefined' || collectionValue === null;
+        return typeof collectionValue === "undefined" || collectionValue === null;
     });
 };
 
@@ -846,7 +844,7 @@ jsonOdm.Query.prototype.$isNull = function () {
  */
 jsonOdm.Query.prototype.$exists = function () {
     return this.$testCollection(null, function (collectionValue) {
-        return typeof collectionValue != 'undefined';
+        return typeof collectionValue != "undefined";
     });
 };
 

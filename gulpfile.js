@@ -22,11 +22,19 @@ var testMinifiedFiles = [
 
 gulp
     .task('default', ['test-minified','doc'] ,function () {})
-    .task('build',['test-non-minified'], function() {
-        return gulp.src(['./src/odm.js', './src/util.js', './src/geo.js', './src/collection.js', './src/query.js'])
+    .task('build',['build-non-minified','test-non-minified'], function() {
+        return gulp.src(['./bin/json.odm.js'])
             .pipe(filesize())
             .pipe(concat('json.odm.min.js'))
             .pipe(uglify())
+            .pipe(filesize())
+            .pipe(gulp.dest('./bin/')
+        );
+    })
+    .task('build-non-minified', function() {
+        return gulp.src(['./src/odm.js', './src/util.js', './src/geo.js', './src/collection.js', './src/query.js'])
+            .pipe(filesize())
+            .pipe(concat('json.odm.js'))
             .pipe(filesize())
             .pipe(gulp.dest('./bin/')
         );

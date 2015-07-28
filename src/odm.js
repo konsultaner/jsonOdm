@@ -65,9 +65,9 @@ function JsonOdm () {
     };
 }
 
-var root = typeof window != "undefined" ? window : global;
+var root = typeof window !== "undefined" ? window : global;
 var odm = new JsonOdm();
 if(!root.jsonOdm) root.jsonOdm = odm;
-if (typeof module !== 'undefined' && module.exports) {
+if (typeof module !== "undefined" && module.exports) {
     module.exports = odm;
 }
