@@ -185,9 +185,9 @@ jsonOdm.Query.prototype.$aggregateCollection = function (afterValidation, before
  *       ).$all();
  * // RESULT COULD BE
  * // [
- * //   {"salaryRate":3300,"salaryGroup":{"name":"Developer"},"missingDays":22,"holidayDays":144,"averageMissingDays":11,"averageHolidayDays":72,$count:2},
- * //   {"salaryRate":2800,"salaryGroup":{"name":"Tester"}   ,"missingDays":10,"holidayDays":66 ,"averageMissingDays":5, "averageHolidayDays":33,$count:2},
- * //   {"salaryRate":4800,"salaryGroup":{"name":"Boss"}     ,"missingDays":12,"holidayDays":33 ,"averageMissingDays":12,"averageHolidayDays":33,$count:1}
+ * //   {"salaryRate":3300,"salaryGroup":{"name":"Developer"},"missingDays":22,"holidayDays":144,"averageMissingDays":11,"averageHolidayDays":72,"count":2},
+ * //   {"salaryRate":2800,"salaryGroup":{"name":"Tester"}   ,"missingDays":10,"holidayDays":66 ,"averageMissingDays":5, "averageHolidayDays":33,"count":2},
+ * //   {"salaryRate":4800,"salaryGroup":{"name":"Boss"}     ,"missingDays":12,"holidayDays":33 ,"averageMissingDays":12,"averageHolidayDays":33,"count":1}
  * // ]
  */
 jsonOdm.Query.prototype.$group = function (by) {
