@@ -1,3 +1,4 @@
+/** @namespace jsonOdm.Geo */
 describe("Geo Tools", function () {
     // GEO HELPER
     describe("Point in Polygon", function () {
@@ -93,11 +94,20 @@ describe("Geo Tools", function () {
     });
     describe("Detect Geometry", function () {
         it("should find the right one", function () {
-            expect(jsonOdm.Geo.detectAsGeometry([1,1]) instanceof jsonOdm.Geo.Point).toBeTruthy()
-            expect(jsonOdm.Geo.detectAsGeometry([1,1,3,3]) instanceof Array).toBeTruthy()// is an Array because constructor returns an array
-            expect(jsonOdm.Geo.detectAsGeometry([[1,1]]) instanceof jsonOdm.Geo.LineString).toBeTruthy()
-            expect(jsonOdm.Geo.detectAsGeometry([[[1,1]]]) instanceof jsonOdm.Geo.Polygon).toBeTruthy()
-            expect(jsonOdm.Geo.detectAsGeometry([[[[1,1]]]]) instanceof jsonOdm.Geo.MultiPolygon).toBeTruthy()
+            expect(jsonOdm.Geo.detectAsGeometry([1,1]) instanceof jsonOdm.Geo.Point).toBeTruthy();
+            expect(jsonOdm.Geo.detectAsGeometry([1,1,3,3]) instanceof Array).toBeTruthy(); // is an Array because constructor returns an array
+            expect(jsonOdm.Geo.detectAsGeometry([[1,1]]) instanceof jsonOdm.Geo.LineString).toBeTruthy();
+            expect(jsonOdm.Geo.detectAsGeometry([[[1,1]]]) instanceof jsonOdm.Geo.Polygon).toBeTruthy();
+            expect(jsonOdm.Geo.detectAsGeometry([[[[1,1]]]]) instanceof jsonOdm.Geo.MultiPolygon).toBeTruthy();
+        });
+    });
+    describe("Create Empty Boundary Box", function () {
+        var emptyBounds = new jsonOdm.Geo.BoundaryBox();
+        it("Should have als parameters zeroed", function () {
+            expect(emptyBounds[0]).toBe(0);
+            expect(emptyBounds[1]).toBe(0);
+            expect(emptyBounds[2]).toBe(0);
+            expect(emptyBounds[3]).toBe(0);
         });
     });
     // GEO WITHIN

@@ -116,19 +116,69 @@ jsonOdm.Util.prototype.isArray = function (arrayObject) {
  * @return {boolean}
  */
 jsonOdm.Util.prototype.is = function (object, type) {
-    type = (typeof type == "string") ? [type] : type;
+    type = (typeof type === "string") ? [type] : type;
     var objectType = Object.prototype.toString.call(object);
     objectType = objectType.substring(8, objectType.length - 1).toLowerCase();
     for (var i = 0; i < type.length; i++) {
         var lowerType = type[i].toLowerCase();
-        if ("array" == lowerType && this.isArray(object)) return true;
+        if ("array" === lowerType && this.isArray(object)) {
+            return true;
+        }
         // all object types, i.e. "[object ArrayBuffer]"
-        if (lowerType === objectType) return true;
+        if (lowerType === objectType) {
+            return true;
+        }
         // number string object
-        if (typeof object === lowerType) return true;
+        if (typeof object === lowerType) {
+            return true;
+        }
     }
     return false;
 };
+
+/** Polyfill for Object.keys
+ * @method objectKeysPolyfill
+ * @memberof jsonOdm.Util.prototype
+ * @param {Object} object The objects to get the keys from
+ * @return {Array} An array of keys
+ */
+jsonOdm.Util.prototype.objectKeysPolyfill = (function () {
+    var hasOwnProperty = Object.prototype.hasOwnProperty,
+        hasDontEnumBug = !({toString: null}).propertyIsEnumerable('toString'),
+        dontEnums = [
+            "toString",
+            "toLocaleString",
+            "valueOf",
+            "hasOwnProperty",
+            "isPrototypeOf",
+            "propertyIsEnumerable",
+            "constructor"
+        ],
+        dontEnumsLength = dontEnums.length;
+
+    return function (obj) {
+        if (typeof obj !== "object" && (typeof obj !== "function" || obj === null)) {
+            throw new TypeError("Object.keys called on non-object");
+        }
+
+        var result = [], prop, i;
+
+        for (prop in obj) {
+            if (hasOwnProperty.call(obj, prop)) {
+                result.push(prop);
+            }
+        }
+
+        if (hasDontEnumBug) {
+            for (i = 0; i < dontEnumsLength; i++) {
+                if (hasOwnProperty.call(obj, dontEnums[i])) {
+                    result.push(dontEnums[i]);
+                }
+            }
+        }
+        return result;
+    };
+}());
 
 /** Get only the keys of an object
  * @method objectKeys
@@ -136,43 +186,7 @@ jsonOdm.Util.prototype.is = function (object, type) {
  * @param {Object} object The objects to get the keys from
  * @return {Array} An array of keys
  */
-jsonOdm.Util.prototype.objectKeys = Object.keys || (function () {
-        var hasOwnProperty = Object.prototype.hasOwnProperty,
-            hasDontEnumBug = !({toString: null}).propertyIsEnumerable('toString'),
-            dontEnums = [
-                'toString',
-                'toLocaleString',
-                'valueOf',
-                'hasOwnProperty',
-                'isPrototypeOf',
-                'propertyIsEnumerable',
-                'constructor'
-            ],
-            dontEnumsLength = dontEnums.length;
-
-        return function (obj) {
-            if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
-                throw new TypeError('Object.keys called on non-object');
-            }
-
-            var result = [], prop, i;
-
-            for (prop in obj) {
-                if (hasOwnProperty.call(obj, prop)) {
-                    result.push(prop);
-                }
-            }
-
-            if (hasDontEnumBug) {
-                for (i = 0; i < dontEnumsLength; i++) {
-                    if (hasOwnProperty.call(obj, dontEnums[i])) {
-                        result.push(dontEnums[i]);
-                    }
-                }
-            }
-            return result;
-        };
-    }());
+jsonOdm.Util.prototype.objectKeys = Object.keys || jsonOdm.Util.prototype.objectKeysPolyfill;
 
 /** Query an object with a function
  *
@@ -212,19 +226,19 @@ jsonOdm.Util.prototype.branch = function (object, path) {
  * // will return {key1:'value1',key12:'value1value2',key2:'val'}
  */
 jsonOdm.Util.prototype.projectElement = function (projection, element, parentElement) {
-    var projectionResult = {}, i;
+    var projectionResult = {};
     for (var key in projection) {
         if (!projection.hasOwnProperty(key)) {
             continue;
         }
         if (projection[key] == 1) {
             projectionResult[key] = element[key]; // might be undefined or raises an error
-        } else if (typeof projection[key] === 'function') {
+        } else if (typeof projection[key] === "function") {
             projectionResult[key] = projection[key](parentElement || element);
         } else if (projection[key] instanceof jsonOdm.Query) {
             projectionResult[key] = projection[key].$$commandQueue[projection[key].$$commandQueue.length - 1](element);
             if (projection[key].$$accumulation !== false) projectionResult[key] = projection[key].$$accumulation;
-        } else if (typeof projection[key] === 'object') {
+        } else if (typeof projection[key] === "object") {
             projectionResult[key] = this.projectElement(projection[key], element[key], parentElement || element);
         }
     }
@@ -393,16 +407,17 @@ jsonOdm.Geo.Point.within = function (point, geometry) {
     }
     if (geometry.type === "MultiLineString") {
         for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
-            for (j = 0; geometry.coordinates[i] && j < geometry.coordinates[i].length; j++)
+            for (j = 0; geometry.coordinates[i] && j < geometry.coordinates[i].length; j++) {
                 if (geometry.coordinates[i][j][0] === point.coordinates[0] && geometry.coordinates[i][j][1] === point.coordinates[1]) {
                     return true;
                 }
+            }
         }
         return false;
     }
     if (geometry.type === "Polygon") {
         // we assume that polygon wholes do not intersect the outer polygon
-        return jsonOdm.Geo.pointWithinPolygon(point.coordinates, geometry.coordinates ? geometry.coordinates[0] : null)
+        return jsonOdm.Geo.pointWithinPolygon(point.coordinates, geometry.coordinates ? geometry.coordinates[0] : null);
     }
     if (geometry.type === "MultiPolygon") {
         for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
@@ -501,7 +516,9 @@ jsonOdm.Geo.MultiPoint.within = function (multiPoint, geometry) {
                     break;
                 }
             }
-            if (!found) return false;
+            if (!found) {
+                return false;
+            }
         }
         return true;
     }
@@ -727,7 +744,9 @@ jsonOdm.Geo.LineString.intersects = function (lineString, geometry) {
 
     if (geometry.type === "LineString") {
         for (i = 0; i < lineString.coordinates.length - 1; i++) {
-            if (jsonOdm.Geo.edgeIntersectsLineString([lineString.coordinates[i], lineString.coordinates[i + 1]], geometry.coordinates)) return true;
+            if (jsonOdm.Geo.edgeIntersectsLineString([lineString.coordinates[i], lineString.coordinates[i + 1]], geometry.coordinates)) {
+                return true;
+            }
         }
         return false;
     }
@@ -1148,7 +1167,9 @@ jsonOdm.Geo.MultiPolygon.within = function (multiPolygon, geometry) {
             for (j = 0; geometry.coordinates && j < geometry.coordinates.length; j++) {
                 for (k = 0; multiPolygon.coordinates[i][0] && k < multiPolygon.coordinates[i][0].length - 1; k++) {
                     var inside = jsonOdm.Geo.edgeWithinPolygon([multiPolygon.coordinates[i][0][k], multiPolygon.coordinates[i][0][k + 1]], geometry.coordinates[j][0]);
-                    if (!inside) break;
+                    if (!inside) {
+                        break;
+                    }
                     if (inside && k + 1 === multiPolygon.coordinates[i][0].length - 1) {
                         found = true;
                         break;
@@ -1336,7 +1357,9 @@ jsonOdm.Geo.pointWithinPolygon = function (point, polygon) {
             return true;
         }
         // the vector intersects the positive x-axis of the coordinate system normalized to the point
-        if (foundX > point[0])intersection++;
+        if (foundX > point[0]) {
+            intersection++;
+        }
     }
     return intersection % 2 === 1; // the normalized x-axis needs to be intersected by a odd amount of intersections
 };
@@ -1476,7 +1499,7 @@ jsonOdm.Geo.pointWithinLineString = function (point, lineString) {
         ) {
             // point was on the current path
             if (
-                (lineString[i]  [0] === point[0] && lineString[i]  [1] === point[1]) ||
+                (lineString[i][0] === point[0] && lineString[i][1] === point[1]) ||
                 (lineString[i + 1][0] === point[0] && lineString[i + 1][1] === point[1]) ||
 
                 ((lineString[i][1] - lineString[i + 1][1]) != 0 && ((lineString[i][0] - lineString[i + 1][0]) * ((point[1] - lineString[i + 1][1]) / (lineString[i][1] - lineString[i + 1][1])) + lineString[i + 1][0] === point[0])) ||
@@ -1543,7 +1566,9 @@ jsonOdm.Geo.lineStringWithinLineString = function (lineString, inLineString) {
                             // next is not the previous one
                         (j > 0 && lineString[i + 1][0] === inLineString[j - 1][0] && lineString[i + 1][1] === inLineString[j - 1][1])
                     )
-                ) return false;
+                ) {
+                    return false;
+                }
                 found = true;
             }
         }
@@ -1568,17 +1593,17 @@ if (typeof jsonOdm === "undefined") {
  * @constructor
  */
 jsonOdm.Collection = function (collectionName) {
-    var self = Object.create( Array.prototype );
+    var self = Object.create(Array.prototype);
     // calls the constructor of Array
     self = (Array.apply(self) || self);
 
-    if(typeof collectionName != "undefined" && jsonOdm.selectedSource && jsonOdm.selectedSource[collectionName]){
+    if (typeof collectionName !== "undefined" && jsonOdm.selectedSource && jsonOdm.selectedSource[collectionName]) {
         self = self.concat(jsonOdm.selectedSource[collectionName]);
     }
     jsonOdm.Collection.decorate(self);
 
     self.$branch = function () {
-        var subCollection = jsonOdm.util.branch(self,arguments);
+        var subCollection = jsonOdm.util.branch(self, arguments);
         jsonOdm.Collection.decorate(subCollection);
         return subCollection;
     };
@@ -1591,8 +1616,8 @@ jsonOdm.Collection = function (collectionName) {
  * @param {jsonOdm.Collection} collection
  */
 jsonOdm.Collection.decorate = function (collection) {
-    var decorate = function (collection){
-        if(jsonOdm.util.isArray(collection)) {
+    var decorate = function (collection) {
+        if (jsonOdm.util.isArray(collection)) {
             /**
              * Creates a has many relation to another collection
              * @param {Array|String} foreignKeyMapName The name of the field that holds an array of foreign keys
@@ -1604,17 +1629,19 @@ jsonOdm.Collection.decorate = function (collection) {
              */
             collection.$hasMany = function (foreignKeyMapName, privateKeyField, childCollectionName, alias) {
                 // SET THE ALIAS
-                if (typeof childCollectionName == "string") alias = alias || childCollectionName;
+                if (typeof childCollectionName === "string") alias = alias || childCollectionName;
                 // FIND THE CHILD COLLECTION
                 var childCollection = childCollectionName;
-                if (typeof childCollectionName == "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]){
+                if (typeof childCollectionName === "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]) {
                     childCollection = jsonOdm.selectedSource[childCollectionName];
                 }
 
                 for (var c = 0; c < collection.length; c++) {
                     var foreignKeyMap = foreignKeyMapName;
-                    if (collection[c].hasOwnProperty(foreignKeyMapName)) foreignKeyMap = collection[c][foreignKeyMapName];
-                    if (typeof collection[c][alias] == "undefined") {
+                    if (collection[c].hasOwnProperty(foreignKeyMapName)) {
+                        foreignKeyMap = collection[c][foreignKeyMapName];
+                    }
+                    if (typeof collection[c][alias] === "undefined") {
                         for (var i = 0; foreignKeyMap.length && i < foreignKeyMap.length; i++) {
                             var foreignModel = null;
                             for (var j = 0; j < childCollection.length; j++) {
@@ -1624,7 +1651,9 @@ jsonOdm.Collection.decorate = function (collection) {
                                 }
                             }
                             if (foreignModel != null) {
-                                if (!collection[c][alias])collection[c][alias] = [];
+                                if (!collection[c][alias]) {
+                                    collection[c][alias] = [];
+                                }
                                 collection[c][alias].push(foreignModel);
                             }
                         }
@@ -1643,17 +1672,19 @@ jsonOdm.Collection.decorate = function (collection) {
              */
             collection.$hasOne = function (foreignKey, privateKeyField, childCollectionName, alias) {
                 // SET THE ALIAS
-                if (typeof childCollectionName == "string") alias = alias || childCollectionName;
+                if (typeof childCollectionName === "string") alias = alias || childCollectionName;
                 // FIND THE CHILD COLLECTION
                 var childCollection = childCollectionName;
-                if (typeof childCollectionName == "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]){
+                if (typeof childCollectionName === "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]) {
                     childCollection = jsonOdm.selectedSource[childCollectionName];
                 }
 
                 for (var c = 0; c < collection.length; c++) {
                     var foreignKeyValue;
-                    if (collection[c].hasOwnProperty(foreignKey)) foreignKeyValue = collection[c][foreignKey];
-                    if (typeof collection[c][alias] == "undefined") {
+                    if (collection[c].hasOwnProperty(foreignKey)) {
+                        foreignKeyValue = collection[c][foreignKey];
+                    }
+                    if (typeof collection[c][alias] === "undefined") {
                         var foreignModel = null;
                         for (var j = 0; j < childCollection.length; j++) {
                             if (foreignKeyValue == childCollection[j][privateKeyField]) {
@@ -1674,7 +1705,7 @@ jsonOdm.Collection.decorate = function (collection) {
              * @memberof jsonOdm.Collection.prototype
              * @method $query
              */
-            collection.$query = function(){
+            collection.$query = function () {
                 return new jsonOdm.Query(collection);
             };
         }

@@ -895,6 +895,16 @@ describe("Collection", function () {
     }
     jsonOdm.addSource("test",testSource,true);
 
+    describe("Source Selection", function () {
+        it("Collection should be empty", function () {
+            jsonOdm.addSource("empty",{},true);
+            var collection = new jsonOdm.Collection("parentCollection");
+            expect(collection.length).toBe(0);
+            jsonOdm.selectSource("test");
+            collection = new jsonOdm.Collection("parentCollection");
+            expect(collection.length).toBe(1);
+        });
+    });
     describe("Array inheritance", function () {
         var collection;
         beforeEach(function () {
@@ -1070,6 +1080,12 @@ describe("Collection", function () {
                 collection = new jsonOdm.Collection("employees");
                 collection.$hasOne("id","salaryGroupId","salaryGroup");
                 q = collection.$query();
+            });
+            it("Should group without projection", function () {
+                var grouped = q.$group(
+                    "salaryGroupId"
+                ).$all();
+                expect(grouped.length).toBe(5);
             });
             it("Should group the collection by fields", function () {
                 var grouped = q.$group(

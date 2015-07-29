@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/konsultaner/jsonOdm.svg?branch=master)](https://travis-ci.org/konsultaner/jsonOdm)
 [![Code Climate](https://codeclimate.com/github/konsultaner/jsonOdm/badges/gpa.svg)](https://codeclimate.com/github/konsultaner/jsonOdm)
+[![Test Coverage](https://codeclimate.com/github/konsultaner/jsonOdm/badges/coverage.svg)](https://codeclimate.com/github/konsultaner/jsonOdm/coverage)
 [![npm](https://img.shields.io/npm/dm/json-odm.svg)](https://www.npmjs.com/package/json-odm)
 [![npm](https://img.shields.io/npm/v/json-odm.svg)](https://www.npmjs.com/package/json-odm)
 [![npm](https://img.shields.io/npm/l/json-odm.svg)](https://www.npmjs.com/package/json-odm)

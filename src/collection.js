@@ -13,17 +13,17 @@ if (typeof jsonOdm === "undefined") {
  * @constructor
  */
 jsonOdm.Collection = function (collectionName) {
-    var self = Object.create( Array.prototype );
+    var self = Object.create(Array.prototype);
     // calls the constructor of Array
     self = (Array.apply(self) || self);
 
-    if(typeof collectionName != "undefined" && jsonOdm.selectedSource && jsonOdm.selectedSource[collectionName]){
+    if (typeof collectionName !== "undefined" && jsonOdm.selectedSource && jsonOdm.selectedSource[collectionName]) {
         self = self.concat(jsonOdm.selectedSource[collectionName]);
     }
     jsonOdm.Collection.decorate(self);
 
     self.$branch = function () {
-        var subCollection = jsonOdm.util.branch(self,arguments);
+        var subCollection = jsonOdm.util.branch(self, arguments);
         jsonOdm.Collection.decorate(subCollection);
         return subCollection;
     };
@@ -36,8 +36,8 @@ jsonOdm.Collection = function (collectionName) {
  * @param {jsonOdm.Collection} collection
  */
 jsonOdm.Collection.decorate = function (collection) {
-    var decorate = function (collection){
-        if(jsonOdm.util.isArray(collection)) {
+    var decorate = function (collection) {
+        if (jsonOdm.util.isArray(collection)) {
             /**
              * Creates a has many relation to another collection
              * @param {Array|String} foreignKeyMapName The name of the field that holds an array of foreign keys
@@ -49,17 +49,19 @@ jsonOdm.Collection.decorate = function (collection) {
              */
             collection.$hasMany = function (foreignKeyMapName, privateKeyField, childCollectionName, alias) {
                 // SET THE ALIAS
-                if (typeof childCollectionName == "string") alias = alias || childCollectionName;
+                if (typeof childCollectionName === "string") alias = alias || childCollectionName;
                 // FIND THE CHILD COLLECTION
                 var childCollection = childCollectionName;
-                if (typeof childCollectionName == "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]){
+                if (typeof childCollectionName === "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]) {
                     childCollection = jsonOdm.selectedSource[childCollectionName];
                 }
 
                 for (var c = 0; c < collection.length; c++) {
                     var foreignKeyMap = foreignKeyMapName;
-                    if (collection[c].hasOwnProperty(foreignKeyMapName)) foreignKeyMap = collection[c][foreignKeyMapName];
-                    if (typeof collection[c][alias] == "undefined") {
+                    if (collection[c].hasOwnProperty(foreignKeyMapName)) {
+                        foreignKeyMap = collection[c][foreignKeyMapName];
+                    }
+                    if (typeof collection[c][alias] === "undefined") {
                         for (var i = 0; foreignKeyMap.length && i < foreignKeyMap.length; i++) {
                             var foreignModel = null;
                             for (var j = 0; j < childCollection.length; j++) {
@@ -69,7 +71,9 @@ jsonOdm.Collection.decorate = function (collection) {
                                 }
                             }
                             if (foreignModel != null) {
-                                if (!collection[c][alias])collection[c][alias] = [];
+                                if (!collection[c][alias]) {
+                                    collection[c][alias] = [];
+                                }
                                 collection[c][alias].push(foreignModel);
                             }
                         }
@@ -88,17 +92,19 @@ jsonOdm.Collection.decorate = function (collection) {
              */
             collection.$hasOne = function (foreignKey, privateKeyField, childCollectionName, alias) {
                 // SET THE ALIAS
-                if (typeof childCollectionName == "string") alias = alias || childCollectionName;
+                if (typeof childCollectionName === "string") alias = alias || childCollectionName;
                 // FIND THE CHILD COLLECTION
                 var childCollection = childCollectionName;
-                if (typeof childCollectionName == "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]){
+                if (typeof childCollectionName === "string" && jsonOdm.selectedSource && jsonOdm.selectedSource[childCollectionName]) {
                     childCollection = jsonOdm.selectedSource[childCollectionName];
                 }
 
                 for (var c = 0; c < collection.length; c++) {
                     var foreignKeyValue;
-                    if (collection[c].hasOwnProperty(foreignKey)) foreignKeyValue = collection[c][foreignKey];
-                    if (typeof collection[c][alias] == "undefined") {
+                    if (collection[c].hasOwnProperty(foreignKey)) {
+                        foreignKeyValue = collection[c][foreignKey];
+                    }
+                    if (typeof collection[c][alias] === "undefined") {
                         var foreignModel = null;
                         for (var j = 0; j < childCollection.length; j++) {
                             if (foreignKeyValue == childCollection[j][privateKeyField]) {
@@ -119,7 +125,7 @@ jsonOdm.Collection.decorate = function (collection) {
              * @memberof jsonOdm.Collection.prototype
              * @method $query
              */
-            collection.$query = function(){
+            collection.$query = function () {
                 return new jsonOdm.Query(collection);
             };
         }

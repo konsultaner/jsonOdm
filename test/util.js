@@ -55,6 +55,13 @@ describe("Utilities", function () {
             expect(jsonOdm.util.objectKeys(myObject)[0]).toBe("myKey");
             expect(jsonOdm.util.objectKeys(myObject).length).toBe(1);
         });
+        it("Should have the key even with the polyfill", function () {
+            expect(jsonOdm.util.objectKeysPolyfill(myObject)[0]).toBe("myKey");
+            expect(jsonOdm.util.objectKeysPolyfill(myObject).length).toBe(1);
+        });
+        it("Should throw an error for the functions", function () {
+            expect(function () {jsonOdm.util.objectKeysPolyfill()}).toThrow(new TypeError('Object.keys called on non-object'));
+        });
     });
     describe("Branch", function () {
         var myObject = {myKey:"myValue",myArray:[{myKey:"value"}]};

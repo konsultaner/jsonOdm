@@ -1,82 +1,82 @@
 "use strict";
 
-var gulp = require('gulp'),
+var gulp = require("gulp"),
     jsdoc = require("gulp-jsdoc"),
-    concat = require('gulp-concat'),
-    filesize = require('gulp-filesize'),
-    bench = require('gulp-bench'),
-    karma = require('gulp-karma'),
-    uglify = require('gulp-uglify');
+    concat = require("gulp-concat"),
+    filesize = require("gulp-filesize"),
+    bench = require("gulp-bench"),
+    karma = require("gulp-karma"),
+    uglify = require("gulp-uglify");
 
 
 var testNonMinifiedFiles = [
-    'src/odm.js',
-    'src/util.js',
-    'src/*.js',
-    'test/**/*.js'
+    "src/odm.js",
+    "src/util.js",
+    "src/*.js",
+    "test/**/*.js"
 ];
 var testMinifiedFiles = [
-    'bin/*.js',
-    'test/**/*.js'
+    "bin/*.js",
+    "test/**/*.js"
 ];
 
 gulp
-    .task('default', ['test-minified','doc'] ,function () {})
-    .task('build',['build-non-minified','test-non-minified'], function() {
-        return gulp.src(['./bin/json.odm.js'])
+    .task("default", ["test-minified","doc"] ,function () {})
+    .task("build",["build-non-minified","test-non-minified"], function() {
+        return gulp.src(["./bin/json.odm.js"])
             .pipe(filesize())
-            .pipe(concat('json.odm.min.js'))
+            .pipe(concat("json.odm.min.js"))
             .pipe(uglify())
             .pipe(filesize())
-            .pipe(gulp.dest('./bin/')
+            .pipe(gulp.dest("./bin/")
         );
     })
-    .task('build-non-minified', function() {
-        return gulp.src(['./src/odm.js', './src/util.js', './src/geo.js', './src/collection.js', './src/query.js'])
+    .task("build-non-minified", function() {
+        return gulp.src(["./src/odm.js", "./src/util.js", "./src/geo.js", "./src/collection.js", "./src/query.js"])
             .pipe(filesize())
-            .pipe(concat('json.odm.js'))
+            .pipe(concat("json.odm.js"))
             .pipe(filesize())
-            .pipe(gulp.dest('./bin/')
+            .pipe(gulp.dest("./bin/")
         );
     })
-    .task('test-non-minified', function () {
+    .task("test-non-minified", function () {
         return gulp.src(testNonMinifiedFiles)
             .pipe(karma({
-                configFile: 'karma.conf.js',
-                action: 'run'
+                configFile: "karma.conf.js",
+                action: "run"
             }))
-            .on('error', function(err) {
+            .on("error", function(err) {
                 // Make sure failed tests cause gulp to exit non-zero
                 throw err;
             });
     })
-    .task('test-minified', ['build'], function () {
+    .task("test-minified", ["build"], function () {
         return gulp.src(testMinifiedFiles)
             .pipe(karma({
-                configFile: 'karma.conf.js',
-                action: 'run',
+                configFile: "karma.conf.js",
+                action: "run",
                 reporters : []
             }))
-            .on('error', function(err) {
+            .on("error", function(err) {
                 // Make sure failed tests cause gulp to exit non-zero
                 throw err;
             });
     })
-    .task('doc', function () {
-        return gulp.src(['./src/*.js'])
+    .task("doc", function () {
+        return gulp.src(["./src/*.js"])
             .pipe(jsdoc.parser({
                 name:"jsonOdm",
                 description:"A light weight but fast object document mapper for JavaScript objects.",
                 version:"0.2.1"
             }, "jsonOdm"))
-            .pipe(jsdoc.generator('./doc',
+            .pipe(jsdoc.generator("./doc",
                 {
-                    path: './node_modules/jsdoc3-bootstrap'
+                    path: "./node_modules/jsdoc3-bootstrap"
                 })
             );
     })
-    .task('bench', function () {
-        return gulp.src('./bench/*.js', {read: false})
+    .task("bench", function () {
+        return gulp.src("./bench/*.js", {read: false})
             .pipe(bench())
-            .pipe(gulp.dest('./doc/bench/'));  /* writes a results file to current folder */
+            .pipe(gulp.dest("./doc/bench/"));  /* writes a results file to current folder */
     });
