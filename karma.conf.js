@@ -31,11 +31,11 @@ module.exports = function(config) {
     reporters: ['progress','coverage'],
 
     coverageReporter: {
-      dir:  './',
+      dir:  './doc/coverage/',
       reporters: [
         // reporters not supporting the `file` property
-        { type: 'html', subdir: 'doc/coverage/report-html' },
-        { type: 'lcovonly',subdir: '/', file: 'lcov.info' }
+        { type: 'html', subdir: 'report-html' },
+        { type: 'lcovonly',subdir: 'lcov', file: 'lcov.info' }
       ]
     },
 

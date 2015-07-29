@@ -11,6 +11,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "codeclimate-test-reporter": "^0.1.0",
     "gulp": "^3.8.11",
     "gulp-bench": "^1.1.0",
     "gulp-concat": "^2.5.2",
@@ -28,8 +29,7 @@
   },
   "scripts": {
     "build": "gulp build",
-    "test": "gulp",
-    "report-win":"set CODECLIMATE_REPO_TOKEN=0d92b7367dd924d8fb4592952f58f375f5ac387610689da3aa3ff5ef20726e41; codeclimate-test-reporter < bin/coverage/lcov.info"
+    "test": "gulp"
   },
   "repository": {
     "type": "git",

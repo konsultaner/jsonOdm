@@ -54,7 +54,8 @@ gulp
         return gulp.src(testMinifiedFiles)
             .pipe(karma({
                 configFile: 'karma.conf.js',
-                action: 'run'
+                action: 'run',
+                reporters : []
             }))
             .on('error', function(err) {
                 // Make sure failed tests cause gulp to exit non-zero
