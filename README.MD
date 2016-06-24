@@ -58,9 +58,9 @@ Road map
         - [ ] $near
         - [ ] $nearSphere
     - [ ] Array 0% i may not implement the first two
-        - [] $all
-        - [] $elementMatch
-        - [] $size 0%
+        - [ ] $all
+        - [ ] $elementMatch
+        - [ ] $size 0%
     - [ ] Aggregation
         - [ ] Pipeline 30% ($limit and $skip is implemented as $result(skip,limit))
             - [x] $project
