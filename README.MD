@@ -30,7 +30,7 @@ Road map
 ----
 
 - [ ] Implement query methods from [mongo db](http://docs.mongodb.org/manual/reference/operator/query/)
-    - [x] Comparison
+    - [x] Comparison 100%
         - [x] $eq
         - [x] $gt
         - [x] $gte
@@ -39,18 +39,64 @@ Road map
         - [x] $ne
         - [x] $in
         - [x] $nin
-    - Logical (~~$or~~,~~$and~~,~~$not(= $nand as alias)~~,~~$nor~~) 100%
-    - Element (~~$exists~~,~~$type~~) 100% (+ $isNull, for is null or undefined)
-    - Evaluation (~~$mod~~,~~$regex~~,~~$text~~,~~$where~~) 100%
-    - Geospatial (~~$geoWithin~~,~~$geoIntersects~~,$near,$nearSphere) 50% (maybe have a hard and a soft check -> performance)
-    - Array ($all,$elementMatch,$size) 0% // i may not implement the first two
-    - Aggregation
-        - Pipeline (~~$project~~,$match,$redact,~~$limit~~,~~$skip~~,$unwind,$sort,$geoNear,$out) 30% ($limit and $skip is implemented as $result(skip,limit))
-            - Grouping (~~$group~~,~~$count~~,~~$sum~~,~~$avg~~,$first,$last,~~$min~~,~~$max~~,~~$push~~,$addToSet) 70% ($count is used to count the results)
-        - Operators (Boolean,Set,Comparison,~~Arithmetic~~,~~String~~,Array,Date,Conditional,Variable,Grouping) 20% ($mod is renamed $modulo, because Evaluation has a $mod)
-- Support Promise/A+ sources for the odm.addSource
-- Full CRUD support
-- Aggregation
+    - [x] Logical 100%
+        - [x] $or
+        - [x] $and
+        - [x] $not(= $nand as alias)
+        - [x] $nor
+    - [x] Element 100% (+ $isNull, for is null or undefined)
+        - [x] $exists
+        - [x] $type
+    - [x] Evaluation 100%
+        - [x] $mod
+        - [x] $regex
+        - [x] $text
+        - [x] $where
+    - [x] Geospatial 50% (maybe have a hard and a soft check -> performance)
+        - [x] $geoWithin
+        - [x] $geoIntersects
+        - [ ] $near
+        - [ ] $nearSphere
+    - [ ] Array 0% i may not implement the first two
+        - [] $all
+        - [] $elementMatch
+        - [] $size 0%
+    - [ ] Aggregation
+        - [ ] Pipeline 30% ($limit and $skip is implemented as $result(skip,limit))
+            - [x] $project
+            - [ ] $match
+            - [ ] $redact
+            - [x] $limit
+            - [x] $skip
+            - [ ] $unwind
+            - [ ] $sort
+            - [ ] $geoNear
+            - [ ] $out
+        - [ ] Grouping 70% ($count is used to count the results)
+            - [x] $group
+            - [x] $count
+            - [x] $sum
+            - [x] $avg
+            - [ ] $first
+            - [ ] $last
+            - [x] $min
+            - [x] $max
+            - [x] $push
+            - [ ] $addToSet
+        - [ ] Operators 20% ($mod is renamed $modulo, because Evaluation has a $mod)
+            - [ ] Boolean
+            - [ ] Set
+            - [ ] Comparison
+            - [x] Arithmetic
+            - [x] String
+            - [ ] Array
+            - [ ] Date
+            - [ ] Conditional
+            - [ ] Variable
+            - [ ] Grouping
+- [ ] Support Promise/A+ sources for the odm.addSource
+- [ ] Full CRUD support
+- [ ] Aggregation
 
 Install from NPM-Package
 ---------------------
