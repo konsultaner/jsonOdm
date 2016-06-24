@@ -29,16 +29,16 @@ You can find the [documentation here](https://rawgit.com/konsultaner/jsonOdm/mas
 Road map
 ----
 
-[ ] Implement query methods from [mongo db](http://docs.mongodb.org/manual/reference/operator/query/)
-    [x] Comparison
-        [x] $eq
-        [x] $gt
-        [x] $gte
-        [x] $lt
-        [x] $lte
-        [x] $ne
-        [x] $in
-        [x] $nin
+- [ ] Implement query methods from [mongo db](http://docs.mongodb.org/manual/reference/operator/query/)
+    - [x] Comparison
+        - [x] $eq
+        - [x] $gt
+        - [x] $gte
+        - [x] $lt
+        - [x] $lte
+        - [x] $ne
+        - [x] $in
+        - [x] $nin
     - Logical (~~$or~~,~~$and~~,~~$not(= $nand as alias)~~,~~$nor~~) 100%
     - Element (~~$exists~~,~~$type~~) 100% (+ $isNull, for is null or undefined)
     - Evaluation (~~$mod~~,~~$regex~~,~~$text~~,~~$where~~) 100%
