@@ -3,64 +3,36 @@
 var gulp = require("gulp"),
     jsdoc = require("gulp-jsdoc"),
     concat = require("gulp-concat"),
-    filesize = require("gulp-filesize"),
     bench = require("gulp-bench"),
-    karma = require("gulp-karma"),
+    karmaServer = require('karma').Server,
     uglify = require("gulp-uglify");
-
-
-var testNonMinifiedFiles = [
-    "src/odm.js",
-    "src/util.js",
-    "src/*.js",
-    "test/**/*.js"
-];
-var testMinifiedFiles = [
-    "bin/*.js",
-    "test/**/*.js"
-];
 
 gulp
     .task("default", ["test-minified","doc"] ,function () {})
     .task("build",["build-non-minified","test-non-minified"], function() {
         return gulp.src(["./bin/json.odm.js"])
-            .pipe(filesize())
             .pipe(concat("json.odm.min.js"))
             .pipe(uglify())
-            .pipe(filesize())
             .pipe(gulp.dest("./bin/")
         );
     })
     .task("build-non-minified", function() {
         return gulp.src(["./src/odm.js", "./src/util.js", "./src/geo.js", "./src/collection.js", "./src/query.js"])
-            .pipe(filesize())
             .pipe(concat("json.odm.js"))
-            .pipe(filesize())
             .pipe(gulp.dest("./bin/")
         );
     })
-    .task("test-non-minified", function () {
-        return gulp.src(testNonMinifiedFiles)
-            .pipe(karma({
-                configFile: "karma.conf.js",
-                action: "run"
-            }))
-            .on("error", function(err) {
-                // Make sure failed tests cause gulp to exit non-zero
-                throw err;
-            });
+    .task("test-non-minified", function (done) {
+        new karmaServer({
+            configFile: __dirname + "/karma.conf.js",
+            singleRun: true
+        }, done).start();
     })
-    .task("test-minified", ["build"], function () {
-        return gulp.src(testMinifiedFiles)
-            .pipe(karma({
-                configFile: "karma.conf.js",
-                action: "run",
-                reporters : []
-            }))
-            .on("error", function(err) {
-                // Make sure failed tests cause gulp to exit non-zero
-                throw err;
-            });
+    .task("test-minified", ["build"], function (done) {
+        new karmaServer({
+            configFile: __dirname + "/karma.conf.min.js",
+            singleRun: true
+        }, done).start();
     })
     .task("doc", function () {
         return gulp.src(["./src/*.js"])
