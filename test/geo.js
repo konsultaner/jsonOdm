@@ -75,6 +75,13 @@ describe("Geo Tools", function () {
             expect(jsonOdm.Geo.edgeWithinPolygon([[2,5],[10,6]],[[0,0],[10,0],[10,10],[6,10],[6,4],[5,10],[0,10]])).toBeFalsy();
         });
     });
+    describe("LineString within LineString", function () {
+        it("Sould only take arrays", function () {
+            expect(jsonOdm.Geo.lineStringWithinLineString([[1,2],[3,2]],[[0,0],[1,2],[3,2],[4,4]])).toBeTruthy();
+            expect(jsonOdm.Geo.lineStringWithinLineString([[1,1],[2,2]],[[0,0],[1,1]])).toBeFalsy();
+            expect(jsonOdm.Geo.lineStringWithinLineString()).toBeFalsy();
+        })
+    });
     describe("Point on LineString", function () {
         var point = [10,10];
         var line1 = [[0,0],[0,10],[10,10],[10,0]];

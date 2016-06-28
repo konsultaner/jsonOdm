@@ -1224,7 +1224,8 @@ Collection
             </td>
             <td class="description">
                 
-                    Creates a has many relation to another collection
+                    // TODO needs a proper has many functionality that aromatically gathers the child elements
+Creates a has many relation to another collection
                 
 
                 
@@ -1475,7 +1476,8 @@ Collection
     
     <div class="description">
         <p>
-        Creates a has many relation to another collection
+        // TODO needs a proper has many functionality that aromatically gathers the child elements
+Creates a has many relation to another collection
         </p>
     </div>
     
@@ -1876,6 +1878,14 @@ String
     
 
     
+
+    
+        <h4>Example</h4>
+        
+    <pre class="prettyprint"><code>var customers = new jsonOdm.Collection("customers");
+customers.$hasOne("id","customerGroupId","customerGroup","group");
+console.log(customers[0]);
+// > {name:"Some Name",age:"25",...,customerGroupId:1,gourp:{id:1,name:"VIP"},...}</code></pre>
 
     
 

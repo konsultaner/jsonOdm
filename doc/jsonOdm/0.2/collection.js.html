@@ -977,6 +977,7 @@ jsonOdm.Collection.decorate = function (collection) {
     var decorate = function (collection) {
         if (jsonOdm.util.isArray(collection)) {
             /**
+             * // TODO needs a proper has many functionality that aromatically gathers the child elements
              * Creates a has many relation to another collection
              * @param {Array|String} foreignKeyMapName The name of the field that holds an array of foreign keys
              * @param {int|String} privateKeyField The private key of the foreign collection objects
@@ -1027,6 +1028,11 @@ jsonOdm.Collection.decorate = function (collection) {
              * @param {String} alias  The new field that will carry the connected data.
              * @memberof jsonOdm.Collection.prototype
              * @method $hasOne
+             * @example
+             * var customers = new jsonOdm.Collection("customers");
+             * customers.$hasOne("id","customerGroupId","customerGroup","group");
+             * console.log(customers[0]);
+             * // > {name:"Some Name",age:"25",...,customerGroupId:1,gourp:{id:1,name:"VIP"},...}
              */
             collection.$hasOne = function (foreignKey, privateKeyField, childCollectionName, alias) {
                 // SET THE ALIAS

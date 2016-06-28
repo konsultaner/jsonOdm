@@ -1539,6 +1539,7 @@ jsonOdm.Geo.edgeIntersectsBounds = function (edge, bounds) {
 };
 
 /**
+ * TODO: ALSO needs to return true for [[1,1],[2,2,]] and [[0,0],[4,4]] // probably needs a rewrite
  * Checks whether a line follows another line or is on the line respectively
  * @param {Array} lineString An array of points, i.e. [[1,1],[1,2],[1,3]]
  * @param {Array} inLineString An array of points, i.e. [[1,1],[1,2],[1,3]]
@@ -1561,9 +1562,9 @@ jsonOdm.Geo.lineStringWithinLineString = function (lineString, inLineString) {
                     !(
                         // next is not the next one
                         (inLineString[j + 1] && lineString[i + 1][0] === inLineString[j + 1][0] && lineString[i + 1][1] === inLineString[j + 1][1]) ||
-                            // next is not the same one
+                        // next is not the same one
                         (lineString[i + 1][0] === inLineString[j][0] && lineString[i + 1][1] === inLineString[j][1]) ||
-                            // next is not the previous one
+                        // next is not the previous one
                         (j > 0 && lineString[i + 1][0] === inLineString[j - 1][0] && lineString[i + 1][1] === inLineString[j - 1][1])
                     )
                 ) {
@@ -1619,6 +1620,7 @@ jsonOdm.Collection.decorate = function (collection) {
     var decorate = function (collection) {
         if (jsonOdm.util.isArray(collection)) {
             /**
+             * // TODO needs a proper has many functionality that aromatically gathers the child elements
              * Creates a has many relation to another collection
              * @param {Array|String} foreignKeyMapName The name of the field that holds an array of foreign keys
              * @param {int|String} privateKeyField The private key of the foreign collection objects
@@ -1669,6 +1671,11 @@ jsonOdm.Collection.decorate = function (collection) {
              * @param {String} alias  The new field that will carry the connected data.
              * @memberof jsonOdm.Collection.prototype
              * @method $hasOne
+             * @example
+             * var customers = new jsonOdm.Collection("customers");
+             * customers.$hasOne("id","customerGroupId","customerGroup","group");
+             * console.log(customers[0]);
+             * // > {name:"Some Name",age:"25",...,customerGroupId:1,gourp:{id:1,name:"VIP"},...}
              */
             collection.$hasOne = function (foreignKey, privateKeyField, childCollectionName, alias) {
                 // SET THE ALIAS
