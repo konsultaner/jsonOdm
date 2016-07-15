@@ -1,7 +1,7 @@
 "use strict";
 
 var gulp = require("gulp"),
-    jsdoc = require("gulp-jsdoc"),
+    jsdoc = require("gulp-jsdoc3"),
     concat = require("gulp-concat"),
     bench = require("gulp-bench"),
     karmaServer = require('karma').Server,
@@ -36,19 +36,10 @@ gulp
     })
     .task("doc", function () {
         return gulp.src(["./src/*.js"])
-            .pipe(jsdoc.parser({
-                name:"jsonOdm",
-                description:"A light weight but fast object document mapper for JavaScript objects.",
-                version:"0.2.1"
-            }, "jsonOdm"))
-            .pipe(jsdoc.generator("./doc",
-                {
-                    path: "./node_modules/jsdoc3-bootstrap"
-                })
-            );
+            .pipe(jsdoc());
     })
     .task("bench", function () {
         return gulp.src("./bench/*.js", {read: false})
             .pipe(bench())
-            .pipe(gulp.dest("./doc/bench/"));  /* writes a results file to current folder */
+            .pipe(gulp.dest("./docs/bench/"));  /* writes a results file to current folder */
     });

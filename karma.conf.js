@@ -31,7 +31,7 @@ module.exports = function(config) {
     reporters: ["progress","coverage"],
 
     coverageReporter: {
-      dir:  "./doc/coverage/",
+      dir:  "./docs/coverage/",
       reporters: [
         // reporters not supporting the `file` property
         { type: "html", subdir: "report-html" },

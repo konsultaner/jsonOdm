@@ -1,6 +1,6 @@
 {
   "name": "json-odm",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Object document mapper for JSON data that provides mongodb methods for querying and transformation as well as additional joining that is not provided by mongodb. >> IF YOU LIKE IT, PLEASE GIVE IT A STAR ON GITHUB <<",
   "main": " ./bin/json.odm.min.js",
   "bin": {
@@ -16,7 +16,8 @@
     "gulp-bench": "^1.1.0",
     "gulp-concat": "^2.6.0",
     "gulp-filesize": "^0.0.6",
-    "gulp-jsdoc": "^0.1.4",
+    "gulp-jsdoc": "^0.1.5",
+    "gulp-jsdoc3": "^0.3.0",
     "gulp-uglify": "^1.5.4",
     "jasmine-core": "^2.4.1",
     "jsdoc3-bootstrap": "^0.15.0",

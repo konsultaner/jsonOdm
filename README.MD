@@ -16,7 +16,9 @@ This Project aims to be provide a json object document mapper.
 **Why would I need this?**  
 There are many cases where you do not want to have the server query your data. You may also see this mapper as a fancy way to filter your data or prepare a view model.
 The original use case was an [ionic](http://ionicframework.com) app that was not interactive so providing a server backend was not needed, but structuring my data
-into joinable collections seemed very helpful.  
+into joinable collections seemed very helpful.
+
+And if you can use a server you may consider our new [WebSocket server project "connectanum"](http://www.connectanum.com) for Publish/Subscribe and RPC communication 
   
 If you like the project please support it with a star here on [GitHub](https://github.com/konsultaner/jsonOdm)  
   
@@ -24,7 +26,7 @@ If commercial support is needed please [contact me](mailto:burkhardt@konsultaner
 
 Docs
 ----
-You can find the [documentation here](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.2/index.html) or compiled to the folder [/doc/jsonOdm/0.2/*](https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.2/index.html).
+You can find the [documentation here](https://rawgit.com/konsultaner/jsonOdm/master/docs/gen/0.2/index.html) or compiled to the folder [/docs/gen/*](https://github.com/konsultaner/jsonOdm/blob/master/docs/gen/index.html).
 
 Road map
 ----
@@ -122,7 +124,7 @@ To be tested: Safari on OSX, IE8(test driver does not run in IE < 9 so it will b
 
 Example
 ------
-This is only a basic example. Find a lot more in the [docs](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.2/index.html), i.e. how to use [$geoWithin](https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.1/jsonOdm.Query.html#$geoWithin)
+This is only a basic example. Find a lot more in the [docs](https://rawgit.com/konsultaner/jsonOdm/master/docs/gen/index.html), i.e. how to use [$geoWithin](https://rawgit.com/konsultaner/jsonOdm/master/docs/gen/jsonOdm.Query.html#__geoWithin__anchor)
 ```html
 <!-- add minified version from https://github.com/konsultaner/jsonOdm/tree/master/bin to the html head -->
 <script type="text/javascript" src="js/json.odm.min.js"></script>

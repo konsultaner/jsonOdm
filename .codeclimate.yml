@@ -7,6 +7,6 @@ ratings:
 exclude_paths:
 - "README.MD"
 - bin/**
-- doc/**
+- docs/**
 - test/**
 - bench/**

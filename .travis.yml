@@ -4,4 +4,4 @@ node_js:
   - "node"
   - "iojs"
 after_script:
-  - codeclimate-test-reporter < doc/coverage/lcov/lcov.info
+  - codeclimate-test-reporter < docs/coverage/lcov/lcov.info
