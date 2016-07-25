@@ -5,7 +5,7 @@
     <title>JSON ODM by konsultaner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
@@ -20,6 +20,8 @@
 
     <section class="main-content">
       <p><a href="https://travis-ci.org/konsultaner/jsonOdm"><img src="https://travis-ci.org/konsultaner/jsonOdm.svg?branch=master" alt="Build Status"></a>
+<a href="https://codeclimate.com/github/konsultaner/jsonOdm"><img src="https://codeclimate.com/github/konsultaner/jsonOdm/badges/gpa.svg" alt="Code Climate"></a>
+<a href="https://codeclimate.com/github/konsultaner/jsonOdm/coverage"><img src="https://codeclimate.com/github/konsultaner/jsonOdm/badges/coverage.svg" alt="Test Coverage"></a>
 <a href="https://www.npmjs.com/package/json-odm"><img src="https://img.shields.io/npm/dm/json-odm.svg" alt="npm"></a>
 <a href="https://www.npmjs.com/package/json-odm"><img src="https://img.shields.io/npm/v/json-odm.svg" alt="npm"></a>
 <a href="https://www.npmjs.com/package/json-odm"><img src="https://img.shields.io/npm/l/json-odm.svg" alt="npm"></a>
@@ -27,89 +29,177 @@
 <a href="https://github.com/konsultaner/jsonOdm/issues"><img src="https://img.shields.io/github/issues/konsultaner/jsonOdm.svg" alt="GitHub issues"></a></p>
 
 <h1>
-<a id="json-odm" class="anchor" href="#json-odm" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON ODM</h1>
+<a id="json-odm" class="anchor" href="#json-odm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JSON ODM</h1>
 
 <h2>
-<a id="by-konsultaner-richard-burkhardt" class="anchor" href="#by-konsultaner-richard-burkhardt" aria-hidden="true"><span class="octicon octicon-link"></span></a>by <a href="http://www.konsultaner.de">Konsultaner</a>, Richard Burkhardt</h2>
+<a id="by-konsultaner-richard-burkhardt" class="anchor" href="#by-konsultaner-richard-burkhardt" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>by <a href="http://www.konsultaner.de">Konsultaner</a>, Richard Burkhardt</h2>
 
 <p>This Project aims to be provide a json object document mapper.<br>
 <strong>Why would I need this?</strong><br>
 There are many cases where you do not want to have the server query your data. You may also see this mapper as a fancy way to filter your data or prepare a view model.
 The original use case was an <a href="http://ionicframework.com">ionic</a> app that was not interactive so providing a server backend was not needed, but structuring my data
-into joinable collections seemed very helpful.  </p>
+into joinable collections seemed very helpful.</p>
+
+<p>And if you can use a server you may consider our new <a href="http://www.connectanum.com">WebSocket server project "connectanum"</a> for Publish/Subscribe and RPC communication </p>
 
 <p>If you like the project please support it with a star here on <a href="https://github.com/konsultaner/jsonOdm">GitHub</a>  </p>
 
 <p>If commercial support is needed please <a href="mailto:burkhardt@konsultaner.de">contact me</a>.  </p>
 
 <h2>
-<a id="docs" class="anchor" href="#docs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docs</h2>
+<a id="docs" class="anchor" href="#docs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Docs</h2>
 
-<p>You can find the <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.2/index.html">documentation here</a> or compiled to the folder <a href="https://github.com/konsultaner/jsonOdm/blob/master/doc/jsonOdm/0.2/index.html">/doc/jsonOdm/0.2/*</a>.</p>
-
-<h2>
-<a id="road-map" class="anchor" href="#road-map" aria-hidden="true"><span class="octicon octicon-link"></span></a>Road map</h2>
-
-<ul>
-<li>Implement query methods from <a href="http://docs.mongodb.org/manual/reference/operator/query/">mongo db</a>
-
-<ul>
-<li>Comparison (<del>$eq</del>,<del>$gt</del>,<del>$gte</del>,<del>$lt</del>,<del>$lte</del>,<del>$ne</del>,<del>$in</del>,<del>$nin</del>) 100%</li>
-<li>Logical (<del>$or</del>,<del>$and</del>,<del>$not(= $nand as alias)</del>,<del>$nor</del>) 100%</li>
-<li>Element (<del>$exists</del>,<del>$type</del>) 100% (+ $isNull, for is null or undefined)</li>
-<li>Evaluation (<del>$mod</del>,<del>$regex</del>,<del>$text</del>,<del>$where</del>) 100%</li>
-<li>Geospatial (<del>$geoWithin</del>,<del>$geoIntersects</del>,$near,$nearSphere) 50% (maybe have a hard and a soft check -&gt; performance)</li>
-<li>Array ($all,$elementMatch,$size) 0% // i may not implement the first two</li>
-<li>Aggregation
-
-<ul>
-<li>Pipeline (<del>$project</del>,$match,$redact,<del>$limit</del>,<del>$skip</del>,$unwind,$sort,$geoNear,$out) 30% ($limit and $skip is implemented as $result(skip,limit))
-
-<ul>
-<li>Grouping (<del>$group</del>,<del>$count</del>,<del>$sum</del>,<del>$avg</del>,$first,$last,<del>$min</del>,<del>$max</del>,<del>$push</del>,$addToSet) 70% ($count is used to count the results)</li>
-</ul>
-</li>
-<li>Operators (Boolean,Set,Comparison,<del>Arithmetic</del>,<del>String</del>,Array,Date,Conditional,Variable,Grouping) 20% ($mod is renamed $modulo, because Evaluation has a $mod)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Support Promise/A+ sources for the odm.addSource</li>
-<li>Full CRUD support</li>
-<li>Aggregation</li>
-</ul>
+<p>You can find the <a href="https://rawgit.com/konsultaner/jsonOdm/master/docs/gen/0.2/index.html">documentation here</a> or compiled to the folder <a href="https://github.com/konsultaner/jsonOdm/blob/master/docs/gen/index.html">/docs/gen/*</a>.</p>
 
 <h2>
-<a id="install-from-npm-package" class="anchor" href="#install-from-npm-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install from NPM-Package</h2>
+<a id="road-map" class="anchor" href="#road-map" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Road map</h2>
 
-<div class="highlight highlight-bash"><pre>npm install json-odm</pre></div>
+<ul>
+<li>[ ] Implement query methods from <a href="http://docs.mongodb.org/manual/reference/operator/query/">mongo db</a>
+
+<ul>
+<li>[x] Comparison 100%
+
+<ul>
+<li>[x] $eq</li>
+<li>[x] $gt</li>
+<li>[x] $gte</li>
+<li>[x] $lt</li>
+<li>[x] $lte</li>
+<li>[x] $ne</li>
+<li>[x] $in</li>
+<li>[x] $nin</li>
+</ul>
+</li>
+<li>[x] Logical 100%
+
+<ul>
+<li>[x] $or</li>
+<li>[x] $and</li>
+<li>[x] $not(= $nand as alias)</li>
+<li>[x] $nor</li>
+</ul>
+</li>
+<li>[x] Element 100% (+ $isNull, for is null or undefined)
+
+<ul>
+<li>[x] $exists</li>
+<li>[x] $type</li>
+</ul>
+</li>
+<li>[x] Evaluation 100%
+
+<ul>
+<li>[x] $mod</li>
+<li>[x] $regex</li>
+<li>[x] $text</li>
+<li>[x] $where</li>
+</ul>
+</li>
+<li>[x] Geospatial 50% (maybe have a hard and a soft check -&gt; performance)
+
+<ul>
+<li>[x] $geoWithin</li>
+<li>[x] $geoIntersects</li>
+<li>[ ] $near</li>
+<li>[ ] $nearSphere</li>
+</ul>
+</li>
+<li>[ ] Array 0% i may not implement the first two
+
+<ul>
+<li>[ ] $all</li>
+<li>[ ] $elementMatch</li>
+<li>[ ] $size</li>
+</ul>
+</li>
+<li>[ ] Aggregation
+
+<ul>
+<li>[ ] Pipeline 30% ($limit and $skip is implemented as $result(skip,limit))
+
+<ul>
+<li>[x] $project</li>
+<li>[ ] $match</li>
+<li>[ ] $redact</li>
+<li>[x] $limit</li>
+<li>[x] $skip</li>
+<li>[ ] $unwind</li>
+<li>[ ] $sort</li>
+<li>[ ] $geoNear</li>
+<li>[ ] $out</li>
+</ul>
+</li>
+<li>[ ] Grouping 70% ($count is used to count the results)
+
+<ul>
+<li>[x] $group</li>
+<li>[x] $count</li>
+<li>[x] $sum</li>
+<li>[x] $avg</li>
+<li>[ ] $first</li>
+<li>[ ] $last</li>
+<li>[x] $min</li>
+<li>[x] $max</li>
+<li>[x] $push</li>
+<li>[ ] $addToSet</li>
+</ul>
+</li>
+<li>[ ] Operators 20% ($mod is renamed $modulo, because Evaluation has a $mod)
+
+<ul>
+<li>[ ] Boolean</li>
+<li>[ ] Set</li>
+<li>[ ] Comparison</li>
+<li>[x] Arithmetic</li>
+<li>[x] String</li>
+<li>[ ] Array</li>
+<li>[ ] Date</li>
+<li>[ ] Conditional</li>
+<li>[ ] Variable</li>
+<li>[ ] Grouping</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>[ ] Support Promise/A+ sources for the odm.addSource</li>
+<li>[ ] Full CRUD support</li>
+<li>[ ] Aggregation</li>
+</ul>
 
 <h2>
-<a id="build-and-run-tests-both-minified-and-unminified" class="anchor" href="#build-and-run-tests-both-minified-and-unminified" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build and run tests, both minified and unminified</h2>
+<a id="install-from-npm-package" class="anchor" href="#install-from-npm-package" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install from NPM-Package</h2>
 
-<div class="highlight highlight-bash"><pre>npm install json-odm
+<div class="highlight highlight-source-shell"><pre>npm install json-odm</pre></div>
+
+<h2>
+<a id="build-and-run-tests-both-minified-and-unminified" class="anchor" href="#build-and-run-tests-both-minified-and-unminified" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build and run tests, both minified and unminified</h2>
+
+<div class="highlight highlight-source-shell"><pre>npm install json-odm
 <span class="pl-c1">cd</span> npm_modules/json-odm/
 npm install
 gulp</pre></div>
 
 <h2>
-<a id="browser-support" class="anchor" href="#browser-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser Support</h2>
+<a id="browser-support" class="anchor" href="#browser-support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Browser Support</h2>
 
 <p>Unit test ran successfully under Chrome,iOS7+,IE9+,Firefox,Android 4.4.2+<br>
 To be tested: Safari on OSX, IE8(test driver does not run in IE &lt; 9 so it will be hard to test)</p>
 
 <h2>
-<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h2>
 
-<p>This is only a basic example. Find more in the <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.1/index.html">docs</a>, i.e. how to use <a href="https://rawgit.com/konsultaner/jsonOdm/master/doc/jsonOdm/0.1/jsonOdm.Query.html#%24geoWithin">$geoWithin</a></p>
+<p>This is only a basic example. Find a lot more in the <a href="https://rawgit.com/konsultaner/jsonOdm/master/docs/gen/index.html">docs</a>, i.e. how to use <a href="https://rawgit.com/konsultaner/jsonOdm/master/docs/gen/jsonOdm.Query.html#__geoWithin__anchor">$geoWithin</a></p>
 
-<div class="highlight highlight-html"><pre><span class="pl-c">&lt;!-- add minified version from https://github.com/konsultaner/jsonOdm/tree/master/bin to the html head --&gt;</span>
+<div class="highlight highlight-text-html-basic"><pre><span class="pl-c">&lt;!-- add minified version from https://github.com/konsultaner/jsonOdm/tree/master/bin to the html head --&gt;</span>
 &lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>js/json.odm.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-c">// initialize The mapper</span>
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// initialize The mapper</span>
 <span class="pl-k">var</span> odm <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">jsonOdm</span>();
 <span class="pl-c">// add a source to the mapper</span>
-odm.addSource(<span class="pl-s"><span class="pl-pds">'</span>people<span class="pl-pds">'</span></span>,{
+<span class="pl-smi">odm</span>.<span class="pl-en">addSource</span>(<span class="pl-s"><span class="pl-pds">'</span>people<span class="pl-pds">'</span></span>,{
    <span class="pl-s"><span class="pl-pds">"</span>Person<span class="pl-pds">"</span></span> <span class="pl-k">:</span> [
        {<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">1</span>,<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>Richi<span class="pl-pds">"</span></span>,jobId<span class="pl-k">:</span><span class="pl-c1">1</span>,hobbyIds<span class="pl-k">:</span>[<span class="pl-c1">1</span>,<span class="pl-c1">3</span>,<span class="pl-c1">4</span>]},
        {<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-c1">2</span>,<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>Dave<span class="pl-pds">"</span></span>,jobId<span class="pl-k">:</span><span class="pl-c1">2</span>,hobbyIds<span class="pl-k">:</span>[<span class="pl-c1">2</span>,<span class="pl-c1">4</span>]},
@@ -135,27 +225,27 @@ odm.addSource(<span class="pl-s"><span class="pl-pds">'</span>people<span class=
 });
 <span class="pl-c">// instantiate a collection object</span>
 <span class="pl-k">var</span> people <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">jsonOdm.Collection</span>(<span class="pl-s"><span class="pl-pds">'</span>Person<span class="pl-pds">'</span></span>);
-people.$hasOne(<span class="pl-s"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>Jobs<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>job<span class="pl-pds">"</span></span>);
-people.$hasMany(<span class="pl-s"><span class="pl-pds">"</span>hobbyIds<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>Hobbies<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>hobbies<span class="pl-pds">"</span></span>);
+<span class="pl-smi">people</span>.<span class="pl-en">$hasOne</span>(<span class="pl-s"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>Jobs<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>job<span class="pl-pds">"</span></span>);
+<span class="pl-smi">people</span>.<span class="pl-en">$hasMany</span>(<span class="pl-s"><span class="pl-pds">"</span>hobbyIds<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>Hobbies<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>hobbies<span class="pl-pds">"</span></span>);
 
-<span class="pl-k">var</span> q <span class="pl-k">=</span> people.query();
+<span class="pl-k">var</span> q <span class="pl-k">=</span> <span class="pl-smi">people</span>.<span class="pl-en">query</span>();
 <span class="pl-c">// get all hairdresser and plumber</span>
-<span class="pl-k">var</span> hairdresser <span class="pl-k">=</span> q.$or(
-   q.$branch(<span class="pl-s"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$eq(<span class="pl-c1">1</span>)
-   q.$branch(<span class="pl-s"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$eq(<span class="pl-c1">4</span>)
-).$all();
+<span class="pl-k">var</span> hairdresser <span class="pl-k">=</span> <span class="pl-smi">q</span>.<span class="pl-en">$or</span>(
+   <span class="pl-smi">q</span>.<span class="pl-en">$branch</span>(<span class="pl-s"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).<span class="pl-en">$eq</span>(<span class="pl-c1">1</span>)
+   <span class="pl-smi">q</span>.<span class="pl-en">$branch</span>(<span class="pl-s"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).<span class="pl-en">$eq</span>(<span class="pl-c1">4</span>)
+).<span class="pl-en">$all</span>();
 
 <span class="pl-c">// get all but hairdressers and plumbers</span>
-<span class="pl-k">var</span> hairdresser <span class="pl-k">=</span> q.$and(
-   q.$branch(<span class="pl-s"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$ne(<span class="pl-c1">1</span>)
-   q.$branch(<span class="pl-s"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).$ne(<span class="pl-c1">4</span>)
-).$all();
+<span class="pl-k">var</span> hairdresser <span class="pl-k">=</span> <span class="pl-smi">q</span>.<span class="pl-en">$and</span>(
+   <span class="pl-smi">q</span>.<span class="pl-en">$branch</span>(<span class="pl-s"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).<span class="pl-en">$ne</span>(<span class="pl-c1">1</span>)
+   <span class="pl-smi">q</span>.<span class="pl-en">$branch</span>(<span class="pl-s"><span class="pl-pds">"</span>jobId<span class="pl-pds">"</span></span>).<span class="pl-en">$ne</span>(<span class="pl-c1">4</span>)
+).<span class="pl-en">$all</span>();
 
 <span class="pl-c">// delete all plumbers</span>
-q.$branch(<span class="pl-s"><span class="pl-pds">"</span>job<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>).$eq(<span class="pl-s"><span class="pl-pds">"</span>plumber<span class="pl-pds">"</span></span>).$<span class="pl-k">delete</span>();</pre></div>
+<span class="pl-smi">q</span>.<span class="pl-en">$branch</span>(<span class="pl-s"><span class="pl-pds">"</span>job<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>).<span class="pl-en">$eq</span>(<span class="pl-s"><span class="pl-pds">"</span>plumber<span class="pl-pds">"</span></span>).<span class="pl-en">$delete</span>();</pre></div>
 
 <h1>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h1>
 
 <p>The MIT License (MIT)  </p>
 
@@ -188,4 +278,3 @@ q.$branch(<span class="pl-s"><span class="pl-pds">"</span>job<span class="pl-pds
 
   </body>
 </html>
-
