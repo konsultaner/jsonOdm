@@ -1,8 +1,14 @@
 "use strict";
 
+
 // for code climate recognition
 if (typeof jsonOdm === "undefined") {
-    var jsonOdm = new JsonOdm();
+    var jsonOdm;
+    if(typeof module === "undefined"){
+        jsonOdm = new JsonOdm();
+    }else{
+        jsonOdm = require('./odm');
+    }
 }
 
 /**
@@ -139,3 +145,7 @@ jsonOdm.Collection.decorate = function (collection) {
 
     decorate(collection);
 };
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = jsonOdm.Collection;
+}

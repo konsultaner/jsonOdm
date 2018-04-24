@@ -77,5 +77,9 @@ if (!root.jsonOdm) {
     root.jsonOdm = jsonOdm;
 }
 if (typeof module !== "undefined" && module.exports) {
+    jsonOdm.Collection = require("./collection");
+    jsonOdm.Geo = require("./geo");
+    jsonOdm.Query = require("./query");
+    jsonOdm.Util = require("./util");
     module.exports = jsonOdm;
 }

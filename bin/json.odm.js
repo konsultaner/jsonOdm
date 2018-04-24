@@ -77,6 +77,10 @@ if (!root.jsonOdm) {
     root.jsonOdm = jsonOdm;
 }
 if (typeof module !== "undefined" && module.exports) {
+    jsonOdm.Collection = require("./collection");
+    jsonOdm.Geo = require("./geo");
+    jsonOdm.Query = require("./query");
+    jsonOdm.Util = require("./util");
     module.exports = jsonOdm;
 }
 
@@ -84,7 +88,12 @@ if (typeof module !== "undefined" && module.exports) {
 
 // for code climate recognition
 if (typeof jsonOdm === "undefined") {
-    var jsonOdm = new JsonOdm();
+    var jsonOdm;
+    if(typeof module === "undefined"){
+        jsonOdm = new JsonOdm();
+    }else{
+        jsonOdm = require('./odm');
+    }
 }
 
 /**
@@ -246,11 +255,21 @@ jsonOdm.Util.prototype.projectElement = function (projection, element, parentEle
 };
 
 jsonOdm.util = new jsonOdm.Util();
+
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = jsonOdm.Util;
+}
 "use strict";
 
 // for code climate recognition
 if (typeof jsonOdm === "undefined") {
-    var jsonOdm = new JsonOdm();
+    var jsonOdm;
+    if(typeof module === "undefined"){
+        jsonOdm = new JsonOdm();
+    }else{
+        jsonOdm = require('./odm');
+    }
 }
 
 /**
@@ -1579,11 +1598,21 @@ jsonOdm.Geo.lineStringWithinLineString = function (lineString, inLineString) {
     }
     return true;
 };
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = jsonOdm.Geo;
+}
 "use strict";
+
 
 // for code climate recognition
 if (typeof jsonOdm === "undefined") {
-    var jsonOdm = new JsonOdm();
+    var jsonOdm;
+    if(typeof module === "undefined"){
+        jsonOdm = new JsonOdm();
+    }else{
+        jsonOdm = require('./odm');
+    }
 }
 
 /**
@@ -1720,11 +1749,20 @@ jsonOdm.Collection.decorate = function (collection) {
 
     decorate(collection);
 };
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = jsonOdm.Collection;
+}
 "use strict";
 
 // for code climate recognition
 if (typeof jsonOdm === "undefined") {
-    var jsonOdm = new JsonOdm();
+    var jsonOdm;
+    if(typeof module === "undefined"){
+        jsonOdm = new JsonOdm();
+    }else{
+        jsonOdm = require('./odm');
+    }
 }
 
 /** @namespace jsonOdm.Query */
@@ -2910,3 +2948,7 @@ jsonOdm.Query.prototype.$nor = function (queries) {
         return true;
     });
 };
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = jsonOdm.Query;
+}

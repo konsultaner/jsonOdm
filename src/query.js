@@ -2,7 +2,12 @@
 
 // for code climate recognition
 if (typeof jsonOdm === "undefined") {
-    var jsonOdm = new JsonOdm();
+    var jsonOdm;
+    if(typeof module === "undefined"){
+        jsonOdm = new JsonOdm();
+    }else{
+        jsonOdm = require('./odm');
+    }
 }
 
 /** @namespace jsonOdm.Query */
@@ -1188,3 +1193,7 @@ jsonOdm.Query.prototype.$nor = function (queries) {
         return true;
     });
 };
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = jsonOdm.Query;
+}

@@ -166,13 +166,13 @@ people.$hasMany("hobbyIds","id","Hobbies","hobbies");
 var q = people.query();
 // get all hairdresser and plumber
 var hairdresser = q.$or(
-   q.$branch("jobId").$eq(1)
+   q.$branch("jobId").$eq(1),
    q.$branch("jobId").$eq(4)
 ).$all();
 
 // get all but hairdressers and plumbers
 var hairdresser = q.$and(
-   q.$branch("jobId").$ne(1)
+   q.$branch("jobId").$ne(1),
    q.$branch("jobId").$ne(4)
 ).$all();
 
