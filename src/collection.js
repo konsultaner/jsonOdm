@@ -7,7 +7,7 @@ if (typeof jsonOdm === "undefined") {
     if(typeof module === "undefined"){
         jsonOdm = new JsonOdm();
     }else{
-        jsonOdm = require('./odm');
+        jsonOdm = global.jsonOdm;
     }
 }
 

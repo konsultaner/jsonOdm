@@ -157,17 +157,17 @@ odm.addSource('people',{
        {"id":4,"name":"coding"},
        {"id":5,"name":"dancing"}
    ]
-});
+},true);
 // instantiate a collection object
-var people = new jsonOdm.Collection('Person');
+var people = new odm.Collection('Person');
 people.$hasOne("jobId","id","Jobs","job");
 people.$hasMany("hobbyIds","id","Hobbies","hobbies");
 
-var q = people.query();
+var q = people.$query();
 // get all hairdresser and plumber
 var hairdresser = q.$or(
-   q.$branch("jobId").$eq(1),
-   q.$branch("jobId").$eq(4)
+    q.$branch("jobId").$eq(1),
+    q.$branch("jobId").$eq(4)
 ).$all();
 
 // get all but hairdressers and plumbers
