@@ -3,3 +3,4 @@ node_modules/
 Thumbs.db
 npm-debug.log
 docs/coverage/report-html
+package-lock.json

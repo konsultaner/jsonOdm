@@ -110,6 +110,9 @@ npm install json-odm
 Build and run tests, both minified and unminified
 -------------------------------------------------
 
+Since [PhantomJs has been archived](https://github.com/ariya/phantomjs/issues/15344), jsonOdm needed to switch to chrome 
+headless for its test. To run tests have Chrome installed!
+
 ```bash
 npm install json-odm
 cd npm_modules/json-odm/
