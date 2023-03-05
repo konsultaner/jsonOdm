@@ -1,7 +1,7 @@
-"use strict";
+// @flow
 
 /**
- * The main class holding all sub classes and the data source
+ * The main class holding all subclasses and the data source
  * @author Richard Burkhardt - Konsultaner
  *
  * @constructor
@@ -40,46 +40,33 @@
  * ).$all();
  *
  */
-function JsonOdm() {
-    var self = this;
-    this.sources = {};
-    this.selectedSource = {};
+export default class JsonOdm {
+    static sources = {};
+    static selectedSource = {};
     /**
      * Add a data source to the odm that is selectable via the selectSource method
      * @param {*} sourceId There is an override check
      * @param {object} source An object with collection arrays
      * @param {boolean} selectSource select the source
      */
-    this.addSource = function (sourceId, source, selectSource) {
+    static addSource(sourceId, source, selectSource) {
         if (typeof source == "object") {
-            if (typeof self.sources[sourceId] === "undefined") {
-                self.sources[sourceId] = source;
+            if (typeof JsonOdm.sources[sourceId] === "undefined") {
+                JsonOdm.sources[sourceId] = source;
             }
             if (selectSource) {
-                self.selectedSource = source;
+                JsonOdm.selectedSource = source;
             }
         }
     };
+
     /**
-     * Select a source by its id this will effect all collections
+     * Select a source by its id this will affect all collections
      * @param {*} sourceId
      */
-    this.selectSource = function (sourceId) {
-        if (typeof self.sources[sourceId] !== "undefined") {
-            self.selectedSource = self.sources[sourceId];
+    static selectSource (sourceId) {
+        if (typeof JsonOdm.sources[sourceId] !== "undefined") {
+            JsonOdm.selectedSource = JsonOdm.sources[sourceId];
         }
     };
-}
-
-var root = typeof window !== "undefined" ? window : global;
-var jsonOdm = new JsonOdm();
-if (!root.jsonOdm) {
-    root.jsonOdm = jsonOdm;
-}
-if (typeof module !== "undefined" && module.exports) {
-    jsonOdm.Collection = require("./collection");
-    jsonOdm.Geo = require("./geo");
-    jsonOdm.Query = require("./query");
-    jsonOdm.Util = require("./util");
-    module.exports = jsonOdm;
 }

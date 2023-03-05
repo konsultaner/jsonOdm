@@ -1,8 +1,8 @@
 {
   "name": "json-odm",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Object document mapper for JSON data that provides mongodb methods for querying and transformation as well as additional joining that is not provided by mongodb. >> IF YOU LIKE IT, PLEASE GIVE IT A STAR ON GITHUB <<",
-  "main": " ./bin/json.odm.min.js",
+  "main": " ./src/index.js",
   "bin": {
     "json-odm": "./bin/json.odm.min.js"
   },
@@ -11,25 +11,21 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "codeclimate-test-reporter": "^0.5.0",
-    "gulp": "^4.0.2",
-    "gulp-bench": "^1.1.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-filesize": "^0.0.6",
-    "gulp-jsdoc": "^0.1.5",
-    "gulp-jsdoc3": "^3.0.0",
-    "gulp-uglify": "^3.0.2",
-    "jasmine-core": "^4.1.0",
-    "jsdoc3-bootstrap": "^0.15.0",
-    "karma": "^6.3.18",
-    "karma-coverage": "^2.2.0",
-    "karma-jasmine": "^5.0.0",
-    "karma-chrome-launcher": "^3.1.1",
-    "phantomjs": "^2.1.7"
+    "@babel/core": "^7.17.7",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-flow": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "flow-bin": "^0.173.0",
+    "flow-js-testing": "^0.2.3-alpha.4",
+    "jest": "^27.5.1",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2"
   },
   "scripts": {
-    "build": "gulp build",
-    "test": "gulp"
+    "test": "jest",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -48,5 +44,30 @@
   "bugs": {
     "url": "https://github.com/konsultaner/jsonOdm/issues"
   },
-  "homepage": "https://github.com/konsultaner/jsonOdm"
+  "homepage": "https://github.com/konsultaner/jsonOdm",
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": false
+        }
+      ],
+      "@babel/flow"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-runtime"
+    ]
+  },
+  "jest": {
+    "modulePaths": [
+      "<rootDir>"
+    ],
+    "testMatch": [
+      "**/test/*.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ]
+  }
 }

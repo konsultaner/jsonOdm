@@ -12,7 +12,7 @@ JSON ODM
 by [Konsultaner](http://www.konsultaner.de), Richard Burkhardt
 -------------
 
-This Project aims to be provide a json object document mapper.  
+This Project aims to provide a json object document mapper.  
 **Why would I need this?**  
 There are many cases where you do not want to have the server query your data. You may also see this mapper as a fancy way to filter your data or prepare a view model.
 The original use case was an [ionic](http://ionicframework.com) app that was not interactive so providing a server backend was not needed, but structuring my data

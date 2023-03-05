@@ -1,6 +1,0 @@
-language: node_js
-sudo: required
-node_js:
-  - "node"
-after_script:
-  - codeclimate-test-reporter < docs/coverage/lcov/lcov.info
