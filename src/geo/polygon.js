@@ -1,6 +1,12 @@
 // @flow
 
-export class Polygon {
+import Point from "./point";
+import MultiPoint from "./multi_point";
+import LineString from "./line_string";
+import MultiLineString from "./multi_line_string";
+import MultiPolygon from "./multi_polygon";
+
+export default class Polygon {
 
     coordinates: any[];
     bbox: number[];
@@ -10,7 +16,7 @@ export class Polygon {
      * @param {Array} positions An array of arrays with at least 2-dimensional arrays of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude.
      * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
      * @example
-     * var polygon = new jsonOdm.Geo.Polygon([
+     * var polygon = new Polygon([
      *    // The last position should be equal to the first one to close the polygon
      *    [[51.2,32],[51.4,21],[51.6,21],[51.2,21]],
      *    // Must be fully inside the n-1th poly-line
@@ -38,11 +44,11 @@ export class Polygon {
         if (!polygon.coordinates || !jsonOdm.util.isArray(polygon.coordinates)) {
             return false;
         }
-        if (geometry.type === "Point" || geometry.type === "MultiPoint" || geometry.type === "LineString" || geometry.type === "MultiLineString") {
+        if (geometry instanceof Point || geometry instanceof MultiPoint || geometry instanceof LineString || geometry instanceof MultiLineString) {
             return false;
         }
 
-        if (geometry.type === "Polygon") {
+        if (geometry instanceof Polygon) {
             for (i = 0; polygon.coordinates[0] && i < polygon.coordinates[0].length - 1; i++) {
                 if (!jsonOdm.Geo.edgeWithinPolygon([polygon.coordinates[0][i], polygon.coordinates[0][i + 1]], geometry.coordinates[0])) {
                     return false;
@@ -50,7 +56,7 @@ export class Polygon {
             }
             return true;
         }
-        if (geometry.type === "MultiPolygon") {
+        if (geometry instanceof MultiPolygon) {
             for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
                 for (j = 0; polygon.coordinates[0] && j < polygon.coordinates[0].length - 1; j++) {
                     var inside = jsonOdm.Geo.edgeWithinPolygon([polygon.coordinates[0][j], polygon.coordinates[0][j + 1]], geometry.coordinates[i][0]);
@@ -64,7 +70,7 @@ export class Polygon {
             }
             return false;
         }
-        if (geometry.type === "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        if (geometry instanceof GeometryCollection && jsonOdm.util.isArray(geometry.geometries)) {
             // maybe order it by complexity to get a better best case scenario
             for (i = 0; i < geometry.geometries.length; i++) {
                 if (jsonOdm.Geo.Polygon.within(polygon, geometry.geometries[i])) {
@@ -93,20 +99,20 @@ export class Polygon {
         if (!polygon.coordinates || !jsonOdm.util.isArray(polygon.coordinates)) {
             return false;
         }
-        if (geometry.type === "Point") {
+        if (geometry instanceof Point) {
             return jsonOdm.Geo.Point.intersects(geometry, polygon);
         }
-        if (geometry.type === "MultiPoint") {
+        if (geometry instanceof MultiPoint) {
             return jsonOdm.Geo.MultiPoint.intersects(geometry, polygon);
         }
-        if (geometry.type === "LineString") {
+        if (geometry instanceof LineString) {
             return jsonOdm.Geo.LineString.intersects(geometry, polygon);
         }
-        if (geometry.type === "MultiLineString") {
+        if (geometry instanceof MultiLineString) {
             return jsonOdm.Geo.MultiLineString.intersects(geometry, polygon);
         }
 
-        if (geometry.type === "Polygon") {
+        if (geometry instanceof Polygon) {
             for (i = 0; polygon.coordinates[0] && i < polygon.coordinates[0].length - 1; i++) {
                 if (jsonOdm.Geo.edgeIntersectsPolygon([polygon.coordinates[0][i], polygon.coordinates[0][i + 1]], geometry.coordinates[0])) {
                     return true;
@@ -114,7 +120,7 @@ export class Polygon {
             }
             return false;
         }
-        if (geometry.type === "MultiPolygon") {
+        if (geometry instanceof MultiPolygon) {
             for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
                 for (j = 0; polygon.coordinates[0] && j < polygon.coordinates[0].length - 1; j++) {
                     if (jsonOdm.Geo.edgeIntersectsPolygon([polygon.coordinates[0][j], polygon.coordinates[0][j + 1]], geometry.coordinates[i][0])) {
@@ -124,7 +130,7 @@ export class Polygon {
             }
             return false;
         }
-        if (geometry.type === "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        if (geometry instanceof GeometryCollection && jsonOdm.util.isArray(geometry.geometries)) {
             // maybe order it by complexity to get a better best case scenario
             for (i = 0; i < geometry.geometries.length; i++) {
                 if (jsonOdm.Geo.Polygon.intersects(polygon, geometry.geometries[i])) {

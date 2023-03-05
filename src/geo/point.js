@@ -1,6 +1,11 @@
 // @flow
 
 import Util from "./util";
+import Polygon from "./polygon";
+import MultiPoint from "./multi_point";
+import LineString from "./line_string";
+import MultiLineString from "./multi_line_string";
+import MultiPolygon from "./multi_polygon";
 
 export default class Point {
 
@@ -38,7 +43,7 @@ export default class Point {
         if (geometry instanceof Point) {
             return geometry.coordinates[0] === point.coordinates[0] && geometry.coordinates[1] === point.coordinates[1];
         }
-        if (geometry.type === "MultiPoint" || geometry.type === "LineString") {
+        if (geometry instanceof MultiPoint || geometry instanceof LineString) {
             for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
                 if (geometry.coordinates[i][0] === point.coordinates[0] && geometry.coordinates[i][1] === point.coordinates[1]) {
                     return true;
@@ -46,7 +51,7 @@ export default class Point {
             }
             return false;
         }
-        if (geometry.type === "MultiLineString") {
+        if (geometry instanceof MultiLineString) {
             for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
                 for (j = 0; geometry.coordinates[i] && j < geometry.coordinates[i].length; j++) {
                     if (geometry.coordinates[i][j][0] === point.coordinates[0] && geometry.coordinates[i][j][1] === point.coordinates[1]) {
@@ -56,11 +61,11 @@ export default class Point {
             }
             return false;
         }
-        if (geometry.type === "Polygon") {
+        if (geometry instanceof Polygon) {
             // we assume that polygon wholes do not intersect the outer polygon
             return Util.pointWithinPolygon(point.coordinates, geometry.coordinates ? geometry.coordinates[0] : null);
         }
-        if (geometry.type === "MultiPolygon") {
+        if (geometry instanceof MultiPolygon) {
             for (i = 0; geometry.coordinates && i < geometry.coordinates.length; i++) {
                 // we assume that polygon wholes do not intersect the outer polygon
                 if (Util.pointWithinPolygon(point.coordinates, geometry.coordinates[i] ? geometry.coordinates[i][0] : null)) {
@@ -69,7 +74,7 @@ export default class Point {
             }
             return false;
         }
-        if (geometry.type === "GeometryCollection" && jsonOdm.util.isArray(geometry.geometries)) {
+        if (geometry instanceof GeometryCollection && Array.isArray(geometry.geometries)) {
             // maybe order it by complexity to get a better best case scenario
             for (i = 0; i < geometry.geometries.length; i++) {
                 if (Point.within(point, geometry.geometries[i])) {
