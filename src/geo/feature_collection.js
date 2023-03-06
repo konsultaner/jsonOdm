@@ -1,6 +1,8 @@
 //  @flow
 
-export default class FeatureCollection {
+import Geometry from "./geometry";
+
+export default class FeatureCollection extends Geometry {
 
     /**
      * The GeoJSON FeatureCollection object
@@ -9,10 +11,8 @@ export default class FeatureCollection {
      * @constructor
      */
     constructor(features, boundaryBox) {
+        super(boundaryBox);
         this.type = "FeatureCollection";
         this.features = features || [];
-        if (boundaryBox) {
-            this.bbox = boundaryBox;
-        }
     }
 }

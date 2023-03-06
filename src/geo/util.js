@@ -1,5 +1,11 @@
 // @flow
 
+import Point from "./point";
+import BoundaryBox from "./boundary_box";
+import LineString from "./line_string";
+import Polygon from "./polygon";
+import MultiPolygon from "./multi_polygon";
+
 export default class Util {
 
     /**
@@ -10,20 +16,20 @@ export default class Util {
     static detectAsGeometry (geometry) {
         if (!geometry.type) {
             if (Array.isArray(geometry) && geometry.length === 2 && !Array.isArray(geometry[0])) {
-                geometry = new jsonOdm.Geo.Point(geometry);
+                geometry = new Point(geometry);
             } else if (Array.isArray(geometry) && geometry.length === 4 && !Array.isArray(geometry[0])) {
-                geometry = new jsonOdm.Geo.BoundaryBox(geometry);
+                geometry = new BoundaryBox(geometry);
             } else if (Array.isArray(geometry) && geometry.length >= 1 && Array.isArray(geometry[0]) && geometry[0].length === 2 && !Array.isArray(geometry[0][0])) {
-                geometry = new jsonOdm.Geo.LineString(geometry);
+                geometry = new LineString(geometry);
             } else if (Array.isArray(geometry) && geometry.length >= 1 &&
                 Array.isArray(geometry[0]) && geometry[0].length >= 1 &&
                 Array.isArray(geometry[0][0]) && geometry[0][0].length === 2 && !Array.isArray(geometry[0][0][0])) {
-                geometry = new jsonOdm.Geo.Polygon(geometry);
+                geometry = new Polygon(geometry);
             } else if (Array.isArray(geometry) && geometry.length >= 1 &&
                 Array.isArray(geometry[0]) && geometry[0].length >= 1 &&
                 Array.isArray(geometry[0][0]) && geometry[0][0].length >= 1 &&
                 Array.isArray(geometry[0][0][0]) && geometry[0][0][0].length === 2 && !Array.isArray(geometry[0][0][0][0])) {
-                geometry = new jsonOdm.Geo.MultiPolygon(geometry);
+                geometry = new MultiPolygon(geometry);
             } else {
                 return false;
             }
@@ -76,7 +82,7 @@ export default class Util {
     };
 
     /**
-     * The method checks whether a edge is inside a polygon or not. The polygon will be auto closed
+     * The method checks whether an edge is inside a polygon or not. The polygon will be auto closed
      * @param {Array} edge A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
      * @param {Array} polygon A polygon representation i.e. [[1,2],[2,3],[4,4],[1,2]]
      * @return {boolean}
@@ -104,7 +110,7 @@ export default class Util {
     };
 
     /**
-     * The method checks whether a edge intersects a polygon or not. The polygon will be auto closed
+     * The method checks whether an edge intersects a polygon or not. The polygon will be auto closed
      * @param {Array} edge A 2-dimensional array holding two vertices representing the edge, i.e. [[1,2],[4,2]]
      * @param {Array} polygon A polygon representation i.e. [[1,2],[2,3],[4,4],[1,2]]
      * @return {boolean}

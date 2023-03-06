@@ -5,10 +5,12 @@ import MultiPoint from "./multi_point";
 import LineString from "./line_string";
 import Polygon from "./polygon";
 import Util from "./util";
+import Geometry from "./geometry";
+import MultiPolygon from "./multi_polygon";
+import GeometryCollection from "./geometry_collection";
 
-export default class MultiLineString {
+export default class MultiLineString extends Geometry {
     coordinates: any[];
-    bbox: number[];
 
     /**
      * A GeoJSON MultiLineString object
@@ -22,22 +24,19 @@ export default class MultiLineString {
      * @constructor
      */
     constructor(positions, boundaryBox) {
-        this.type = "MultiLineString";
+        super(boundaryBox);
         this.coordinates = positions;
-        if (boundaryBox) {
-            this.bbox = boundaryBox;
-        }
     };
 
     /**
-     * Checks whether a MultiLineString is inside of another geometry
+     * Checks whether a MultiLineString is inside another geometry
      * @param {MultiLineString} multiLineString
      * @param {Point|BoundaryBox|MultiPoint|LineString|MultiLineString|Polygon|MultiPolygon|GeometryCollection} geometry Any &lt;geometry&gt; object
      * @return {boolean}
      */
     static within (multiLineString, geometry) {
         let i, j, k, found;
-        if (!multiLineString.coordinates || !jsonOdm.util.isArray(multiLineString.coordinates)) {
+        if (!multiLineString.coordinates || !Array.isArray(multiLineString.coordinates)) {
             return false;
         }
         if (geometry instanceof Point || geometry instanceof MultiPoint) {
@@ -94,7 +93,7 @@ export default class MultiLineString {
             }
             return true;
         }
-        if (geometry instanceof GeometryCollection && jsonOdm.util.isArray(geometry.geometries)) {
+        if (geometry instanceof GeometryCollection && Array.isArray(geometry.geometries)) {
             // maybe order it by complexity to get a better best case scenario
             for (i = 0; i < geometry.geometries.length; i++) {
                 if (MultiLineString.within(multiLineString, geometry.geometries[i])) {
@@ -121,8 +120,8 @@ export default class MultiLineString {
      * @return {boolean}
      */
     static intersects (multiLineString, geometry) {
-        var i, j, k;
-        if (!multiLineString.coordinates || !jsonOdm.util.isArray(multiLineString.coordinates)) {
+        let i, j, k;
+        if (!multiLineString.coordinates || !Array.isArray(multiLineString.coordinates)) {
             return false;
         }
         if (geometry instanceof Point) {
@@ -168,7 +167,7 @@ export default class MultiLineString {
             }
             return false;
         }
-        if (geometry instanceof GeometryCollection && jsonOdm.util.isArray(geometry.geometries)) {
+        if (geometry instanceof GeometryCollection && Array.isArray(geometry.geometries)) {
             // maybe order it by complexity to get a better best case scenario
             for (i = 0; i < geometry.geometries.length; i++) {
                 if (MultiLineString.intersects(multiLineString, geometry.geometries[i])) {

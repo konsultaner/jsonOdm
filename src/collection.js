@@ -15,14 +15,14 @@ export default class Collection extends Array {
     constructor(dataOrName) {
         super();
         if (Array.isArray(dataOrName)) {
-            this.push(dataOrName);
+            this.push.apply(this,dataOrName);
         } else if (typeof dataOrName !== "undefined" && JsonOdm.selectedSource[dataOrName]) {
-            this.push(JsonOdm.selectedSource[dataOrName]);
+            this.push.apply(this,JsonOdm.selectedSource[dataOrName]);
         }
     }
 
     $branch() {
-        return new Collection(Util.branch(self, arguments));
+        return new Collection(Util.branch(this, arguments));
     }
 
     /**

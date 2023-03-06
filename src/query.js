@@ -47,8 +47,9 @@ export default class Query {
          */
         const stringFiledModifier = ["charAt", "charCodeAt", "concat", "fromCharCode", "indexOf", "lastIndexOf", "localeCompare", "match", "replace", "search", "slice", "split", "substr", "substring", "toLocaleLowerCase", "toLocaleUpperCase", "toLowerCase", "toUpperCase", "trim", "valueOf"];
         const createQueryStringModifier = (modifier) => {
-            return () => {
-                return this.$modifyField((function (args, modifier) {
+            const self = this;
+            return function () {
+                return self.$modifyField((function (args, modifier) {
                     return function (value) {
                         return typeof value === "string" && String.prototype.hasOwnProperty(modifier) ? String.prototype[modifier].apply(value, args) : value;
                     };
@@ -404,7 +405,7 @@ export default class Query {
         if( typeof node === "undefined" ) {
             return this;
         }
-        let $branch = (function (nodes) {
+        let brancher = ((nodes) => {
             /**
              * @param {*} The collection to go down
              * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
@@ -414,7 +415,7 @@ export default class Query {
             };
         })(arguments);
         let subQuery = new Query(this.$$collection);
-        subQuery.$$commandQueue.push($branch);
+        subQuery.$$commandQueue.push(brancher);
         return subQuery;
     };
 
@@ -985,13 +986,13 @@ export default class Query {
                 }
             }
             // ands
-            for (i = 0; i < logics[1].length; i++) {
+            for (let i = 0; i < logics[1].length; i++) {
                 if (collectionValue.indexOf(logics[1][i]) < 0) {
                     return false;
                 }
             }
             // ors
-            for (i = 0; i < logics[2].length; i++) {
+            for (let i = 0; i < logics[2].length; i++) {
                 if (collectionValue.indexOf(logics[2][i]) > -1) {
                     return true;
                 }

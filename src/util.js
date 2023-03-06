@@ -1,22 +1,12 @@
 // @flow
 
+import Query from "./query";
+
 /**
  * The Utility Class that provides some useful methods used throughout the ODM
  * @constructor
  */
 export default class Util {
-    /** Checks the input parameter and returns true if it is an array
-     *
-     * @param {*} arrayObject
-     * @return {boolean}
-     */
-    static isArray (arrayObject): boolean {
-        if (!Array.isArray) {
-            return Object.prototype.toString.call(arrayObject) === "[object Array]";
-        }
-        return Array.isArray(arrayObject);
-    }
-
     /**
      * Checks the type of object. valid type values are:
      * number, string, undefined, object, array and RegExp, ArrayBuffer, null, boolean plus all other [object *] types
@@ -30,7 +20,7 @@ export default class Util {
         objectType = objectType.substring(8, objectType.length - 1).toLowerCase();
         for (let i = 0; i < type.length; i++) {
             let lowerType = type[i].toLowerCase();
-            if ("array" === lowerType && this.isArray(object)) {
+            if ("array" === lowerType && Array.isArray(object)) {
                 return true;
             }
             // all object types, i.e. "[object ArrayBuffer]"
@@ -144,7 +134,7 @@ export default class Util {
                 projectionResult[key] = element[key]; // might be undefined or raises an error
             } else if (typeof projection[key] === "function") {
                 projectionResult[key] = projection[key](parentElement || element);
-            } else if (projection[key] instanceof jsonOdm.Query) {
+            } else if (projection[key] instanceof Query) {
                 projectionResult[key] = projection[key].$$commandQueue[projection[key].$$commandQueue.length - 1](element);
                 if (projection[key].$$accumulation !== false) projectionResult[key] = projection[key].$$accumulation;
             } else if (typeof projection[key] === "object") {

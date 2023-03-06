@@ -6,10 +6,11 @@ import LineString from "./line_string";
 import MultiLineString from "./multi_line_string";
 import Polygon from "./polygon";
 import Util from "./util";
+import Geometry from "./geometry";
+import GeometryCollection from "./geometry_collection";
 
-export default class MultiPolygon {
+export default class MultiPolygon extends Geometry {
     coordinates: any[];
-    bbox: number[];
 
     /**
      * A GeoJSON MultiPolygon object
@@ -29,11 +30,8 @@ export default class MultiPolygon {
      * @constructor
      */
     constructor (positions, boundaryBox) {
-        this.type = "MultiPolygon";
+        super(boundaryBox);
         this.coordinates = positions;
-        if (boundaryBox) {
-            this.bbox = boundaryBox;
-        }
     };
 
     /**
@@ -44,7 +42,7 @@ export default class MultiPolygon {
      */
     static within(multiPolygon, geometry) {
         let i, j, k, found;
-        if (!multiPolygon.coordinates || !jsonOdm.util.isArray(multiPolygon.coordinates)) {
+        if (!multiPolygon.coordinates || !Array.isArray(multiPolygon.coordinates)) {
             return false;
         }
         if (geometry instanceof Point || geometry instanceof MultiPoint || geometry instanceof LineString || geometry instanceof MultiLineString) {
@@ -82,7 +80,7 @@ export default class MultiPolygon {
             }
             return true;
         }
-        if (geometry instanceof GeometryCollection && jsonOdm.util.isArray(geometry.geometries)) {
+        if (geometry instanceof GeometryCollection && Array.isArray(geometry.geometries)) {
             for (i = 0; i < geometry.geometries.length; i++) {
                 if (MultiPolygon.within(multiPolygon, geometry.geometries[i])) {
                     return true;
@@ -109,7 +107,7 @@ export default class MultiPolygon {
      */
     static intersects(multiPolygon, geometry) {
         let i, j, k;
-        if (!multiPolygon.coordinates || !jsonOdm.util.isArray(multiPolygon.coordinates)) {
+        if (!multiPolygon.coordinates || !Array.isArray(multiPolygon.coordinates)) {
             return false;
         }
         if (geometry instanceof Point) {
@@ -140,7 +138,7 @@ export default class MultiPolygon {
             }
             return false;
         }
-        if (geometry instanceof GeometryCollection && jsonOdm.util.isArray(geometry.geometries)) {
+        if (geometry instanceof GeometryCollection && Array.isArray(geometry.geometries)) {
             for (i = 0; i < geometry.geometries.length; i++) {
                 if (MultiPolygon.intersects(multiPolygon, geometry.geometries[i])) {
                     return true;

@@ -5,10 +5,12 @@ import Point from "./point";
 import Util from "./util";
 import LineString from "./line_string";
 import MultiLineString from "./multi_line_string";
+import Geometry from "./geometry";
+import GeometryCollection from "./geometry_collection";
+import MultiPolygon from "./multi_polygon";
 
-export default class MultiPoint {
+export default class MultiPoint extends Geometry  {
     coordinates: any[];
-    bbox: number[];
 
     /**
      * A GeoJSON MultiPoint object
@@ -21,11 +23,8 @@ export default class MultiPoint {
      * @constructor
      */
     constructor (positions, boundaryBox) {
-        this.type = "MultiPoint";
+        super(boundaryBox);
         this.coordinates = positions;
-        if (boundaryBox) {
-            this.bbox = boundaryBox;
-        }
     };
 
 

@@ -1,3 +1,7 @@
+import Collection from "../src/collection";
+import Geo from "../src/geo";
+import JsonOdm from "../src/odm";
+
 describe("Collection", function () {
 
     var testSource = {
@@ -893,22 +897,22 @@ describe("Collection", function () {
             id:i,name:'Richi'+i
         })
     }
-    jsonOdm.addSource("test",testSource,true);
+    JsonOdm.addSource("test",testSource,true);
 
     describe("Source Selection", function () {
         it("Collection should be empty", function () {
-            jsonOdm.addSource("empty",{},true);
-            var collection = new jsonOdm.Collection("parentCollection");
+            JsonOdm.addSource("empty",{},true);
+            var collection = new Collection("parentCollection");
             expect(collection.length).toBe(0);
-            jsonOdm.selectSource("test");
-            collection = new jsonOdm.Collection("parentCollection");
+            JsonOdm.selectSource("test");
+            collection = new Collection("parentCollection");
             expect(collection.length).toBe(1);
         });
     });
     describe("Array inheritance", function () {
         var collection;
         beforeEach(function () {
-            collection = new jsonOdm.Collection("testCollection");
+            collection = new Collection("testCollection");
         });
         it("Should have initial length", function () {
             expect(collection.length).toBe(2);
@@ -925,7 +929,7 @@ describe("Collection", function () {
     describe("Decoration", function () {
         var collection;
         beforeEach(function () {
-            collection = new jsonOdm.Collection("parentCollection");
+            collection = new Collection("parentCollection");
         });
         it("Should be decorated", function () {
             expect(collection.$hasMany).not.toBeUndefined();
@@ -943,7 +947,7 @@ describe("Collection", function () {
         describe("Simple Logic with collection 'testCollection'", function () {
             var collection;
             beforeAll(function () {
-                collection = new jsonOdm.Collection("testCollection");
+                collection = new Collection("testCollection");
             });
             it("Should be equal", function () {
                 expect(collection.$query().$branch("name").$eq("Mustermann").$first().name).toBe("Mustermann");
@@ -982,7 +986,7 @@ describe("Collection", function () {
         describe("Simple Logic with collection 'aLot'", function () {
             var collection;
             beforeAll(function () {
-                collection = new jsonOdm.Collection("aLot");
+                collection = new Collection("aLot");
             });
             it("Should be less then", function () {
                 expect(collection.$query().$branch("id").$lt(401).$all().length).toBe(400);
@@ -997,7 +1001,7 @@ describe("Collection", function () {
         describe("Modulo operator", function () {
             var collection;
             beforeAll(function () {
-                collection = new jsonOdm.Collection("aLot");
+                collection = new Collection("aLot");
             });
             it("Should calculate the modulo", function () {
                 expect(collection.$query().$branch("id").$mod(4,0).$all().length).toBe(Math.floor(collection.length/4));
@@ -1007,7 +1011,7 @@ describe("Collection", function () {
         describe("Regular expression", function () {
             var collection;
             beforeAll(function () {
-                collection = new jsonOdm.Collection("aLot");
+                collection = new Collection("aLot");
             });
             it("Should find by regular expression", function () {
                 expect(collection.$query().$branch("name").$regex("^richi[0-9]{1,2}$","i").$all().length).toBe(99);
@@ -1019,7 +1023,7 @@ describe("Collection", function () {
         describe("Logic operators", function () {
             var collection, q,subCollection;
             beforeAll(function () {
-                collection = new jsonOdm.Collection("aLot");
+                collection = new Collection("aLot");
                 q = collection.$query();
             });
             it("Should select by one or the other", function () {
@@ -1077,7 +1081,7 @@ describe("Collection", function () {
         describe("Accumulation operators", function () {
             var collection, q;
             beforeEach(function () {
-                collection = new jsonOdm.Collection("employees");
+                collection = new Collection("employees");
                 collection.$hasOne("id","salaryGroupId","salaryGroup");
                 q = collection.$query();
             });
@@ -1159,7 +1163,7 @@ describe("Collection", function () {
         describe("Arithmetic operators", function () {
             var collection, q;
             beforeEach(function () {
-                collection = new jsonOdm.Collection("arithmeticCollection");
+                collection = new Collection("arithmeticCollection");
                 q = collection.$query();
             });
             it("Should add all fields", function () {
@@ -1189,9 +1193,9 @@ describe("Collection", function () {
         });
     });
     describe("String modification", function () {
-        var collection, firstCite;
+        let collection, firstCite;
         beforeAll(function () {
-            collection = new jsonOdm.Collection("goldenRuleCollection");
+            collection = new Collection("goldenRuleCollection");
             firstCite = collection.$query().$first();
         });
         it("Should substring the result", function () {
@@ -1202,9 +1206,9 @@ describe("Collection", function () {
         });
     });
     describe("Projection", function () {
-        var collection,query,projected;
+        let collection,query,projected;
         beforeAll(function () {
-            collection = new jsonOdm.Collection("goldenRuleCollection");
+            collection = new Collection("goldenRuleCollection");
             query = collection.$query();
             projected = query.$project({
                 concat: function (element) {
@@ -1240,7 +1244,7 @@ describe("Collection", function () {
         });
     });
     describe("Find text", function () {
-        var collection = new jsonOdm.Collection("goldenRuleCollection");
+        var collection = new Collection("goldenRuleCollection");
         it("Should find both english rules",function() {
             expect(collection.$query().$branch("cite").$text("One treat").$all().length).toBe(2);
         });
@@ -1264,7 +1268,7 @@ describe("Collection", function () {
         });
     });
     describe("Wheresearch", function () {
-        var collection = new jsonOdm.Collection("goldenRuleCollection");
+        var collection = new Collection("goldenRuleCollection");
         it("Should find all english rules",function(){
             expect(collection.$query().$where("return this.lang == 'en'").$all().length).toBe(0);
         });
@@ -1282,7 +1286,7 @@ describe("Collection", function () {
         });
     });
     describe("Delete elements", function () {
-        var collection = new jsonOdm.Collection("aLot");
+        var collection = new Collection("aLot");
         collection.$query().$branch("id").$gt(500).$delete();
         it("Should delete all but the first 500", function () {
             expect(collection.length).toBe(500);
@@ -1290,26 +1294,26 @@ describe("Collection", function () {
     });
     describe("Geo Querying", function () {
         describe("GeoWithin", function () {
-            var collection = new jsonOdm.Collection("geo"),
+            var collection = new Collection("geo"),
                 q;
             it("Should find the 2nd O in Google", function () {
-                q = collection.$query().$branch("geometry").$geoWithin(new jsonOdm.Geo.BoundaryBox([129.049317,-31.434555,139.464356,-19.068644]));
+                q = collection.$query().$branch("geometry").$geoWithin(new Geo.BoundaryBox([129.049317,-31.434555,139.464356,-19.068644]));
                 expect(q.$all().length).toBe(1);
             });
             it("Should find the 2nd O and G in Google", function () {
-                q = collection.$query().$branch("geometry").$geoWithin(new jsonOdm.Geo.BoundaryBox([129.049317,-35.434555,140.870606,-19.068644]));
+                q = collection.$query().$branch("geometry").$geoWithin(new Geo.BoundaryBox([129.049317,-35.434555,140.870606,-19.068644]));
                 expect(q.$all().length).toBe(2);
             });
         });
         describe("GeoIntersect", function () {
-            var collection = new jsonOdm.Collection("geo"),
+            var collection = new Collection("geo"),
                 q;
             it("Should find the Goo in Google", function () {
-                q = collection.$query().$branch("geometry").$geoIntersects(new jsonOdm.Geo.BoundaryBox([129.049317,-31.434555,139.464356,-19.068644]));
+                q = collection.$query().$branch("geometry").$geoIntersects(new Geo.BoundaryBox([129.049317,-31.434555,139.464356,-19.068644]));
                 expect(q.$all().length).toBe(3);
             });
             it("Should find the 2nd O and G in Google", function () {
-                q = collection.$query().$branch("geometry").$geoIntersects(new jsonOdm.Geo.BoundaryBox([129.049317,-35.434555,140.870606,-19.068644]));
+                q = collection.$query().$branch("geometry").$geoIntersects(new Geo.BoundaryBox([129.049317,-35.434555,140.870606,-19.068644]));
                 expect(q.$all().length).toBe(4);
             });
         });

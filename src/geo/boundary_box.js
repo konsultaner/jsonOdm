@@ -1,6 +1,6 @@
 // @flow
 
-import {Polygon} from "./polygon";
+import Polygon from "./polygon";
 
 export default class BoundaryBox extends Array {
 
@@ -14,17 +14,16 @@ export default class BoundaryBox extends Array {
     constructor(boundaryBox) {
         super();
         if (Array.isArray(boundaryBox)) {
-            self[0] = boundaryBox[0];
-            self[1] = boundaryBox[1];
-            self[2] = boundaryBox[2];
-            self[3] = boundaryBox[3];
+            this[0] = boundaryBox[0];
+            this[1] = boundaryBox[1];
+            this[2] = boundaryBox[2];
+            this[3] = boundaryBox[3];
         } else {
-            self[0] = 0;
-            self[1] = 0;
-            self[2] = 0;
-            self[3] = 0;
+            this[0] = 0;
+            this[1] = 0;
+            this[2] = 0;
+            this[3] = 0;
         }
-        return self;
     }
 
     /**

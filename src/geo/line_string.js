@@ -5,11 +5,13 @@ import MultiPoint from "./multi_point";
 import Util from "./util";
 import Polygon from "./polygon";
 import MultiLineString from "./multi_line_string";
+import Geometry from "./geometry";
+import MultiPolygon from "./multi_polygon";
+import GeometryCollection from "./geometry_collection";
 
-export default class LineString {
+export default class LineString extends Geometry  {
 
     coordinates: any[];
-    bbox: number[];
 
     /**
      * A GeoJSON LineString object
@@ -22,11 +24,9 @@ export default class LineString {
      * @constructor
      */
     constructor (positions, boundaryBox) {
+        super(boundaryBox);
         this.type = "LineString";
         this.coordinates = positions;
-        if (boundaryBox) {
-            this.bbox = boundaryBox;
-        }
     };
 
 
@@ -38,7 +38,7 @@ export default class LineString {
      */
     static within(lineString, geometry) {
         let i, j;
-        if (!lineString.coordinates || !jsonOdm.util.isArray(lineString.coordinates)) {
+        if (!lineString.coordinates || !Array.isArray(lineString.coordinates)) {
             return false;
         }
         if (geometry instanceof Point || geometry instanceof MultiPoint) {
@@ -100,7 +100,7 @@ export default class LineString {
      */
     static intersects = function (lineString, geometry) {
         let i, j;
-        if (!lineString.coordinates || !jsonOdm.util.isArray(lineString.coordinates)) {
+        if (!lineString.coordinates || !Array.isArray(lineString.coordinates)) {
             return false;
         }
         if (geometry instanceof Point) {
@@ -146,7 +146,7 @@ export default class LineString {
             }
             return false;
         }
-        if (geometry instanceof GeometryCollection && jsonOdm.util.isArray(geometry.geometries)) {
+        if (geometry instanceof GeometryCollection && Array.isArray(geometry.geometries)) {
             // maybe order it by complexity to get a better best case scenario
             for (i = 0; i < geometry.geometries.length; i++) {
                 if (LineString.intersects(lineString, geometry.geometries[i])) {

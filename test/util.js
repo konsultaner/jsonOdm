@@ -1,74 +1,58 @@
-describe("Utilities", function () {
-    describe("isArray", function () {
-        it("should be an array", function () {
-            expect(jsonOdm.util.isArray([])).toBe(true);
-        });
+import Util from "../src/util";
 
-        it("Should not be an array", function () {
-            expect(jsonOdm.util.isArray("a")).not.toBe(true);
-            expect(jsonOdm.util.isArray(1)).not.toBe(true);
-            expect(jsonOdm.util.isArray({})).not.toBe(true);
-            expect(jsonOdm.util.isArray(true)).not.toBe(true);
-            expect(jsonOdm.util.isArray(false)).not.toBe(true);
-        });
-    });
+describe("Utilities", function () {
     describe("is", function () {
         it("Should be a null", function () {
-            expect(jsonOdm.util.is(null,"null"));
+            expect(Util.is(null,"null"));
         });
         it("Should be a string", function () {
-            expect(jsonOdm.util.is("","string")).toBe(true);
+            expect(Util.is("","string")).toBe(true);
         });
         it("Should be a object", function () {
-            expect(jsonOdm.util.is({},"object")).toBe(true);
+            expect(Util.is({},"object")).toBe(true);
         });
         it("Should be a regexp", function () {
-            expect(jsonOdm.util.is(/.*/i,"regexp")).toBe(true);
+            expect(Util.is(/.*/i,"regexp")).toBe(true);
         });
         it("Should be an array", function () {
-            expect(jsonOdm.util.is([],"array")).toBe(true);
+            expect(Util.is([],"array")).toBe(true);
         });
         it("Should be an object", function () {
-            expect(jsonOdm.util.is({},"object")).toBe(true);
+            expect(Util.is({},"object")).toBe(true);
         });
         it("Should be a boolean", function () {
-            expect(jsonOdm.util.is(true,"boolean")).toBe(true);
+            expect(Util.is(true,"boolean")).toBe(true);
         });
         it("Should be a undefined", function () {
-            expect(jsonOdm.util.is({}.undefined,"undefined")).toBe(true);
+            expect(Util.is({}.undefined,"undefined")).toBe(true);
         });
-        if(window.ArrayBuffer){ // only test it if it is supported
-            it("Should be a arraybuffer", function () {
-                expect(jsonOdm.util.is(new ArrayBuffer(12),"arraybuffer")).toBe(true);
-            });
-        }
         it("Should be a boolean", function () {
-            expect(jsonOdm.util.is(true,["string","boolean"])).toBe(true);
+            expect(Util.is(true,["string","boolean"])).toBe(true);
         });
         it("Should be not a boolean", function () {
-            expect(jsonOdm.util.is(true,["string","number"])).not.toBe(true);
+            expect(Util.is(true,["string","number"])).not.toBe(true);
         });
     });
     describe("Object Keys", function () {
         var myObject = {myKey:"myValue"};
         it("Should have the key", function () {
-            expect(jsonOdm.util.objectKeys(myObject)[0]).toBe("myKey");
-            expect(jsonOdm.util.objectKeys(myObject).length).toBe(1);
+            expect(Util.objectKeys(myObject)[0]).toBe("myKey");
+            expect(Util.objectKeys(myObject).length).toBe(1);
         });
         it("Should have the key even with the polyfill", function () {
-            expect(jsonOdm.util.objectKeysPolyfill(myObject)[0]).toBe("myKey");
-            expect(jsonOdm.util.objectKeysPolyfill(myObject).length).toBe(1);
+            expect(Util.objectKeysPolyfill(myObject)[0]).toBe("myKey");
+            expect(Util.objectKeysPolyfill(myObject).length).toBe(1);
         });
         it("Should throw an error for the functions", function () {
-            expect(function () {jsonOdm.util.objectKeysPolyfill()}).toThrow(new TypeError('Object.keys called on non-object'));
+            expect(function () {Util.objectKeysPolyfill()}).toThrow(new TypeError('Object.keys called on non-object'));
         });
     });
     describe("Branch", function () {
         var myObject = {myKey:"myValue",myArray:[{myKey:"value"}]};
         it("Should branch" , function () {
-            expect(jsonOdm.util.branch(myObject,["myKey"])).toBe("myValue");
-            expect(jsonOdm.util.branch(jsonOdm.util.branch(myObject,["myArray",0,"myKey"]))).toBe("value");
-            expect(jsonOdm.util.branch(myObject,["myArray",0,"myKey"])).not.toBe("myValue");
+            expect(Util.branch(myObject,["myKey"])).toBe("myValue");
+            expect(Util.branch(Util.branch(myObject,["myArray",0,"myKey"]))).toBe("value");
+            expect(Util.branch(myObject,["myArray",0,"myKey"])).not.toBe("myValue");
         });
     });
     describe("Projection", function () {
@@ -84,7 +68,7 @@ describe("Utilities", function () {
                     }
                 }
             },
-            projectedObject = jsonOdm.util.projectElement({
+            projectedObject = Util.projectElement({
                 key1:1,
                 key4: function (element) {
                     return element.key2;
