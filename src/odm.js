@@ -1,5 +1,7 @@
 // @flow
 
+import Aqlite from "./aqlite";
+
 /**
  * The main class holding all subclasses and the data source
  * @author Richard Burkhardt - Konsultaner
@@ -69,4 +71,14 @@ export default class JsonOdm {
             JsonOdm.selectedSource = JsonOdm.sources[sourceId];
         }
     };
+
+    /**
+     * A subset AQL {@link https://www.arangodb.com/docs/stable/aql/}
+     * @experimental
+     * @param query The query to execute
+     * @return {Query}
+     **/
+    static query(query) {
+        return Aqlite.parse(query);
+    }
 }

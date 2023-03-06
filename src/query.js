@@ -60,7 +60,6 @@ export default class Query {
         }
     }
 
-
     /**
      * Returns a collection containing all matching elements
      * @example
