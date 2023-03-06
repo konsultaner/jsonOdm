@@ -4,10 +4,7 @@
   "description": "Object document mapper for JSON data that provides mongodb methods for querying and transformation as well as additional joining that is not provided by mongodb. >> IF YOU LIKE IT, PLEASE GIVE IT A STAR ON GITHUB <<",
   "main": " ./src/index.js",
   "bin": {
-    "json-odm": "./bin/json.odm.min.js"
-  },
-  "directories": {
-    "doc": "doc"
+    "json-odm": "./dist/jsonOdm.js"
   },
   "dependencies": {},
   "devDependencies": {
@@ -16,7 +13,10 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-flow": "^7.16.7",
     "babel-loader": "^8.2.3",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
+    "better-docs": "^2.7.2",
+    "documentation": "^14.0.1",
     "flow-bin": "^0.173.0",
     "flow-js-testing": "^0.2.3-alpha.4",
     "jest": "^27.5.1",
@@ -25,7 +25,8 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "webpack"
+    "build": "webpack",
+    "docs": "npx documentation build src/** -f html -o docs"
   },
   "repository": {
     "type": "git",

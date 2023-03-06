@@ -2,15 +2,14 @@
 
 import Polygon from "./polygon";
 
+/**
+ * A GeoJSON BoundaryBox object
+ * @param {Array} boundaryBox An array with [min. longitude, min. latitude, max. longitude, max. latitude]
+ * @example
+ * var boundaryBox = new jsonOdm.Geo.BoundaryBox([-180.00,-90.00,180.00,90.00]);
+ */
 export default class BoundaryBox extends Array {
 
-    /**
-     * A GeoJSON BoundaryBox object
-     * @param {Array} boundaryBox An array with [min. longitude, min. latitude, max. longitude, max. latitude]
-     * @example
-     * var boundaryBox = new jsonOdm.Geo.BoundaryBox([-180.00,-90.00,180.00,90.00]);
-     * @constructor
-     */
     constructor(boundaryBox) {
         super();
         if (Array.isArray(boundaryBox)) {

@@ -6,6 +6,9 @@ import LineString from "./line_string";
 import Polygon from "./polygon";
 import MultiPolygon from "./multi_polygon";
 
+/**
+ * A Utility class for Geo calculations
+ */
 export default class Util {
 
     /**

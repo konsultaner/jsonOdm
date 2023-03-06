@@ -9,18 +9,17 @@ import MultiPolygon from "./multi_polygon";
 import Geometry from "./geometry";
 import GeometryCollection from "./geometry_collection";
 
+/**
+ * A GeoJSON Point object
+ * @param {Array} position A 2-dimensional array with the first entry being the longitude and the second one being the latitude, i.e. [51,32]
+ * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
+ * @example
+ * var point = new jsonOdm.Geo.Point([51.5,32]);
+ */
 export default class Point extends Geometry  {
 
     coordinates: any[];
 
-    /**
-     * A GeoJSON Point object
-     * @param {Array} position A 2-dimensional array with the first entry being the longitude and the second one being the latitude, i.e. [51,32]
-     * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
-     * @example
-     * var point = new jsonOdm.Geo.Point([51.5,32]);
-     * @constructor
-     */
     constructor (position, boundaryBox) {
         super(boundaryBox);
         this.coordinates = position;

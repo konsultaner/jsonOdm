@@ -9,20 +9,19 @@ import Geometry from "./geometry";
 import MultiPolygon from "./multi_polygon";
 import GeometryCollection from "./geometry_collection";
 
+/**
+ * A GeoJSON LineString object
+ * @param {Array} positions An at least 2-dimensional array of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude, i.e. [[51,32],[51.4,21]]
+ * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
+ * @example
+ * var lineString = new LineString([
+ *    [51.5,32],[51.6,21]
+ * ]);
+ */
 export default class LineString extends Geometry  {
 
     coordinates: any[];
 
-    /**
-     * A GeoJSON LineString object
-     * @param {Array} positions An at least 2-dimensional array of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude, i.e. [[51,32],[51.4,21]]
-     * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
-     * @example
-     * var lineString = new LineString([
-     *    [51.5,32],[51.6,21]
-     * ]);
-     * @constructor
-     */
     constructor (positions, boundaryBox) {
         super(boundaryBox);
         this.type = "LineString";

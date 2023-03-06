@@ -17,8 +17,6 @@ import Util from "./geo/util";
  * <strong style='color:#ff0000'>Warning:</strong> The coordinate reference system is <a href="http://spatialreference.org/ref/epsg/4326/" target="_blank">WGS 84</a>
  * witch uses the coordinate order [<strong>longitude</strong>,<strong>latitude</strong>]!<br>
  * Changing the coordinate reference system (CRS) is not supported yet.
- * @module jsonOdm.Geo
- * @constructor
  */
 export default class Geo {
 

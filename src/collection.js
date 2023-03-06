@@ -8,8 +8,6 @@ import Util from "./util";
  * The Collection class holding the date from the selected data source
  * @param {String} [collectionName] The name of the selected collection. Leave empty if you want an empty collection but with all methods
  * @return {Collection} An array object with some extra methods added to it
- * @augments Array
- * @constructor
  */
 export default class Collection extends Array {
     constructor(dataOrName) {
@@ -32,8 +30,6 @@ export default class Collection extends Array {
      * @param {int|String} privateKeyField The private key of the foreign collection objects
      * @param {jsonOdm.Collection|String} childCollectionName The child collection that belongs to the foreign keys
      * @param {String} [alias] The new field that will carry all connected data. This field must not exist before setting the relation
-     * @memberof jsonOdm.Collection.prototype
-     * @method $hasMany
      */
     $hasMany(foreignKeyMapName, privateKeyField, childCollectionName, alias) {
         // SET THE ALIAS
@@ -75,8 +71,6 @@ export default class Collection extends Array {
      * @param {int|String} privateKeyField The name of the private key field
      * @param {jsonOdm.Collection|String} childCollectionName The child collection that belongs to the foreign keys
      * @param {String} alias  The new field that will carry the connected data.
-     * @memberof jsonOdm.Collection.prototype
-     * @method $hasOne
      * @example
      * var customers = new jsonOdm.Collection("customers");
      * customers.$hasOne("id","customerGroupId","customerGroup","group");

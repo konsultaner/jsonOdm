@@ -1,21 +1,19 @@
 import Geometry from "./geometry";
-import Geo from "../geo";
 
+/**
+ * A GeoJSON GeometryCollection object
+ * @param {Array} geometries An array of GeoJSON geometry objects
+ * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
+ * @example
+ * var polygons = new GeometryCollection([
+ *    new LineString([[51.5,32.1],[51.6,21]]),
+ *    new MultiPoint([[51.5,32],[51.6,21]]),
+ *    new LineString([[51.3,32.2],[51.9,21]])
+ * ]);
+ */
 export default class GeometryCollection extends Geometry  {
     geometries: any[];
 
-    /**
-     * A GeoJSON GeometryCollection object
-     * @param {Array} geometries An array of GeoJSON geometry objects
-     * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
-     * @example
-     * var polygons = new GeometryCollection([
-     *    new LineString([[51.5,32.1],[51.6,21]]),
-     *    new MultiPoint([[51.5,32],[51.6,21]]),
-     *    new LineString([[51.3,32.2],[51.9,21]])
-     * ]);
-     * @constructor
-     */
     constructor(geometries, boundaryBox) {
         super(boundaryBox);
         this.geometries = geometries;

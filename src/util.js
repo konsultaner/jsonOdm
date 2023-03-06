@@ -4,7 +4,6 @@ import Query from "./query";
 
 /**
  * The Utility Class that provides some useful methods used throughout the ODM
- * @constructor
  */
 export default class Util {
     /**
@@ -37,7 +36,7 @@ export default class Util {
 
     /** Polyfill for Object.keys
      * @method objectKeysPolyfill
-     * @memberof jsonOdm.Util.prototype
+     * @memberof Util
      * @param {Object} object The objects to get the keys from
      * @return {Array} An array of keys
      */
@@ -81,7 +80,7 @@ export default class Util {
 
     /** Get only the keys of an object
      * @method objectKeys
-     * @memberof jsonOdm.Util.prototype
+     * @memberof Util
      * @param {Object} object The objects to get the keys from
      * @return {Array} An array of keys
      */

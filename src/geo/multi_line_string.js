@@ -9,20 +9,19 @@ import Geometry from "./geometry";
 import MultiPolygon from "./multi_polygon";
 import GeometryCollection from "./geometry_collection";
 
+/**
+ * A GeoJSON MultiLineString object
+ * @param {Array} positions An array of arrays with at least 2-dimensional arrays of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude.
+ * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
+ * @example
+ * var multiLineString = new MultiLineString([
+ *    [[51.2,32],[51.4,21]],
+ *    [[51.5,32],[51.6,21]]
+ * ]);
+ */
 export default class MultiLineString extends Geometry {
     coordinates: any[];
 
-    /**
-     * A GeoJSON MultiLineString object
-     * @param {Array} positions An array of arrays with at least 2-dimensional arrays of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude.
-     * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
-     * @example
-     * var multiLineString = new MultiLineString([
-     *    [[51.2,32],[51.4,21]],
-     *    [[51.5,32],[51.6,21]]
-     * ]);
-     * @constructor
-     */
     constructor(positions, boundaryBox) {
         super(boundaryBox);
         this.coordinates = positions;

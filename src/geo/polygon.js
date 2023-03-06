@@ -9,24 +9,23 @@ import Geometry from "./geometry";
 import GeometryCollection from "./geometry_collection";
 import Util from "./util";
 
+/**
+ * A GeoJSON Polygon object
+ * @param {Array} positions An array of arrays with at least 2-dimensional arrays of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude.
+ * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
+ * @example
+ * var polygon = new Polygon([
+ *    // The last position should be equal to the first one to close the polygon
+ *    [[51.2,32],[51.4,21],[51.6,21],[51.2,21]],
+ *    // Must be fully inside the n-1th poly-line
+ *    [[51.5,32],[51.6,21],[51.7,21],[51.5,21]]
+ *    // more inner holes might follow
+ * ]);
+ */
 export default class Polygon extends Geometry {
 
     coordinates: any[];
 
-    /**
-     * A GeoJSON Polygon object
-     * @param {Array} positions An array of arrays with at least 2-dimensional arrays of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude.
-     * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
-     * @example
-     * var polygon = new Polygon([
-     *    // The last position should be equal to the first one to close the polygon
-     *    [[51.2,32],[51.4,21],[51.6,21],[51.2,21]],
-     *    // Must be fully inside the n-1th poly-line
-     *    [[51.5,32],[51.6,21],[51.7,21],[51.5,21]]
-     *    // more inner holes might follow
-     * ]);
-     * @constructor
-     */
     constructor(positions, boundaryBox) {
         super(boundaryBox);
         this.coordinates = positions;

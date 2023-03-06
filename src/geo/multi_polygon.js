@@ -9,26 +9,25 @@ import Util from "./util";
 import Geometry from "./geometry";
 import GeometryCollection from "./geometry_collection";
 
+/**
+ * A GeoJSON MultiPolygon object
+ * @param {Array} positions An array of Polygon position arrays
+ * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
+ * @example
+ * var polygons = new MultiPolygon([
+ *    [
+ *      [[51.2,32],[51.4,21],[51.6,21],[51.2,21]],
+ *      [[51.5,32],[51.6,21],[51.7,21],[51.5,21]]
+ *    ],
+ *    [
+ *      [[51.2,32],[51.4,21],[51.6,21],[51.2,21]],
+ *      [[51.5,32],[51.6,21],[51.7,21],[51.5,21]]
+ *    ]
+ * ]);
+ */
 export default class MultiPolygon extends Geometry {
     coordinates: any[];
 
-    /**
-     * A GeoJSON MultiPolygon object
-     * @param {Array} positions An array of Polygon position arrays
-     * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
-     * @example
-     * var polygons = new MultiPolygon([
-     *    [
-     *      [[51.2,32],[51.4,21],[51.6,21],[51.2,21]],
-     *      [[51.5,32],[51.6,21],[51.7,21],[51.5,21]]
-     *    ],
-     *    [
-     *      [[51.2,32],[51.4,21],[51.6,21],[51.2,21]],
-     *      [[51.5,32],[51.6,21],[51.7,21],[51.5,21]]
-     *    ]
-     * ]);
-     * @constructor
-     */
     constructor (positions, boundaryBox) {
         super(boundaryBox);
         this.coordinates = positions;

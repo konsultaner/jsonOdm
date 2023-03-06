@@ -9,19 +9,18 @@ import Geometry from "./geometry";
 import GeometryCollection from "./geometry_collection";
 import MultiPolygon from "./multi_polygon";
 
+/**
+ * A GeoJSON MultiPoint object
+ * @param {Array} positions An array of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude, i.e. [[51,32],[51.4,21]]
+ * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
+ * @example
+ * var multiPoint = new Geo.MultiPoint([
+ *    [51.5,32],[51.6,21]
+ * ]);
+ */
 export default class MultiPoint extends Geometry  {
     coordinates: any[];
 
-    /**
-     * A GeoJSON MultiPoint object
-     * @param {Array} positions An array of 2-dimensional arrays with the first entry being the longitude and the second one being the latitude, i.e. [[51,32],[51.4,21]]
-     * @param {Array} [boundaryBox] An array with [min. longitude, min. latitude, max. longitude, max. latitude]
-     * @example
-     * var multiPoint = new Geo.MultiPoint([
-     *    [51.5,32],[51.6,21]
-     * ]);
-     * @constructor
-     */
     constructor (positions, boundaryBox) {
         super(boundaryBox);
         this.coordinates = positions;

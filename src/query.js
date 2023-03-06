@@ -7,7 +7,6 @@ import Geo from "./geo";
 /**
  * The query object that holds the collection to be queried
  * @param {Collection} [collection]
- * @constructor
  * @example //This example shows how to query a collection
  * let myCollection = new jsonOdm('myCollection');
  * let $q = myCollection.query();
@@ -39,7 +38,7 @@ export default class Query {
          * @param {*} [args] The string methods parameter
          * @return {Query}
          * @method StringPrototype
-         * @memberof Query.prototype
+         * @memberof Query
          * @example
          * let collection = new Collection("myCollection");
          * let $query = collection.$query();
@@ -398,6 +397,7 @@ export default class Query {
     };
 
     /** Go down the property tree of the collection
+     * @memberof Query
      * @param {...String} node A variable amount of nodes to traverse down the document tree
      * @return {Query}
      */
@@ -407,6 +407,7 @@ export default class Query {
         }
         let brancher = ((nodes) => {
             /**
+             * @memberof Query
              * @param {*} The collection to go down
              * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
              */
@@ -427,6 +428,7 @@ export default class Query {
     $modifyField(modifier) {
         let $modifier = (function (currentModifier, lastCommand) {
             /**
+             * @memberof Query
              * @param {*} The collection to go down
              * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
              */
@@ -453,6 +455,7 @@ export default class Query {
         let subQuery = new Query(this.$$collection);
         let $accumulator = (function (nodes, accumulator, query, parentQuery) {
             /**
+             * @memberof Query
              * @param {*} The collection to go down
              * @return {Query|boolean} The query object with the sub collection or false if querying was impossible
              */
