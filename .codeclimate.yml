@@ -6,7 +6,7 @@ ratings:
     - src/**
 exclude_paths:
 - "README.MD"
-- bin/**
+- dist/**
 - docs/**
 - test/**
 - bench/**

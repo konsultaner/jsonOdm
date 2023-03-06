@@ -15,6 +15,7 @@
     "babel-loader": "^8.2.3",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
+    "benchmark-cli": "^1.1.0",
     "better-docs": "^2.7.2",
     "documentation": "^14.0.1",
     "flow-bin": "^0.173.0",
@@ -26,7 +27,8 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "docs": "npx documentation build src/** -f html -o docs"
+    "docs": "npx documentation build src/** -f html -o docs",
+    "bench": "webpack && npx benchmark ./bench/*"
   },
   "repository": {
     "type": "git",

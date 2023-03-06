@@ -13,9 +13,14 @@ export default class Collection extends Array {
     constructor(dataOrName) {
         super();
         if (Array.isArray(dataOrName)) {
-            this.push.apply(this,dataOrName);
+            for (let i = 0; i < dataOrName.length; i++) {
+                this.push(dataOrName[i]);
+            }
         } else if (typeof dataOrName !== "undefined" && JsonOdm.selectedSource[dataOrName]) {
-            this.push.apply(this,JsonOdm.selectedSource[dataOrName]);
+            const source = JsonOdm.selectedSource[dataOrName]
+            for (let i = 0; i < source.length; i++) {
+                this.push(source[i]);
+            }
         }
     }
 
