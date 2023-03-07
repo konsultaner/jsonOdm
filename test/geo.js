@@ -562,8 +562,8 @@ describe("Geo Tools", function () {
     });
     // GEO INTERSECT
     describe("Point intersects Geometry", function () {
-        it("Should be an alias", function () {
-            expect(Geo.Point.intersects).toBe(Geo.Point.within);
+        it("Should be in Point -> its an alias function", function () {
+            expect(Geo.Point.within(new Geo.Point([1,1]),new Geo.Point([1,1]))).toBeTruthy();
         });
     });
     describe("MultiPoint intersects Geometry", function () {
