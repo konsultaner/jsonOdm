@@ -16,15 +16,33 @@ export default class Aqlite {
     static TOKEN_WHITESPACE_MATCHER = /\s/;
 
     static RESERVED_TOKENS = [
-        "LET",
-        "FOR",
-        "IN",
-        "FILTER",
-        "LIMIT",
-        "SORT",
-        "COLLECT",
         "AGGREGATE",
-        "RETURN"
+        "ALL",
+        "AND",
+        "ANY",
+        "ASC",
+        "COLLECT",
+        "DESC",
+        "DISTINCT",
+        "FALSE",
+        "FILTER",
+        "FOR",
+        "GRAPH",
+        "IN",
+        "INBOUND",
+        "INSERT",
+        "INTO",
+        "LET",
+        "LIKE",
+        "LIMIT",
+        "NONE",
+        "NOT",
+        "NULL",
+        "OR",
+        "REMOVE",
+        "RETURN",
+        "SORT",
+        "TRUE"
     ]
 
     static getToken(query): Token[] {
