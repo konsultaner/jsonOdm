@@ -26,7 +26,14 @@ If commercial support is needed please [contact me](mailto:burkhardt@konsultaner
 
 Docs
 ----
-You can find the [documentation here](https://rawgit.com/konsultaner/jsonOdm/master/docs/gen/0.2/index.html) or compiled to the folder [/docs/gen/*](https://github.com/konsultaner/jsonOdm/blob/master/docs/gen/index.html).
+You can find the [documentation here](https://rawgit.com/konsultaner/jsonOdm/move_to_webpack/docs/index.html) or compiled to the folder [/docs/*](https://github.com/konsultaner/jsonOdm/tree/move_to_webpack/docs/index.html).
+
+To compile the docs:
+
+```bash
+npm i
+npm run docs
+```
 
 Road map
 ----
@@ -107,30 +114,42 @@ Install from NPM-Package
 npm install json-odm
 ```
 
-Build and run tests, both minified and unminified
--------------------------------------------------
+Build
+-----
 
-Since [PhantomJs has been archived](https://github.com/ariya/phantomjs/issues/15344), jsonOdm needed to switch to chrome 
-headless for its test. To run tests have Chrome installed!
+To build the dist:
 
 ```bash
-npm install json-odm
-cd npm_modules/json-odm/
-npm install
-gulp
+npm i
+npm run build
 ```
 
-Browser Support
----------------
-Unit test ran successfully under Chrome,iOS7+,IE9+,Firefox,Android 4.4.2+  
-To be tested: Safari on OSX, IE8(test driver does not run in IE < 9 so it will be hard to test)
+Tests
+-----
+
+To run the tests:
+
+```bash
+npm i
+npm run test
+```
+
+Benchmarks
+-----
+
+To run the benchmarks:
+
+```bash
+npm i
+npm run bench
+```
 
 Example
 ------
-This is only a basic example. Find a lot more in the [docs](https://rawgit.com/konsultaner/jsonOdm/master/docs/gen/index.html), i.e. how to use [$geoWithin](https://rawgit.com/konsultaner/jsonOdm/master/docs/gen/jsonOdm.Query.html#__geoWithin__anchor)
+This is only a basic example. Find a lot more in the [docs](https://rawgit.com/konsultaner/jsonOdm/move_to_webpack/docs/index.html), i.e. how to use [$geoWithin](https://rawgit.com/konsultaner/jsonOdm/move_to_webpack/docs/index.html#querygeowithin)
 ```html
-<!-- add minified version from https://github.com/konsultaner/jsonOdm/tree/master/bin to the html head -->
-<script type="text/javascript" src="js/json.odm.min.js"></script>
+<!-- add from https://github.com/konsultaner/jsonOdm/tree/master/dist to the html head -->
+<script type="text/javascript" src="js/jsonOdm.js"></script>
 ```
 
 ```javascript
